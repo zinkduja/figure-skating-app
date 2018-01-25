@@ -60,6 +60,65 @@
                                     android:layout_height="match_parent">
 
                                     <TextView
+                                        android:id="@+id/wTableHeader1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/aclonica"
+                                        android:text="Place"
+                                        android:textAlignment="center"
+                                        android:textColor="@android:color/black" />
+
+                                    <TextView
+                                        android:id="@+id/wTableHeader2"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/aclonica"
+                                        android:text="Name"
+                                        android:textAlignment="textStart"
+                                        android:textColor="@android:color/black" />
+
+                                    <TextView
+                                        android:id="@+id/wTableHeader3"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/aclonica"
+                                        android:text="Nation"
+                                        android:textAlignment="center"
+                                        android:textColor="@android:color/black" />
+
+                                    <TextView
+                                        android:id="@+id/wTableHeader4"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/aclonica"
+                                        android:text="Points"
+                                        android:textAlignment="center"
+                                        android:textColor="@android:color/black" />
+
+                                    <TextView
+                                        android:id="@+id/wTableHeader5"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/aclonica"
+                                        android:text="SP"
+                                        android:textAlignment="center"
+                                        android:textColor="@android:color/black" />
+
+                                    <TextView
+                                        android:id="@+id/wTableHeader6"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/aclonica"
+                                        android:text="FS"
+                                        android:textAlignment="center"
+                                        android:textColor="@android:color/black" />
+                                </TableRow>
+
+                                <TableRow
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                    <TextView
                                         android:id="@+id/wTableCell1"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -498,6 +557,65 @@
                                     android:layout_height="match_parent">
 
                                     <TextView
+                                        android:id="@+id/tableHeader1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/aclonica"
+                                        android:text="Place"
+                                        android:textAlignment="center"
+                                        android:textColor="@android:color/black" />
+
+                                    <TextView
+                                        android:id="@+id/tableHeader2"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/aclonica"
+                                        android:text="Name"
+                                        android:textAlignment="textStart"
+                                        android:textColor="@android:color/black" />
+
+                                    <TextView
+                                        android:id="@+id/tableHeader3"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/aclonica"
+                                        android:text="Nation"
+                                        android:textAlignment="center"
+                                        android:textColor="@android:color/black" />
+
+                                    <TextView
+                                        android:id="@+id/tableHeader4"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/aclonica"
+                                        android:text="Points"
+                                        android:textAlignment="center"
+                                        android:textColor="@android:color/black" />
+
+                                    <TextView
+                                        android:id="@+id/tableHeader5"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/aclonica"
+                                        android:text="SP"
+                                        android:textAlignment="center"
+                                        android:textColor="@android:color/black" />
+
+                                    <TextView
+                                        android:id="@+id/tableHeader6"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/aclonica"
+                                        android:text="FS"
+                                        android:textAlignment="center"
+                                        android:textColor="@android:color/black" />
+                                </TableRow>
+
+                                <TableRow
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                    <TextView
                                         android:id="@+id/tableCell1"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -509,7 +627,7 @@
                                         android:id="@+id/tableCell2"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Evgenia MEDVEDEVA"
+                                        android:text="Javier FERNANDEZ"
                                         android:textAlignment="textStart"
                                         android:textColor="@android:color/black" />
 
@@ -517,7 +635,7 @@
                                         android:id="@+id/tableCell3"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="RUS"
+                                        android:text="ESP"
                                         android:textAlignment="center"
                                         android:textColor="@android:color/black" />
 
@@ -525,7 +643,7 @@
                                         android:id="@+id/tableCell4"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="223.86"
+                                        android:text="314.93"
                                         android:textAlignment="center"
                                         android:textColor="@android:color/black" />
 
@@ -533,7 +651,7 @@
                                         android:id="@+id/tableCell5"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="3"
+                                        android:text="2"
                                         android:textAlignment="center"
                                         android:textColor="@android:color/black" />
 
@@ -562,7 +680,7 @@
                                         android:id="@+id/tableCell8"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Ashley WAGNER"
+                                        android:text="Yuzuru HANYU"
                                         android:textAlignment="textStart"
                                         android:textColor="@android:color/black" />
 
@@ -570,7 +688,7 @@
                                         android:id="@+id/tableCell9"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="USA"
+                                        android:text="JPN"
                                         android:textAlignment="center"
                                         android:textColor="@android:color/black" />
 
@@ -578,7 +696,7 @@
                                         android:id="@+id/tableCell10"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="215.39"
+                                        android:text="295.17"
                                         android:textAlignment="center"
                                         android:textColor="@android:color/black" />
 
@@ -586,7 +704,7 @@
                                         android:id="@+id/tableCell11"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="4"
+                                        android:text="1"
                                         android:textAlignment="center"
                                         android:textColor="@android:color/black" />
 
@@ -615,14 +733,14 @@
                                         android:id="@+id/tableCell14"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Anna POGORILAYA"
+                                        android:text="Boyang JIN"
                                         android:textColor="@android:color/black" />
 
                                     <TextView
                                         android:id="@+id/tableCell15"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="RUS"
+                                        android:text="CHN"
                                         android:textAlignment="center"
                                         android:textColor="@android:color/black" />
 
@@ -630,7 +748,7 @@
                                         android:id="@+id/tableCell16"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="213.69"
+                                        android:text="270.99"
                                         android:textAlignment="center"
                                         android:textColor="@android:color/black" />
 
@@ -638,7 +756,7 @@
                                         android:id="@+id/tableCell17"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="2"
+                                        android:text="5"
                                         android:textAlignment="center"
                                         android:textColor="@android:color/black" />
 
@@ -646,7 +764,7 @@
                                         android:id="@+id/tableCell18"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="4"
+                                        android:text="3"
                                         android:textAlignment="center"
                                         android:textColor="@android:color/black" />
                                 </TableRow>
@@ -667,14 +785,14 @@
                                         android:id="@+id/tableCell20"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Gracie GOLD"
+                                        android:text="Mikhail KOLYADA"
                                         android:textColor="@android:color/black" />
 
                                     <TextView
                                         android:id="@+id/tableCell21"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="USA"
+                                        android:text="RUS"
                                         android:textAlignment="center"
                                         android:textColor="@android:color/black" />
 
@@ -682,7 +800,7 @@
                                         android:id="@+id/tableCell22"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="211.29"
+                                        android:text="267.97"
                                         android:textAlignment="center"
                                         android:textColor="@android:color/black" />
 
@@ -690,7 +808,7 @@
                                         android:id="@+id/tableCell23"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="1"
+                                        android:text="6"
                                         android:textAlignment="center"
                                         android:textColor="@android:color/black" />
 
@@ -698,7 +816,7 @@
                                         android:id="@+id/tableCell24"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="6"
+                                        android:text="5"
                                         android:textAlignment="center"
                                         android:textColor="@android:color/black" />
                                 </TableRow>
@@ -719,14 +837,14 @@
                                         android:id="@+id/tableCell26"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Satoko MIYAHARA"
+                                        android:text="Patrick CHAN"
                                         android:textColor="@android:color/black" />
 
                                     <TextView
                                         android:id="@+id/tableCell27"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="JPN"
+                                        android:text="CAN"
                                         android:textAlignment="center"
                                         android:textColor="@android:color/black" />
 
@@ -734,7 +852,7 @@
                                         android:id="@+id/tableCell28"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="210.61"
+                                        android:text="266.75"
                                         android:textAlignment="center"
                                         android:textColor="@android:color/black" />
 
@@ -742,7 +860,7 @@
                                         android:id="@+id/tableCell29"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="6"
+                                        android:text="3"
                                         android:textAlignment="center"
                                         android:textColor="@android:color/black" />
 
@@ -750,7 +868,7 @@
                                         android:id="@+id/tableCell30"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="3"
+                                        android:text="8"
                                         android:textAlignment="center"
                                         android:textColor="@android:color/black" />
                                 </TableRow>
@@ -771,14 +889,14 @@
                                         android:id="@+id/tableCell32"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Elena RADIONOVA"
+                                        android:text="Adam RIPPON"
                                         android:textColor="@android:color/black" />
 
                                     <TextView
                                         android:id="@+id/tableCell33"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="RUS"
+                                        android:text="USA"
                                         android:textAlignment="center"
                                         android:textColor="@android:color/black" />
 
@@ -786,7 +904,7 @@
                                         android:id="@+id/tableCell34"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="209.81"
+                                        android:text="264.44"
                                         android:textAlignment="center"
                                         android:textColor="@android:color/black" />
 
@@ -794,7 +912,7 @@
                                         android:id="@+id/tableCell35"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="5"
+                                        android:text="7"
                                         android:textAlignment="center"
                                         android:textColor="@android:color/black" />
 
@@ -802,7 +920,7 @@
                                         android:id="@+id/tableCell36"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="5"
+                                        android:text="4"
                                         android:textAlignment="center"
                                         android:textColor="@android:color/black" />
                                 </TableRow>
@@ -823,7 +941,7 @@
                                         android:id="@+id/tableCell38"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Mao ASADA"
+                                        android:text="	Shoma UNO"
                                         android:textColor="@android:color/black" />
 
                                     <TextView
@@ -838,7 +956,7 @@
                                         android:id="@+id/tableCell40"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="200.30"
+                                        android:text="264.25"
                                         android:textAlignment="center"
                                         android:textColor="@android:color/black" />
 
@@ -846,7 +964,7 @@
                                         android:id="@+id/tableCell41"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="9"
+                                        android:text="4"
                                         android:textAlignment="center"
                                         android:textColor="@android:color/black" />
 
@@ -854,7 +972,7 @@
                                         android:id="@+id/tableCell42"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="7"
+                                        android:text="6"
                                         android:textAlignment="center"
                                         android:textColor="@android:color/black" />
                                 </TableRow>
@@ -875,14 +993,14 @@
                                         android:id="@+id/tableCell44"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Rika HONGO"
+                                        android:text="Max AARON"
                                         android:textColor="@android:color/black" />
 
                                     <TextView
                                         android:id="@+id/tableCell45"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="JPN"
+                                        android:text="USA"
                                         android:textAlignment="center"
                                         android:textColor="@android:color/black" />
 
@@ -890,7 +1008,7 @@
                                         android:id="@+id/tableCell46"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="199.15"
+                                        android:text="254.14"
                                         android:textAlignment="center"
                                         android:textColor="@android:color/black" />
 
