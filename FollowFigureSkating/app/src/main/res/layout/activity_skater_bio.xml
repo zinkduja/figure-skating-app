@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="vandy.cs4279.followfigureskating.SkaterBioActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/skaterPhoto"
+                android:layout_width="match_parent"
+                android:layout_height="183dp"
+                app:srcCompat="@android:drawable/sym_def_app_icon" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/skaterName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Name: Ashley Wagner"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/dob"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Date of Birth: May 16, 1991"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/hometown"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Hometown: Los Angeles"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/height"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Height: 5' 3&quot;\n"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/coach"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Coach: Rafael Arutunian"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/choreographer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Choreographer: Shae-Lynn Bourne"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/formerCoaches"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Former Coach: John Nicks, Nadia Kanaeva, Priscilla Hill, Shirley Hughes\n"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp" />
+
+                <View
+                    android:id="@+id/line1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/scoreTableTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Top Scores"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp" />
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:stretchColumns="*">
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" >
+
+                        <TextView
+                            android:id="@+id/tableCell1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="Personal Best Top Score"
+                            android:textColor="@android:color/black" />
+
+                        <TextView
+                            android:id="@+id/tableCell2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="215.39"
+                            android:textAlignment="center"
+                            android:textColor="@android:color/black" />
+
+                        <TextView
+                            android:id="@+id/tableCell3"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="ISU World Championships 2016"
+                            android:textColor="@android:color/black" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" >
+
+                        <TextView
+                            android:id="@+id/tableCell4"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="Personal Best Score Short Program"
+                            android:textColor="@android:color/black" />
+
+                        <TextView
+                            android:id="@+id/tableCell5"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="73.16"
+                            android:textAlignment="center"
+                            android:textColor="@android:color/black" />
+
+                        <TextView
+                            android:id="@+id/tableCell6"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="ISU World Championships 2016"
+                            android:textColor="@android:color/black" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" >
+
+                        <TextView
+                            android:id="@+id/tableCell7"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="Personal Best Score Free Skating"
+                            android:textColor="@android:color/black" />
+
+                        <TextView
+                            android:id="@+id/tableCell8"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="142.23"
+                            android:textAlignment="center"
+                            android:textColor="@android:color/black" />
+
+                        <TextView
+                            android:id="@+id/tableCell9"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="ISU World Championships 2016"
+                            android:textColor="@android:color/black" />
+                    </TableRow>
+
+                </TableLayout>
+
+                <TextView
+                    android:id="@+id/blank"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <View
+                    android:id="@+id/line2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/otherTable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Next Table"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+</android.support.constraint.ConstraintLayout>
