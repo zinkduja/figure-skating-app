@@ -30,7 +30,9 @@
         <activity android:name=".SkaterBioActivity" />
         <activity android:name=".EventResultsActivity" />
         <activity android:name=".UserSettingsActivity" />
-        <activity android:name=".CurrentlySkating"></activity>
+        <activity android:name=".CurrentlySkating" />
+        <activity android:name=".SkatersActivity" />
+        <activity android:name=".FavoritesPage"></activity>
     </application>
 
 </manifest>
