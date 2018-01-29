@@ -89,6 +89,62 @@
                     android:background="@android:color/black" />
 
                 <TextView
+                    android:id="@+id/otherTable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Program Music (17/18 Season)"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp" />
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:stretchColumns="*">
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/tableCell1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="Short Program: "
+                            android:textColor="@android:color/black" />
+
+                        <TextView
+                            android:id="@+id/tableCell"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="Hip Hip Chin Chin performed by Club des Belugas"
+                            android:textColor="@android:color/black" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/tableCell4"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="Free Skating:"
+                            android:textColor="@android:color/black" />
+
+                        <TextView
+                            android:id="@+id/tableCell49"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="Diamonds (from 'Moulin Rouge' soundtrack), One Day I'll Fly Away (from 'Moulin Rouge' soundtrack), The Show Must Go On (from 'Moulin Rouge' soundtrack)"
+                            android:textColor="@android:color/black" />
+
+                    </TableRow>
+
+                </TableLayout>
+
+                <TextView
                     android:id="@+id/scoreTableTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -195,15 +251,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@android:color/black" />
-
-                <TextView
-                    android:id="@+id/otherTable"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Next Table"
-                    android:textAlignment="center"
-                    android:textColor="@android:color/black"
-                    android:textSize="24sp" />
 
             </LinearLayout>
         </LinearLayout>
