@@ -29,7 +29,8 @@
             android:parentActivityName=".MainActivity" />
         <activity android:name=".SkaterBioActivity" />
         <activity android:name=".EventResultsActivity" />
-        <activity android:name=".UserSettingsActivity"></activity>
+        <activity android:name=".UserSettingsActivity" />
+        <activity android:name=".CurrentlySkating"></activity>
     </application>
 
 </manifest>
