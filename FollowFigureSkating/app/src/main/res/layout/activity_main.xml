@@ -39,7 +39,7 @@
             android:layout_height="match_parent">
 
             <Button
-                android:id="@+id/login button"
+                android:id="@+id/login_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/holo_blue_bright"

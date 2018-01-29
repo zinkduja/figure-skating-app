@@ -24,12 +24,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".LoginAndroidActivity"
             android:label="Login"
             android:parentActivityName=".MainActivity" />
         <activity android:name=".SkaterBioActivity" />
         <activity android:name=".EventResultsActivity" />
-        <activity android:name=".UserSettingsActivity"></activity>
+        <activity android:name=".UserSettingsActivity" />
+        <activity
+            android:name=".LandingActivity"
+            android:label="@string/title_activity_landing" />
+        <activity android:name=".LoginActivity"></activity>
     </application>
 
 </manifest>
