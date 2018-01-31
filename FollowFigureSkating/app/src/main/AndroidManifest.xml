@@ -30,13 +30,13 @@
         <activity android:name=".SkaterBioActivity" />
         <activity android:name=".EventResultsActivity" />
         <activity android:name=".UserSettingsActivity" />
-        <activity
-            android:name=".LandingActivity"
-            android:label="@string/title_activity_landing" />
-        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".LoginActivity" />
         <activity android:name=".CurrentlySkating" />
         <activity android:name=".SkatersActivity" />
-        <activity android:name=".FavoritesPage"></activity>
+        <activity android:name=".FavoritesPage" />
+        <activity
+            android:name=".LandingActivity"
+            android:label="@string/title_activity_landing"></activity>
     </application>
 
 </manifest>
