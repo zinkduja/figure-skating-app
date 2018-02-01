@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="vandy.cs4279.followfigureskating.FavoritesPage">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="vandy.cs4279.followfigureskating.FavoritesFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -67,7 +66,7 @@
                                     android:padding="20dp">
 
                                     <ImageView
-                                        android:id="@+id/imageView"
+                                        android:id="@+id/imageView1"
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="left"
@@ -76,7 +75,7 @@
                                         app:srcCompat="@mipmap/ic_launcher" />
 
                                     <TextView
-                                        android:id="@+id/textView"
+                                        android:id="@+id/textView1"
                                         android:layout_width="400px"
                                         android:layout_height="match_parent"
                                         android:layout_gravity="center_vertical"
@@ -96,7 +95,7 @@
                                     android:padding="20dp">
 
                                     <ImageView
-                                        android:id="@+id/imageView"
+                                        android:id="@+id/imageView2"
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="left"
@@ -105,7 +104,7 @@
                                         app:srcCompat="@mipmap/ic_launcher" />
 
                                     <TextView
-                                        android:id="@+id/textView"
+                                        android:id="@+id/textView2"
                                         android:layout_width="400px"
                                         android:layout_height="match_parent"
                                         android:layout_gravity="center_vertical"
@@ -125,7 +124,7 @@
                                     android:padding="20dp">
 
                                     <ImageView
-                                        android:id="@+id/imageView"
+                                        android:id="@+id/imageView3"
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="left"
@@ -134,7 +133,7 @@
                                         app:srcCompat="@mipmap/ic_launcher" />
 
                                     <TextView
-                                        android:id="@+id/textView"
+                                        android:id="@+id/textView3"
                                         android:layout_width="400px"
                                         android:layout_height="match_parent"
                                         android:layout_gravity="center_vertical"
@@ -154,7 +153,7 @@
                                     android:padding="20dp">
 
                                     <ImageView
-                                        android:id="@+id/imageView2"
+                                        android:id="@+id/imageView4"
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="start"
@@ -163,7 +162,7 @@
                                         app:srcCompat="@mipmap/ic_launcher" />
 
                                     <TextView
-                                        android:id="@+id/textView2"
+                                        android:id="@+id/textView4"
                                         android:layout_width="400px"
                                         android:layout_height="match_parent"
                                         android:layout_gravity="center_vertical"
@@ -205,7 +204,7 @@
                                     android:padding="20dp">
 
                                     <ImageView
-                                        android:id="@+id/imageView"
+                                        android:id="@+id/imageView5"
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="left"
@@ -214,7 +213,7 @@
                                         app:srcCompat="@mipmap/ic_launcher" />
 
                                     <TextView
-                                        android:id="@+id/textView"
+                                        android:id="@+id/textView5"
                                         android:layout_width="400px"
                                         android:layout_height="match_parent"
                                         android:layout_gravity="center_vertical"
@@ -234,7 +233,7 @@
                                     android:padding="20dp">
 
                                     <ImageView
-                                        android:id="@+id/imageView"
+                                        android:id="@+id/imageView6"
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="left"
@@ -243,7 +242,7 @@
                                         app:srcCompat="@mipmap/ic_launcher" />
 
                                     <TextView
-                                        android:id="@+id/textView"
+                                        android:id="@+id/textView6"
                                         android:layout_width="400px"
                                         android:layout_height="match_parent"
                                         android:layout_gravity="center_vertical"
@@ -263,7 +262,7 @@
                                     android:padding="20dp">
 
                                     <ImageView
-                                        android:id="@+id/imageView"
+                                        android:id="@+id/imageView7"
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="left"
@@ -272,7 +271,7 @@
                                         app:srcCompat="@mipmap/ic_launcher" />
 
                                     <TextView
-                                        android:id="@+id/textView"
+                                        android:id="@+id/textView7"
                                         android:layout_width="400px"
                                         android:layout_height="match_parent"
                                         android:layout_gravity="center_vertical"
@@ -292,7 +291,7 @@
                                     android:padding="20dp">
 
                                     <ImageView
-                                        android:id="@+id/imageView2"
+                                        android:id="@+id/imageView8"
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="start"
@@ -301,7 +300,7 @@
                                         app:srcCompat="@mipmap/ic_launcher" />
 
                                     <TextView
-                                        android:id="@+id/textView2"
+                                        android:id="@+id/textView8"
                                         android:layout_width="400px"
                                         android:layout_height="match_parent"
                                         android:layout_gravity="center_vertical"
@@ -323,4 +322,4 @@
 
     </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+</FrameLayout>

@@ -3,6 +3,8 @@ package vandy.cs4279.followfigureskating;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -16,21 +18,26 @@ public class LandingActivity extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            Fragment selectedFrag = null;
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
-                    return true;
+                    selectedFrag = LandingFragment.newInstance();
+                    break;
                 case R.id.navigation_skaters:
-                    mTextMessage.setText(R.string.skaters);
-                    return true;
+                    selectedFrag = SkatersFragment.newInstance();
+                    break;
                 case R.id.navigation_following:
-                    mTextMessage.setText(R.string.following);
-                    return true;
+                    selectedFrag = FavoritesFragment.newInstance();
+                    break;
                 case R.id.navigation_settings:
-                    mTextMessage.setText(R.string.settings);
-                    return true;
+                    selectedFrag = UserSettingsFragment.newInstance();
+                    break;
             }
-            return false;
+
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frame_layout, selectedFrag);
+            transaction.commit();
+            return true;
         }
     };
 
