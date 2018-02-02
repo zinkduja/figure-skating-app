@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 public class LandingActivity extends AppCompatActivity {
@@ -49,6 +50,36 @@ public class LandingActivity extends AppCompatActivity {
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout, LandingFragment.newInstance());
+        transaction.commit();
     }
 
+    /**
+     * This method opens the skater bio frag when the button is pressed.
+     */
+    public void onSkaterButtonPressed(View view) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout, SkaterBioFragment.newInstance());
+        transaction.commit();
+    }
+
+    /**
+     * This method opens the event results frag when the button is pressed.
+     */
+    public void onEventResultsButtonPressed(View view) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout, EventResultsFragment.newInstance());
+        transaction.commit();
+    }
+
+    /**
+     * This method opens the currently skating frag when the button is pressed.
+     */
+    public void onCurSkatingButtonPressed(View view) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout, CurrentlySkatingFragment.newInstance());
+        transaction.commit();
+    }
 }

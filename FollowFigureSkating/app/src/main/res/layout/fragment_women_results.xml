@@ -1,0 +1,504 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="vandy.cs4279.followfigureskating.WomenResultsFragment">
+
+    <LinearLayout
+        android:id="@+id/women"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:stretchColumns="*">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/wTableHeader1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/aclonica"
+                        android:text="Place"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableHeader2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/aclonica"
+                        android:text="Name"
+                        android:textAlignment="textStart"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableHeader3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/aclonica"
+                        android:text="Nation"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableHeader4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/aclonica"
+                        android:text="Points"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableHeader5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/aclonica"
+                        android:text="SP"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableHeader6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/aclonica"
+                        android:text="FS"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/wTableCell1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableCell2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Evgenia MEDVEDEVA"
+                        android:textAlignment="textStart"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableCell3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="RUS"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableCell4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="223.86"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableCell5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableCell6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/wTableCell7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableCell8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ashley WAGNER"
+                        android:textAlignment="textStart"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableCell9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="USA"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableCell10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="215.39"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableCell11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="4"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableCell12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/wTableCell13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableCell14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Anna POGORILAYA"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableCell15"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="RUS"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableCell16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="213.69"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableCell17"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableCell18"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="4"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/wTableCell19"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="4"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableCell20"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Gracie GOLD"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableCell21"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="USA"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableCell22"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="211.29"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableCell23"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableCell24"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="6"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/wTableCell25"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableCell26"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Satoko MIYAHARA"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableCell27"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="JPN"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableCell28"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="210.61"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableCell29"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="6"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableCell30"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/wTableCell31"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="6"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableCell32"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Elena RADIONOVA"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableCell33"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="RUS"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableCell34"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="209.81"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableCell35"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableCell36"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/wTableCell37"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="7"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableCell38"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mao ASADA"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableCell39"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="JPN"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableCell40"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="200.30"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableCell41"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="9"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableCell42"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="7"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/wTableCell43"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="8"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableCell44"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Rika HONGO"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableCell45"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="JPN"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableCell46"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="199.15"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableCell47"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="7"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/wTableCell48"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="8"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+                </TableRow>
+
+            </TableLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+</FrameLayout>
