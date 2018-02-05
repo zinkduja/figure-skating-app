@@ -43,7 +43,7 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:id="@+id/imageView"
+                        android:id="@+id/skaterImage1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
@@ -52,7 +52,7 @@
                         app:srcCompat="@mipmap/ic_launcher" />
 
                     <TextView
-                        android:id="@+id/textView"
+                        android:id="@+id/skaterName1"
                         android:layout_width="400px"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
@@ -72,7 +72,7 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:id="@+id/imageView"
+                        android:id="@+id/skaterImage2"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
@@ -81,7 +81,7 @@
                         app:srcCompat="@mipmap/ic_launcher" />
 
                     <TextView
-                        android:id="@+id/textView"
+                        android:id="@+id/skaterName2"
                         android:layout_width="400px"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
@@ -101,7 +101,7 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:id="@+id/imageView"
+                        android:id="@+id/skaterImage3"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
@@ -110,7 +110,7 @@
                         app:srcCompat="@mipmap/ic_launcher" />
 
                     <TextView
-                        android:id="@+id/textView"
+                        android:id="@+id/skaterName3"
                         android:layout_width="400px"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
@@ -130,7 +130,7 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:id="@+id/imageView2"
+                        android:id="@+id/skaterImage4"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
@@ -139,7 +139,7 @@
                         app:srcCompat="@mipmap/ic_launcher" />
 
                     <TextView
-                        android:id="@+id/textView2"
+                        android:id="@+id/skaterName4"
                         android:layout_width="400px"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
