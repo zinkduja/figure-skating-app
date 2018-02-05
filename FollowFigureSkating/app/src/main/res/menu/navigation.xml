@@ -8,7 +8,7 @@
 
     <item
         android:id="@+id/navigation_skaters"
-        android:icon="@mipmap/ic_fav_foreground"
+        android:icon="@mipmap/ic_skater_foreground"
         android:title="@string/skaters" />
 
     <item
@@ -18,7 +18,7 @@
 
     <item
         android:id="@+id/navigation_settings"
-        android:icon="@mipmap/ic_fav_foreground"
+        android:icon="@mipmap/ic_settings_foreground"
         android:title="@string/settings" />
 
 </menu>
