@@ -143,6 +143,12 @@
 
                 </TableLayout>
 
+                <View
+                    android:id="@+id/line2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/black" />
+
                 <TextView
                     android:id="@+id/scoreTableTitle"
                     android:layout_width="match_parent"
