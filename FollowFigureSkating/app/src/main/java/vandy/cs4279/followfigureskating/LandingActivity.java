@@ -60,26 +60,38 @@ public class LandingActivity extends AppCompatActivity {
      * This method opens the skater bio frag when the button is pressed.
      */
     public void onSkaterButtonPressed(View view) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout, SkaterBioFragment.newInstance());
-        transaction.commit();
+        SkaterBioFragment sbFrag = SkaterBioFragment.newInstance();
+        getSupportFragmentManager().beginTransaction()
+                .add(sbFrag, "skaterBio")
+                // Add this transaction to the back stack
+                .addToBackStack(null)
+                .replace(R.id.frame_layout, sbFrag)
+                .commit();
     }
 
     /**
      * This method opens the event results frag when the button is pressed.
      */
     public void onEventResultsButtonPressed(View view) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout, EventResultsFragment.newInstance());
-        transaction.commit();
+        EventResultsFragment erFrag = EventResultsFragment.newInstance();
+        getSupportFragmentManager().beginTransaction()
+                .add(erFrag, "skaterBio")
+                // Add this transaction to the back stack
+                .addToBackStack(null)
+                .replace(R.id.frame_layout, erFrag)
+                .commit();
     }
 
     /**
      * This method opens the currently skating frag when the button is pressed.
      */
     public void onCurSkatingButtonPressed(View view) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout, CurrentlySkatingFragment.newInstance());
-        transaction.commit();
+        CurrentlySkatingFragment csFrag = CurrentlySkatingFragment.newInstance();
+        getSupportFragmentManager().beginTransaction()
+                .add(CurrentlySkatingFragment.newInstance(), "skaterBio")
+                // Add this transaction to the back stack
+                .addToBackStack(null)
+                .replace(R.id.frame_layout, csFrag)
+                .commit();
     }
 }
