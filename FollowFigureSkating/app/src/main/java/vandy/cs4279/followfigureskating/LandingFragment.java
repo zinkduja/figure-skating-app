@@ -67,6 +67,10 @@ public class LandingFragment extends Fragment {
     }
 
     //gets overriden in Landing Activity
+    public void onEventButtonPressed(View view) {
+    }
+
+    //gets overriden in Landing Activity
     public void onSkaterButtonPressed(View view) {
     }
 

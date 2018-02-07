@@ -56,6 +56,16 @@ public class LandingActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    public void onEventButtonPressed(View view) {
+        EventSummaryFragment esFrag = EventSummaryFragment.newInstance();
+        getSupportFragmentManager().beginTransaction()
+                .add(esFrag, "skaterBio")
+                // Add this transaction to the back stack
+                .addToBackStack("")
+                .replace(R.id.frame_layout, esFrag)
+                .commit();
+    }
+
     /**
      * This method opens the skater bio frag when the button is pressed.
      */

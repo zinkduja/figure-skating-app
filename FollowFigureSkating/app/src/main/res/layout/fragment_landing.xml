@@ -1,4 +1,5 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,28 +8,61 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
-        <Button
-            android:id="@+id/tempButton"
+        <ImageView
+            android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Skater Bio Fragment"
-            android:onClick="onSkaterButtonPressed"/>
+            android:src="@mipmap/ic_skate_foreground" />
 
         <Button
-            android:id="@+id/tempButton2"
-            android:layout_width="match_parent"
+            android:id="@+id/eventButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Event Results Fragment"
-            android:onClick="onEventResultsButtonPressed"/>
+            android:onClick="onEventButtonPressed"
+            android:text="Current Event" />
 
-        <Button
-            android:id="@+id/tempButton3"
+        <TextView
+            android:id="@+id/blank"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Currently Skating Fragment"
-            android:onClick="onCurSkatingButtonPressed"/>
+            android:text="\n\n" />
+
+        <TextView
+            android:id="@+id/event1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Other Event - From (date) To (date) \n"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+        <TextView
+            android:id="@+id/event2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Other Event - From (date) To (date) \n"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+        <TextView
+            android:id="@+id/event3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Other Event - From (date) To (date) \n"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+        <TextView
+            android:id="@+id/event4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Other Event - From (date) To (date) \n"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
     </LinearLayout>
 
 </FrameLayout>
