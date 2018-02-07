@@ -7,17 +7,18 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link SkatersFragment.OnFragmentInteractionListener} interface
+ * {@link SkatersFragment . OnFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link SkatersFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SkatersFragment extends Fragment {
+public class SkatersFragment extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -62,7 +63,15 @@ public class SkatersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_skaters, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_skaters, container, false);
+        TextView text = (TextView) rootView.findViewById(R.id.skaterName1);
+        text.setOnClickListener(this);
+        return rootView;
+    }
+
+    @Override
+    public void onClick(View view) {
+        getFragmentManager().beginTransaction().replace(R.id.skaterPage, new SkaterBioFragment() ).addToBackStack("").commit();
     }
 
     /*// TODO: Rename method, update argument and hook method into UI event

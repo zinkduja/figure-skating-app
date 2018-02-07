@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 /**
@@ -14,7 +15,7 @@ import android.view.ViewGroup;
  * Use the {@link WomenResultsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class WomenResultsFragment extends Fragment {
+public class WomenResultsFragment extends Fragment implements View.OnClickListener {
 
     public WomenResultsFragment() {
         // Required empty public constructor
@@ -39,7 +40,18 @@ public class WomenResultsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        if (container != null) {
+            container.removeAllViews();
+        }
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_women_results, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_women_results, container, false);
+        TextView text = (TextView) rootView.findViewById(R.id.wTableCell2);
+        text.setOnClickListener(this);
+        return rootView;
+    }
+
+    @Override
+    public void onClick(View view) {
+        getFragmentManager().beginTransaction().replace(R.id.mainframe, new SkaterBioFragment() ).addToBackStack("").commit();
     }
 }
