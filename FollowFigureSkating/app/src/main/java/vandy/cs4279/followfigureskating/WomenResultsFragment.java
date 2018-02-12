@@ -15,7 +15,7 @@ import android.widget.TextView;
  * Use the {@link WomenResultsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class WomenResultsFragment extends Fragment implements View.OnClickListener {
+public class WomenResultsFragment extends Fragment {
 
     public WomenResultsFragment() {
         // Required empty public constructor
@@ -45,13 +45,6 @@ public class WomenResultsFragment extends Fragment implements View.OnClickListen
         }
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_women_results, container, false);
-        TextView text = (TextView) rootView.findViewById(R.id.wTableCell2);
-        text.setOnClickListener(this);
         return rootView;
-    }
-
-    @Override
-    public void onClick(View view) {
-        getFragmentManager().beginTransaction().replace(R.id.mainframe, new SkaterBioFragment() ).addToBackStack("").commit();
     }
 }

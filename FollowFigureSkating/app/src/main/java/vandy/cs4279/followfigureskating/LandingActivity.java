@@ -59,49 +59,10 @@ public class LandingActivity extends AppCompatActivity {
     public void onEventButtonPressed(View view) {
         EventSummaryFragment esFrag = EventSummaryFragment.newInstance();
         getSupportFragmentManager().beginTransaction()
-                .add(esFrag, "skaterBio")
+                .add(esFrag, "eventSummary")
                 // Add this transaction to the back stack
                 .addToBackStack("")
                 .replace(R.id.frame_layout, esFrag)
-                .commit();
-    }
-
-    /**
-     * This method opens the skater bio frag when the button is pressed.
-     */
-    public void onSkaterButtonPressed(View view) {
-        SkaterBioFragment sbFrag = SkaterBioFragment.newInstance();
-        getSupportFragmentManager().beginTransaction()
-                .add(sbFrag, "skaterBio")
-                // Add this transaction to the back stack
-                .addToBackStack(null)
-                .replace(R.id.frame_layout, sbFrag)
-                .commit();
-    }
-
-    /**
-     * This method opens the event results frag when the button is pressed.
-     */
-    public void onEventResultsButtonPressed(View view) {
-        EventResultsFragment erFrag = EventResultsFragment.newInstance();
-        getSupportFragmentManager().beginTransaction()
-                .add(erFrag, "skaterBio")
-                // Add this transaction to the back stack
-                .addToBackStack(null)
-                .replace(R.id.frame_layout, erFrag)
-                .commit();
-    }
-
-    /**
-     * This method opens the currently skating frag when the button is pressed.
-     */
-    public void onCurSkatingButtonPressed(View view) {
-        CurrentlySkatingFragment csFrag = CurrentlySkatingFragment.newInstance();
-        getSupportFragmentManager().beginTransaction()
-                .add(CurrentlySkatingFragment.newInstance(), "skaterBio")
-                // Add this transaction to the back stack
-                .addToBackStack(null)
-                .replace(R.id.frame_layout, csFrag)
                 .commit();
     }
 }

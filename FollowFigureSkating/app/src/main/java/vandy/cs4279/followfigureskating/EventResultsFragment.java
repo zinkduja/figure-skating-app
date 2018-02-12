@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTabHost;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 /**
@@ -15,7 +16,7 @@ import android.view.ViewGroup;
  * Use the {@link EventResultsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class EventResultsFragment extends Fragment {
+public class EventResultsFragment extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     private FragmentTabHost mTabHost;
 
@@ -61,7 +62,23 @@ public class EventResultsFragment extends Fragment {
         mTabHost.addTab(mTabHost.newTabSpec("men").setIndicator("Men"),
                 MenResultsFragment.class, null);
 
+        View womenView = inflater.inflate(R.layout.fragment_women_results, container, false);
+        TextView text = (TextView) womenView.findViewById(R.id.wTableCell2);
+        text.setOnClickListener(this);
+
         return mTabHost;
+    }
+
+    @Override
+    public void onClick(View view) {
+        //getFragmentManager().beginTransaction().replace(R.id.mainframe, new SkaterBioFragment() ).addToBackStack("").commit();
+        SkaterBioFragment sbFrag = SkaterBioFragment.newInstance();
+        getFragmentManager().beginTransaction()
+                .add(sbFrag, "skaterBio")
+                // Add this transaction to the back stack
+                .addToBackStack("")
+                .replace(R.id.frame_layout, sbFrag)
+                .commit();
     }
 
     /*// TODO: Rename method, update argument and hook method into UI event

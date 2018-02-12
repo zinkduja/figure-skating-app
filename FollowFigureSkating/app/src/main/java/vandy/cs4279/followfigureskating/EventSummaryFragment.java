@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 /**
@@ -17,7 +18,7 @@ import android.view.ViewGroup;
  * Use the {@link EventSummaryFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class EventSummaryFragment extends Fragment {
+public class EventSummaryFragment extends Fragment implements View.OnClickListener  {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -54,7 +55,22 @@ public class EventSummaryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_event_summary, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_event_summary, container, false);
+        TextView text = (TextView) rootView.findViewById(R.id.cell2);
+        text.setOnClickListener(this);
+        return rootView;
+    }
+
+    @Override
+    public void onClick(View view) {
+        //getFragmentManager().beginTransaction().replace(R.id.mainframe, new SkaterBioFragment() ).addToBackStack("").commit();
+        EventResultsFragment erFrag = EventResultsFragment.newInstance();
+        getFragmentManager().beginTransaction()
+                .add(erFrag, "eventResults")
+                // Add this transaction to the back stack
+                .addToBackStack("")
+                .replace(R.id.frame_layout, erFrag)
+                .commit();
     }
 
     /*// TODO: Rename method, update argument and hook method into UI event
