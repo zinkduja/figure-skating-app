@@ -1,6 +1,7 @@
 package vandy.cs4279.followfigureskating;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,26 +9,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 
 /**
  * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link UserSettingsFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
  * Use the {@link UserSettingsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class UserSettingsFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+public class UserSettingsFragment extends Fragment implements View.OnClickListener {
 
     //private OnFragmentInteractionListener mListener;
+    private FirebaseAuth mAuth;
 
     public UserSettingsFragment() {
         // Required empty public constructor
@@ -48,17 +41,35 @@ public class UserSettingsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
+        //initialize auth
+        mAuth = FirebaseAuth.getInstance();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user_settings, container, false);
+        View view = inflater.inflate(R.layout.fragment_user_settings, container, false);
+
+        //set onClickListener
+        view.findViewById(R.id.logout_link).setOnClickListener(this);
+
+        return view;
+    }
+
+    private void signOut() {
+        mAuth.signOut();
+
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
+
+    public void onClick(View view) {
+        if(view.getId() == R.id.logout_link) {
+            signOut();
+        }
     }
 
     /*// TODO: Rename method, update argument and hook method into UI event
