@@ -43,6 +43,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mAuth = FirebaseAuth.getInstance();
     }
 
+    /**
+     * Attempts to create a new user account.
+     * @param email - the email the user registers with
+     * @param password - the password the user registers with
+     */
     private void createAccount(String email, String password) {
         Log.d(TAG, "createAccount:" + email);
         if(!validateForm() || !checkPassword()) {
@@ -72,6 +77,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 });
     }
 
+    /**
+     * Makes sure the password meets all requirements.
+     * @return - true if password meets requirements, false otherwise
+     */
     private boolean checkPassword() {
         //TODO - add more password requirements?
         if(mPasswordField.length() < 6) {
@@ -82,6 +91,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         return true;
     }
 
+    /**
+     * Attempts to sign a user in with the given email and password.
+     * @param email - email the user has entered
+     * @param password - password the user has entered
+     */
     private void signIn(String email, String password) {
         Log.d(TAG, "signIn:" + email);
         if(!validateForm()) {
@@ -112,6 +126,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     //TODO - do we want this?
+
+    /**
+     * Sends an email verifaction email to the user to ensure
+     * that the user gave a valid email that they have
+     * access to.
+     */
     private void sendEmailVerification() {
         /*
         // Disable button
@@ -145,6 +165,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
          */
     }
 
+    /**
+     * Makes sure that the email and password field have both
+     * been filled out in the form.
+     * @return - true if both fields are filled out, false otherwise
+     */
     private boolean validateForm() {
         boolean valid = true;
 
@@ -167,6 +192,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         return valid;
     }
 
+    /**
+     * If the login or registration was successful, start
+     * the LandingActivity to allow the user to access
+     * the rest of the app.
+     */
     private void onSuccessfulLoginOrRegister() {
         Intent intent = new Intent(this, LandingActivity.class);
         startActivity(intent);

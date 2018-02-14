@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
     }
 
-    //TODO - move this to main activity?
     @Override
     public void onStart() {
         super.onStart();
@@ -33,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Starts the LoginActivity.
+     * @param view - the current View
+     */
     public void launchLoginActivity(View view) {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);

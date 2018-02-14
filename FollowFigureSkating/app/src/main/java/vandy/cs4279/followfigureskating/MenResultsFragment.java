@@ -1,7 +1,5 @@
 package vandy.cs4279.followfigureskating;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -26,7 +24,6 @@ public class MenResultsFragment extends Fragment {
      *
      * @return A new instance of fragment MenResultsFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static MenResultsFragment newInstance() {
         return new MenResultsFragment();
     }

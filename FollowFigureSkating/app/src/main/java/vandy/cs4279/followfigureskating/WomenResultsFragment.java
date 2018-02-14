@@ -1,13 +1,10 @@
 package vandy.cs4279.followfigureskating;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 
 /**
@@ -27,7 +24,6 @@ public class WomenResultsFragment extends Fragment {
      *
      * @return A new instance of fragment WomenResultsFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static WomenResultsFragment newInstance() {
         return new WomenResultsFragment();
     }
@@ -40,11 +36,7 @@ public class WomenResultsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if (container != null) {
-            container.removeAllViews();
-        }
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_women_results, container, false);
-        return rootView;
+        return inflater.inflate(R.layout.fragment_women_results, container, false);
     }
 }
