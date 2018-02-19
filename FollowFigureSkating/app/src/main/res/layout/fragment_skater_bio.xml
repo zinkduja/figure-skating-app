@@ -25,61 +25,177 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/skaterName"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Name: Ashley Wagner"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp" />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/skaterNameHolder"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Name: "
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/skaterName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Unknown"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/dobHolder"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Date of Birth: "
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/dob"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Unknown"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/hometownHolder"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hometown: "
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/hometown"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Unknown"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/heightHolder"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Height: "
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/height"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Unknown"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+                </LinearLayout>
 
                 <TextView
-                    android:id="@+id/dob"
+                    android:id="@+id/blank1"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Date of Birth: May 16, 1991"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp" />
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/coachHolder"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Coach: "
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/coach"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Unknown"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/choreographerHolder"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Choreographer: "
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/choreographer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Unknown"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/formerCoachesHolder"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Former Coach(es): "
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/formerCoaches"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Unknown"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+                </LinearLayout>
 
                 <TextView
-                    android:id="@+id/hometown"
+                    android:id="@+id/blank2"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Hometown: Los Angeles"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/height"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Height: 5' 3&quot;\n"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/coach"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Coach: Rafael Arutunian"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/choreographer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Choreographer: Shae-Lynn Bourne"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/formerCoaches"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Former Coach: John Nicks, Nadia Kanaeva, Priscilla Hill, Shirley Hughes\n"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp" />
+                    android:layout_height="wrap_content" />
 
                 <View
                     android:id="@+id/line1"
@@ -247,12 +363,12 @@
                 </TableLayout>
 
                 <TextView
-                    android:id="@+id/blank"
+                    android:id="@+id/blank3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
                 <View
-                    android:id="@+id/line2"
+                    android:id="@+id/line3"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@android:color/black" />
