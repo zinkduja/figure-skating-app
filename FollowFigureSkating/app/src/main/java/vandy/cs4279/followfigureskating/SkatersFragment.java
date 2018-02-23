@@ -4,12 +4,14 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -22,9 +24,13 @@ import vandy.cs4279.followfigureskating.dbClasses.Skater;
  * Use the {@link SkatersFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SkatersFragment extends Fragment implements View.OnClickListener {
+public class SkatersFragment extends Fragment implements View.OnClickListener, SearchView.OnQueryTextListener{
 
-    private ArrayList<String> mSkaterList;
+    private LinearLayout mVertLL;
+
+    private ArrayList<String> mSkaterNameList;
+    private ArrayList<LinearLayout> mSkaterViewList;
+    private ArrayList<LinearLayout> mCurSkaterViewList;
 
     public SkatersFragment() {
         // Required empty public constructor
@@ -48,53 +54,134 @@ public class SkatersFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment and set onClickListener
+        // Inflate the layout for this fragment and instantiate the ArrayLists
         View rootView = inflater.inflate(R.layout.fragment_skaters, container, false);
-        LinearLayout vertLL = rootView.findViewById(R.id.verticalLL);
+        mVertLL = rootView.findViewById(R.id.verticalLL);
+        mSkaterViewList = new ArrayList<>();
+        mCurSkaterViewList = new ArrayList<>();
 
-        //get skaters and populate page TODO
+        // get skaters and populate page
         getSkatersFromWeb();
-        for(String skater : mSkaterList){
-            LinearLayout layout = new LinearLayout(vertLL.getContext());
+        mSkaterNameList.forEach(skater -> {
+            LinearLayout layout = new LinearLayout(mVertLL.getContext());
             layout.setOrientation(LinearLayout.HORIZONTAL);
             layout.setPadding(0, 0, 0, 30);
 
-            //add image formatting
-            ImageView pic = new ImageView(layout.getContext());
-            pic.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
-            pic.setForegroundGravity(Gravity.LEFT);
-            pic.setBaselineAlignBottom(false);
-            pic.setImageResource(R.mipmap.ic_launcher); //TODO
+            // add image formatting
+            ImageView pic = createSkaterPic(layout);
             layout.addView(pic);
 
-            //add text formatting
-            TextView name = new TextView(layout.getContext());
-            name.setLayoutParams(new LinearLayout.LayoutParams(533, LinearLayout.LayoutParams.MATCH_PARENT, 1));
-            name.setGravity(Gravity.CENTER);
-            name.setPadding(27, 27, 27, 27);
-            name.setText(skater);
-            name.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-            name.setTextAppearance(R.style.baseFont);
+            // add text formatting
+            TextView name = createSkaterText(layout, skater);
             layout.addView(name);
 
-            //set listeners and add to main layout
+            // set listeners and add to main layout
             name.setOnClickListener(this);
-            vertLL.addView(layout);
-        }
+            mVertLL.addView(layout);
+            mSkaterViewList.add(layout);
+        });
 
-        //TextView text = (TextView) rootView.findViewById(R.id.skaterName1);
-        //text.setOnClickListener(this);
+        // set listener for SearchView
+        ((SearchView)(rootView.findViewById(R.id.skaterSearchView))).setOnQueryTextListener(this);
+
         return rootView;
     }
 
-    public void getSkatersFromWeb(){
-        //TODO - get all the skaters from the web and put them in mSkaterList
-        mSkaterList = new ArrayList<>();
+    /**
+     * Factory method to create and format an ImageView for each skater.
+     * @param layout - the enclosing LinearLayout
+     * @return - the ImageView generated
+     */
+    public ImageView createSkaterPic(LinearLayout layout) {
+        ImageView temp = new ImageView(layout.getContext());
 
-        mSkaterList.add("Boyang Jin");
-        mSkaterList.add("Patrick Chan");
-        mSkaterList.add("Yuzuru Hanyu");
-        mSkaterList.add("Nathan Chen");
+        temp.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+        temp.setForegroundGravity(Gravity.LEFT);
+        temp.setBaselineAlignBottom(false);
+        temp.setImageResource(R.mipmap.ic_launcher); //TODO
+
+        return temp;
+    }
+
+    /**
+     * Factory method to create and format a TextView for each skater.
+     * @param layout - the enclosing LinearLayout
+     * @param skaterName - name of the skater
+     * @return - the TextView generated
+     */
+    public TextView createSkaterText(LinearLayout layout, String skaterName) {
+        TextView temp = new TextView(layout.getContext());
+
+        temp.setLayoutParams(new LinearLayout.LayoutParams(533, LinearLayout.LayoutParams.MATCH_PARENT, 1));
+        temp.setGravity(Gravity.CENTER);
+        temp.setPadding(27, 27, 27, 27);
+        temp.setText(skaterName);
+        temp.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        temp.setTextAppearance(R.style.baseFont);
+
+        return temp;
+    }
+
+    /**
+     * Pulls all skater names from the internet and populates mSkaterNameList.
+     */
+    public void getSkatersFromWeb() {
+        //TODO - get all the skaters from the web and put them in mSkaterNameList
+        mSkaterNameList = new ArrayList<>();
+
+        mSkaterNameList.add("Boyang Jin");
+        mSkaterNameList.add("Patrick Chan");
+        mSkaterNameList.add("Yuzuru Hanyu");
+        mSkaterNameList.add("Nathan Chen");
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        /*// clear the current views from mCurSkaterViewList
+        mCurSkaterViewList.clear();
+
+        // filter the views by newText
+        mSkaterViewList.forEach(skaterLayout -> {
+            String skaterName = ((TextView) (skaterLayout.getChildAt(1))).getText().toString();
+            if (skaterName.contains(query)) {
+                mCurSkaterViewList.add(skaterLayout);
+            }
+        });
+
+        // remove all skaters from the page
+        mVertLL.removeAllViewsInLayout();
+
+        // add the filtered views to the page
+        mCurSkaterViewList.forEach(skaterLayout -> {
+            mVertLL.addView(skaterLayout);
+        });*/
+
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        Log.d("SkatersFrag", "reached here");
+        // clear the current views from mCurSkaterViewList
+        mCurSkaterViewList.clear();
+
+        // filter the views by newText
+        mSkaterViewList.forEach(skaterLayout -> {
+            String skaterName = ((TextView) (skaterLayout.getChildAt(1))).getText().toString();
+            if (skaterName.contains(newText)) {
+                mCurSkaterViewList.add(skaterLayout);
+            }
+        });
+
+        // remove all skaters from the page
+        mVertLL.removeAllViewsInLayout();
+
+        // add the filtered views to the page
+        mCurSkaterViewList.forEach(skaterLayout -> {
+            mVertLL.addView(skaterLayout);
+        });
+
+        return false;
     }
 
     @Override
