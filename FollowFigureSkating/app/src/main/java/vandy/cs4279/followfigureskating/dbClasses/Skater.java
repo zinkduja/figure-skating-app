@@ -22,4 +22,32 @@ public class Skater {
         mFormerCoaches = formerCoaches;
     }
 
+    public String getmName() {
+        return mName;
+    }
+
+    public String getmDob() {
+        return mDob;
+    }
+
+    public String getmHometown() {
+        return mHometown;
+    }
+
+    public String getmHeight() {
+        return mHeight;
+    }
+
+    public String getmCoach() {
+        return mCoach;
+    }
+
+    public String getmChoreographer() {
+        return mChoreographer;
+    }
+
+    public String getmFormerCoaches() {
+        return mFormerCoaches;
+    }
+
 }
