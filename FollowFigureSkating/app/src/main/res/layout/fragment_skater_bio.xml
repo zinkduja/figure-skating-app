@@ -26,20 +26,44 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/skaterNameHolder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Name: "
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/skaterName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Unknown"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/skaterNameHolder"
+                        android:id="@+id/skaterNationHolder"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Name: "
+                        android:text="Nation: "
                         android:textColor="@android:color/black"
                         android:textSize="18sp" />
 
                     <TextView
-                        android:id="@+id/skaterName"
+                        android:id="@+id/skaterNation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -132,7 +156,7 @@
                         android:id="@+id/coachHolder"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Coach: "
+                        android:text="Coach(es): "
                         android:textColor="@android:color/black"
                         android:textSize="18sp" />
 

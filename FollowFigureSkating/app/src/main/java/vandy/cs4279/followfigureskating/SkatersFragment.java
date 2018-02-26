@@ -137,25 +137,6 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        /*// clear the current views from mCurSkaterViewList
-        mCurSkaterViewList.clear();
-
-        // filter the views by newText
-        mSkaterViewList.forEach(skaterLayout -> {
-            String skaterName = ((TextView) (skaterLayout.getChildAt(1))).getText().toString();
-            if (skaterName.contains(query)) {
-                mCurSkaterViewList.add(skaterLayout);
-            }
-        });
-
-        // remove all skaters from the page
-        mVertLL.removeAllViewsInLayout();
-
-        // add the filtered views to the page
-        mCurSkaterViewList.forEach(skaterLayout -> {
-            mVertLL.addView(skaterLayout);
-        });*/
-
         return false;
     }
 

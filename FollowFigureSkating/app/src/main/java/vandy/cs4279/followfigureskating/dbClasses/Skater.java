@@ -8,18 +8,20 @@ public class Skater {
     private String mCoach;
     private String mChoreographer;
     private String mFormerCoaches;
+    private String mNation;
 
     public Skater(){}
 
-    public Skater(String name, String dob, String hometown, String height, String coach,
-            String choreographer, String formerCoaches) {
+    public Skater(String name, String dob, String height, String hometown, String coach,
+            String choreographer, String formerCoaches, String nation) {
         mName = name;
         mDob = dob;
-        mHometown = hometown;
         mHeight = height;
+        mHometown = hometown;
         mCoach = coach;
         mChoreographer = choreographer;
         mFormerCoaches = formerCoaches;
+        mNation = nation;
     }
 
     public String getmName() {
@@ -49,5 +51,7 @@ public class Skater {
     public String getmFormerCoaches() {
         return mFormerCoaches;
     }
+
+    public String getmNation() { return mNation; }
 
 }
