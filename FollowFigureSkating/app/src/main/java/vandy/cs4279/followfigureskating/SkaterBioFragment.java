@@ -111,7 +111,7 @@ public class SkaterBioFragment extends Fragment {
 
         //if needed, update the database:
         //Skater skater = new Skater(mSkaterName, ...);
-        //mDatabase.child("skaters").child(mSkaterName).setValue(skater);
+        //mDatabase.child("skaters").child(skaterIsuID).setValue(skater);
 
         (new ParsePageAsyncTask()).execute(new String[]{"http://www.isuresults.com/bios/isufs00013802.htm"});
         //populate the page with the info
