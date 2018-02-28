@@ -14,6 +14,12 @@ import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 
 import vandy.cs4279.followfigureskating.dbClasses.Skater;
@@ -26,11 +32,14 @@ import vandy.cs4279.followfigureskating.dbClasses.Skater;
  */
 public class SkatersFragment extends Fragment implements View.OnClickListener, SearchView.OnQueryTextListener{
 
+    private final String TAG = "Skaters Fragment";
     private LinearLayout mVertLL;
 
     private ArrayList<String> mSkaterNameList;
     private ArrayList<LinearLayout> mSkaterViewList;
     private ArrayList<LinearLayout> mCurSkaterViewList;
+
+    private DatabaseReference mDatabase;
 
     public SkatersFragment() {
         // Required empty public constructor
@@ -49,6 +58,7 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
     @Override
@@ -61,31 +71,14 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
         mCurSkaterViewList = new ArrayList<>();
 
         // get skaters and populate page
-        getSkatersFromWeb();
-        mSkaterNameList.forEach(skater -> {
-            LinearLayout layout = new LinearLayout(mVertLL.getContext());
-            layout.setOrientation(LinearLayout.HORIZONTAL);
-            layout.setPadding(0, 0, 0, 30);
-
-            // add image formatting
-            ImageView pic = createSkaterPic(layout);
-            layout.addView(pic);
-
-            // add text formatting
-            TextView name = createSkaterText(layout, skater);
-            layout.addView(name);
-
-            // set listeners and add to main layout
-            name.setOnClickListener(this);
-            mVertLL.addView(layout);
-            mSkaterViewList.add(layout);
-        });
+        getSkatersFromDB(this);
 
         // set listener for SearchView
         ((SearchView)(rootView.findViewById(R.id.skaterSearchView))).setOnQueryTextListener(this);
 
         return rootView;
     }
+
 
     /**
      * Factory method to create and format an ImageView for each skater.
@@ -123,16 +116,48 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
     }
 
     /**
-     * Pulls all skater names from the internet and populates mSkaterNameList.
+     * Fetches all skater names from the database and populates mSkaterNameList.
      */
-    public void getSkatersFromWeb() {
+    public void getSkatersFromDB(SkatersFragment sFrag) {
         //TODO - get all the skaters from the web and put them in mSkaterNameList
-        mSkaterNameList = new ArrayList<>();
 
-        mSkaterNameList.add("Boyang Jin");
-        mSkaterNameList.add("Patrick Chan");
-        mSkaterNameList.add("Yuzuru Hanyu");
-        mSkaterNameList.add("Nathan Chen");
+        mDatabase.child("skaters").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                mSkaterNameList = new ArrayList<>();
+                dataSnapshot.getChildren().forEach(dsp -> {
+                    mSkaterNameList.add(String.valueOf(dsp.getValue()));
+                });
+
+                Log.w(TAG, "Successful fetch of skaters from database");
+
+                mSkaterNameList.forEach(skater -> {
+                    if(skater.startsWith("A")) {
+                        LinearLayout layout = new LinearLayout(mVertLL.getContext());
+                        layout.setOrientation(LinearLayout.HORIZONTAL);
+                        layout.setPadding(0, 0, 0, 30);
+
+                        // add image formatting
+                        ImageView pic = createSkaterPic(layout);
+                        layout.addView(pic);
+
+                        // add text formatting
+                        TextView name = createSkaterText(layout, skater);
+                        layout.addView(name);
+
+                        // set listeners and add to main layout
+                        name.setOnClickListener(sFrag);
+                        mVertLL.addView(layout);
+                        mSkaterViewList.add(layout);
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG, "Database error: " + databaseError.getMessage());
+            }
+        });
     }
 
     @Override
@@ -142,7 +167,6 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        Log.d("SkatersFrag", "reached here");
         // clear the current views from mCurSkaterViewList
         mCurSkaterViewList.clear();
 
@@ -176,8 +200,8 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
         //start the fragment
         getFragmentManager()
                 .beginTransaction()
-                .replace(R.id.skaterPage, sbFrag)
                 .addToBackStack("")
+                .replace(R.id.skaterPage, sbFrag)
                 .commit();
     }
 }

@@ -1,5 +1,6 @@
 package vandy.cs4279.followfigureskating;
 
+import android.app.FragmentManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -7,6 +8,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -22,6 +24,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LandingActivity extends AppCompatActivity {
+
+    private final static String TAG = "Landing Activity";
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -44,9 +48,14 @@ public class LandingActivity extends AppCompatActivity {
                     break;
             }
 
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            getSupportFragmentManager().beginTransaction()
+                    .addToBackStack("")
+                    .replace(R.id.frame_layout, selectedFrag)
+                    .commit();
+
+            /*FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.frame_layout, selectedFrag);
-            transaction.commit();
+            transaction.commit();*/
             return true;
         }
     };
@@ -55,7 +64,11 @@ public class LandingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing);
-        (new SkaterListAsyncTask()).execute(new String[]{"http://www.isuresults.com/bios/fsbiosladies.htm"});
+
+        // update the skaters from the ISU website
+        (new SkaterListAsyncTask()).execute("http://www.isuresults.com/bios/fsbiosladies.htm");
+        (new SkaterListAsyncTask()).execute("http://www.isuresults.com/bios/fsbiosmen.htm");
+        //TODO - add pairs and ice dance
 
         // set up bottom navigation
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
@@ -67,6 +80,10 @@ public class LandingActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Handles when the user clicks on the Event Button.
+     * @param view - current View
+     */
     public void onEventButtonPressed(View view) {
         EventSummaryFragment esFrag = EventSummaryFragment.newInstance();
         getSupportFragmentManager().beginTransaction()
@@ -98,17 +115,15 @@ public class LandingActivity extends AppCompatActivity {
                     String skaterID = link.attr("href");
                     skaterID = skaterID.replaceAll("[^0-9]", "");
                     String name = link.text();
-                   // System.out.println(href + " " + name);
 
-                    // if db is null or skater is not in database, add skater to hashmap
-                    if(mDatabase.child("skaters") == null || mDatabase.child("skaters").child(skaterID) == null) {
-                        skaterMap.put(skaterID, name);
-                        System.out.println("HERE");
-                    }
+                    // add pair to map
+                    skaterMap.put(skaterID, name);
                 });
 
                 // update the database
                 mDatabase.child("skaters").updateChildren(skaterMap);
+
+                Log.w(TAG, "database successfully updated");
 
             } catch (Throwable t) {
                 t.printStackTrace();

@@ -136,6 +136,7 @@ public class SkaterBioFragment extends Fragment {
             } catch (Throwable t) {
                 t.printStackTrace();
             }
+
             return newSkater;
         }
 
