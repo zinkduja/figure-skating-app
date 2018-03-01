@@ -101,7 +101,7 @@ public class SkaterBioFragment extends Fragment {
         //TODO - populate page with info
         //get data from webpage here
 
-        (new ParsePageAsyncTask()).execute(new String[]{"http://www.isuresults.com/bios/isufs00013802.htm"});
+        (new ParsePageAsyncTask()).execute("http://www.isuresults.com/bios/isufs00013802.htm");
 
         //check if data is different from database
         //make sure to check if database contains null (first time running app)

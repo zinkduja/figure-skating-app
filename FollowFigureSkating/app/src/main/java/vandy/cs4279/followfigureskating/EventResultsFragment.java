@@ -62,7 +62,7 @@ public class EventResultsFragment extends Fragment implements View.OnClickListen
     public void onClick(View view) {
         SkaterBioFragment sbFrag = SkaterBioFragment.newInstance();
         getFragmentManager().beginTransaction()
-                .add(sbFrag, "skaterBio")
+                .add(sbFrag, "SKATER_BIO_FRAG")
                 // Add this transaction to the back stack
                 .addToBackStack("")
                 .replace(R.id.frame_layout, sbFrag)

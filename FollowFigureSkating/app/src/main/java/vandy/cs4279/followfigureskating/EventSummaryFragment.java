@@ -48,7 +48,7 @@ public class EventSummaryFragment extends Fragment implements View.OnClickListen
     public void onClick(View view) {
         EventResultsFragment erFrag = EventResultsFragment.newInstance();
         getFragmentManager().beginTransaction()
-                .add(erFrag, "eventResults")
+                .add(erFrag, "EVENT_RESULTS_FRAG")
                 // Add this transaction to the back stack
                 .addToBackStack("")
                 .replace(R.id.frame_layout, erFrag)

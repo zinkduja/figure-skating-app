@@ -183,6 +183,7 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
         //start the fragment
         getFragmentManager()
                 .beginTransaction()
+                .add(sbFrag, "SKATER_BIO_FRAG")
                 .addToBackStack("")
                 .replace(R.id.skaterPage, sbFrag)
                 .commit();
