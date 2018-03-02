@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -35,6 +36,8 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
 
     private final String TAG = "Skaters Fragment";
     private LinearLayout mVertLL;
+    private View mView;
+    private ProgressBar mLoadingBar;
 
     private ArrayList<String> mSkaterNameList;
     private ArrayList<LinearLayout> mSkaterViewList;
@@ -75,9 +78,13 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment and instantiate the ArrayLists
         View rootView = inflater.inflate(R.layout.fragment_skaters, container, false);
+        mView = rootView;
         mVertLL = rootView.findViewById(R.id.verticalLL);
         mSkaterViewList = new ArrayList<>();
         mCurSkaterViewList = new ArrayList<>();
+
+        // create and add loading bar
+        // mLoadingBar = new ProgressBar(main.getContext());
 
         // get skaters and populate page
         getSkatersFromDB();
@@ -128,7 +135,6 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
      * Fetches all skater names from the database and populates mSkaterNameList.
      */
     public void getSkatersFromDB() {
-
         mDatabase.child("skaters").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -209,6 +215,7 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
 
         @Override
         protected void onPostExecute(Void param) {
+            // fill the page in with the skaters
             mSkaterNameList.forEach(skater -> {
                 if(skater.startsWith("A")) {
                     LinearLayout layout = new LinearLayout(mVertLL.getContext());
@@ -229,6 +236,10 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
                     mSkaterViewList.add(layout);
                 }
             });
+
+            // make sure loading bar
+            //((LinearLayout)(mView.findViewById(R.id.mainLayout))).
+            mView.findViewById(R.id.loadingBar).setVisibility(View.GONE);
         }
     }
 }
