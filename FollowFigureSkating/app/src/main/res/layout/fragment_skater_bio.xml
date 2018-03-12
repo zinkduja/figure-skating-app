@@ -253,7 +253,7 @@
                             android:textColor="@android:color/black" />
 
                         <TextView
-                            android:id="@+id/cell2"
+                            android:id="@+id/shortprogram"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="Hip Hip Chin Chin performed by Club des Belugas"
@@ -273,7 +273,7 @@
                             android:textColor="@android:color/black" />
 
                         <TextView
-                            android:id="@+id/cell4"
+                            android:id="@+id/freeprogram"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="Diamonds (from 'Moulin Rouge' soundtrack), One Day I'll Fly Away (from 'Moulin Rouge' soundtrack), The Show Must Go On (from 'Moulin Rouge' soundtrack)"
@@ -315,7 +315,7 @@
                             android:textColor="@android:color/black" />
 
                         <TextView
-                            android:id="@+id/tableCell2"
+                            android:id="@+id/bestTop"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="215.39"
@@ -323,7 +323,7 @@
                             android:textColor="@android:color/black" />
 
                         <TextView
-                            android:id="@+id/tableCell3"
+                            android:id="@+id/bestTopComp"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="ISU World Championships 2016"
@@ -342,7 +342,7 @@
                             android:textColor="@android:color/black" />
 
                         <TextView
-                            android:id="@+id/tableCell5"
+                            android:id="@+id/bestShort"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="73.16"
@@ -350,7 +350,7 @@
                             android:textColor="@android:color/black" />
 
                         <TextView
-                            android:id="@+id/tableCell6"
+                            android:id="@+id/bestShortComp"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="ISU World Championships 2016"

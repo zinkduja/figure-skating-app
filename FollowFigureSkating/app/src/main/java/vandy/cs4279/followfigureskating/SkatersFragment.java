@@ -132,7 +132,7 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
                 Log.w(TAG, "Successful fetch of skaters from database");
 
                 mSkaterNameList.forEach(skater -> {
-                    if(skater.startsWith("A")) {
+                    //if(skater.startsWith("A")) {
                         LinearLayout layout = new LinearLayout(mVertLL.getContext());
                         layout.setOrientation(LinearLayout.HORIZONTAL);
                         layout.setPadding(0, 0, 0, 30);
@@ -149,7 +149,7 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
                         name.setOnClickListener(sFrag);
                         mVertLL.addView(layout);
                         mSkaterViewList.add(layout);
-                    }
+                    //}
                 });
             }
 
