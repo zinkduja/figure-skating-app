@@ -21,7 +21,9 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
 
 public class LandingActivity extends AppCompatActivity {
 
@@ -49,13 +51,9 @@ public class LandingActivity extends AppCompatActivity {
             }
 
             getSupportFragmentManager().beginTransaction()
-                    .addToBackStack("")
                     .replace(R.id.frame_layout, selectedFrag)
                     .commit();
 
-            /*FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.frame_layout, selectedFrag);
-            transaction.commit();*/
             return true;
         }
     };
@@ -74,9 +72,28 @@ public class LandingActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout, LandingFragment.newInstance());
-        transaction.commit();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frame_layout, LandingFragment.newInstance())
+                .commit();
+    }
+
+    @Override
+    public void onBackPressed () {
+        super.onBackPressed();
+
+        List list = getSupportFragmentManager().getFragments();
+        int len = list.size();
+
+        if (len >= 0) {
+            if (list.get(len-1) instanceof SkatersFragment) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.frame_layout, SkatersFragment.newInstance())
+                        .commit();
+            }
+
+        }
+
+
 
     }
 
@@ -87,7 +104,7 @@ public class LandingActivity extends AppCompatActivity {
     public void onEventButtonPressed(View view) {
         EventSummaryFragment esFrag = EventSummaryFragment.newInstance();
         getSupportFragmentManager().beginTransaction()
-                .add(esFrag, "eventSummary")
+                .add(esFrag, "EVENT_SUMMARY_FRAG")
                 // Add this transaction to the back stack
                 .addToBackStack("")
                 .replace(R.id.frame_layout, esFrag)

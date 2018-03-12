@@ -2,6 +2,7 @@ package vandy.cs4279.followfigureskating;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -34,6 +36,8 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
 
     private final String TAG = "Skaters Fragment";
     private LinearLayout mVertLL;
+    private View mView;
+    private ProgressBar mLoadingBar;
 
     private ArrayList<String> mSkaterNameList;
     private ArrayList<LinearLayout> mSkaterViewList;
@@ -43,6 +47,14 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
 
     public SkatersFragment() {
         // Required empty public constructor
+    }
+
+    /**
+     * Returns the fragment.
+     * @return - the fragment (this)
+     */
+    public SkatersFragment getFragment() {
+        return this;
     }
 
     /**
@@ -66,12 +78,16 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment and instantiate the ArrayLists
         View rootView = inflater.inflate(R.layout.fragment_skaters, container, false);
+        mView = rootView;
         mVertLL = rootView.findViewById(R.id.verticalLL);
         mSkaterViewList = new ArrayList<>();
         mCurSkaterViewList = new ArrayList<>();
 
+        // create and add loading bar
+        // mLoadingBar = new ProgressBar(main.getContext());
+
         // get skaters and populate page
-        getSkatersFromDB(this);
+        getSkatersFromDB();
 
         // set listener for SearchView
         ((SearchView)(rootView.findViewById(R.id.skaterSearchView))).setOnQueryTextListener(this);
@@ -118,39 +134,12 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
     /**
      * Fetches all skater names from the database and populates mSkaterNameList.
      */
-    public void getSkatersFromDB(SkatersFragment sFrag) {
-        //TODO - get all the skaters from the web and put them in mSkaterNameList
-
+    public void getSkatersFromDB() {
         mDatabase.child("skaters").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                mSkaterNameList = new ArrayList<>();
-                dataSnapshot.getChildren().forEach(dsp -> {
-                    mSkaterNameList.add(String.valueOf(dsp.getValue()));
-                });
-
-                Log.w(TAG, "Successful fetch of skaters from database");
-
-                mSkaterNameList.forEach(skater -> {
-                    //if(skater.startsWith("A")) {
-                        LinearLayout layout = new LinearLayout(mVertLL.getContext());
-                        layout.setOrientation(LinearLayout.HORIZONTAL);
-                        layout.setPadding(0, 0, 0, 30);
-
-                        // add image formatting
-                        ImageView pic = createSkaterPic(layout);
-                        layout.addView(pic);
-
-                        // add text formatting
-                        TextView name = createSkaterText(layout, skater);
-                        layout.addView(name);
-
-                        // set listeners and add to main layout
-                        name.setOnClickListener(sFrag);
-                        mVertLL.addView(layout);
-                        mSkaterViewList.add(layout);
-                    //}
-                });
+                // fetch the data
+                (new SkatersFragment.FetchSkatersAsyncTask()).execute(dataSnapshot);
             }
 
             @Override
@@ -173,7 +162,7 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
         // filter the views by newText
         mSkaterViewList.forEach(skaterLayout -> {
             String skaterName = ((TextView) (skaterLayout.getChildAt(1))).getText().toString();
-            if (skaterName.contains(newText)) {
+            if (skaterName.toLowerCase().contains(newText.toLowerCase())) {
                 mCurSkaterViewList.add(skaterLayout);
             }
         });
@@ -200,8 +189,57 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
         //start the fragment
         getFragmentManager()
                 .beginTransaction()
+                .add(sbFrag, "SKATER_BIO_FRAG")
                 .addToBackStack("")
                 .replace(R.id.skaterPage, sbFrag)
                 .commit();
+    }
+
+    private class FetchSkatersAsyncTask extends AsyncTask<DataSnapshot, Void, Void> {
+        @Override
+        protected Void doInBackground(DataSnapshot... dataSnapshots) {
+            try {
+                mSkaterNameList = new ArrayList<>();
+                dataSnapshots[0].getChildren().forEach(dsp -> {
+                    mSkaterNameList.add(String.valueOf(dsp.getValue()));
+                });
+
+                Log.w(TAG, "Successful fetch of skaters from database");
+
+            } catch (Throwable t) {
+                t.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void param) {
+            // fill the page in with the skaters
+            mSkaterNameList.forEach(skater -> {
+                //if(skater.startsWith("A")) {
+                    LinearLayout layout = new LinearLayout(mVertLL.getContext());
+                    layout.setOrientation(LinearLayout.HORIZONTAL);
+                    layout.setPadding(0, 0, 0, 30);
+
+                    // add image formatting
+                    ImageView pic = createSkaterPic(layout);
+                    layout.addView(pic);
+
+                    // add text formatting
+                    TextView name = createSkaterText(layout, skater);
+                    layout.addView(name);
+
+                    // set listeners and add to main layout
+                    name.setOnClickListener(getFragment());
+                    mVertLL.addView(layout);
+                    mSkaterViewList.add(layout);
+                //}
+            });
+
+            // make sure loading bar
+            //((LinearLayout)(mView.findViewById(R.id.mainLayout))).
+            mView.findViewById(R.id.loadingBar).setVisibility(View.GONE);
+        }
     }
 }

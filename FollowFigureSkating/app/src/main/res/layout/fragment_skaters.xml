@@ -7,6 +7,7 @@
     tools:context="vandy.cs4279.followfigureskating.SkatersFragment">
 
     <LinearLayout
+        android:id="@+id/mainLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -16,13 +17,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:iconifiedByDefault="false"
-            android:queryHint="Search" />
+            android:queryHint="Search">
+
+        </SearchView>
+
+        <ProgressBar
+            android:id="@+id/loadingBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="20px"
             android:fillViewport="true"
+            android:padding="20px"
             tools:layout_editor_absoluteX="10dp"
             tools:layout_editor_absoluteY="66dp">
 
