@@ -1,5 +1,6 @@
 package vandy.cs4279.followfigureskating;
 
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
@@ -15,6 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
 
@@ -41,6 +44,7 @@ public class SkaterBioFragment extends Fragment {
     private TextView mCoachView;
     private TextView mChoreographerView;
     private TextView mFormerCoachesView;
+    private ImageView mSkaterPhoto;
 
     public SkaterBioFragment() {
         // Required empty public constructor
@@ -72,7 +76,7 @@ public class SkaterBioFragment extends Fragment {
         }
         View rootView = inflater.inflate(R.layout.fragment_skater_bio, container, false);
 
-        //get all necessary TextViews
+        //get all necessary Views
         mSkaterNameView = (TextView) rootView.findViewById(R.id.skaterName);
         mSkaterNationView = (TextView) rootView.findViewById(R.id.skaterNation);
         mDobView = (TextView) rootView.findViewById(R.id.dob);
@@ -81,6 +85,8 @@ public class SkaterBioFragment extends Fragment {
         mCoachView = (TextView) rootView.findViewById(R.id.coach);
         mChoreographerView = (TextView) rootView.findViewById(R.id.choreographer);
         mFormerCoachesView = (TextView) rootView.findViewById(R.id.formerCoaches);
+
+        mSkaterPhoto = (ImageView) rootView.findViewById(R.id.skaterPhoto);
 
         //get the skater's name that was passed in
         mSkaterName = getArguments().getString("name");
@@ -112,13 +118,15 @@ public class SkaterBioFragment extends Fragment {
     }
 
     private class ParsePageAsyncTask extends AsyncTask<String, Void, Skater> {
+        Element image;
+
         @Override
         protected Skater doInBackground(String... strings) {
             //StringBuffer buffer = new StringBuffer();
             Skater newSkater = new Skater();
             try {
                 Document doc = Jsoup.connect(strings[0]).get();
-                // Get document (HTML page) title
+                // Get info from webpage
                 Element dob = doc.getElementById("FormView1_person_dobLabel");
                 Element heightNum = doc.getElementById("FormView1_person_heightLabel");
                 String height = heightNum.text();
@@ -132,6 +140,17 @@ public class SkaterBioFragment extends Fragment {
 
                 newSkater = new Skater(mSkaterName, dob.text(), height, hometown.text(),
                         coach.text(), choreo.text(), former.text(), nation.text());
+
+                /*//get the image of the skater from wikipedia
+                Document wikiDoc = Jsoup.connect().get();
+                Elements info = wikiDoc.getElementsByClass("infobox vcard");
+                for(Element e : info) {
+                    if(e.hasClass("image")) {
+                        Uri pic = Uri.parse(e.text());
+                        mSkaterPhoto.setImageURI(pic);
+                        break;
+                    }
+                }*/
 
             } catch (Throwable t) {
                 t.printStackTrace();
