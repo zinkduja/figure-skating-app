@@ -217,7 +217,7 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
         protected void onPostExecute(Void param) {
             // fill the page in with the skaters
             mSkaterNameList.forEach(skater -> {
-                if(skater.startsWith("A")) {
+                //if(skater.startsWith("A")) {
                     LinearLayout layout = new LinearLayout(mVertLL.getContext());
                     layout.setOrientation(LinearLayout.HORIZONTAL);
                     layout.setPadding(0, 0, 0, 30);
@@ -234,7 +234,7 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
                     name.setOnClickListener(getFragment());
                     mVertLL.addView(layout);
                     mSkaterViewList.add(layout);
-                }
+                //}
             });
 
             // make sure loading bar

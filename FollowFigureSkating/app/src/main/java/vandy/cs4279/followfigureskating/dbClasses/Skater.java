@@ -9,11 +9,18 @@ public class Skater {
     private String mChoreographer;
     private String mFormerCoaches;
     private String mNation;
+    private String mShortProgram;
+    private String mFreeProgram;
+    private String mBestTop;
+    private String mBestTopComp;
+    private String mBestShort;
+    private String mBestShortComp;
 
     public Skater(){}
 
     public Skater(String name, String dob, String height, String hometown, String coach,
-            String choreographer, String formerCoaches, String nation) {
+            String choreographer, String formerCoaches, String nation, String shortP, String freeP,
+                  String bestTop, String bestTopComp, String bestShort, String bestShortComp) {
         mName = name;
         mDob = dob;
         mHeight = height;
@@ -22,6 +29,13 @@ public class Skater {
         mChoreographer = choreographer;
         mFormerCoaches = formerCoaches;
         mNation = nation;
+        mShortProgram = shortP;
+        mFreeProgram = freeP;
+        mBestShort = bestShort;
+        mBestShortComp = bestShortComp;
+        mBestTop = bestTop;
+        mBestTopComp = bestTopComp;
+
     }
 
     public String getmName() {
@@ -53,5 +67,17 @@ public class Skater {
     }
 
     public String getmNation() { return mNation; }
+
+    public String getmShortProgram() { return mShortProgram; }
+
+    public String getmFreeProgram() { return mFreeProgram; }
+
+    public String getmBestTop() { return mBestTop; }
+
+    public String getmBestTopComp() { return mBestTopComp; }
+
+    public String getmBestShort() { return mBestShort; }
+
+    public String getmBestShortComp() { return mBestShortComp; }
 
 }

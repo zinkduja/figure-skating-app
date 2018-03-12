@@ -64,8 +64,8 @@ public class LandingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_landing);
 
         // update the skaters from the ISU website
-        (new SkaterListAsyncTask()).execute("http://www.isuresults.com/bios/fsbiosladies.htm");
-        (new SkaterListAsyncTask()).execute("http://www.isuresults.com/bios/fsbiosmen.htm");
+        (new SkaterListAsyncTask()).execute("http://www.isuresults.com/ws/ws/wsladies.htm");
+        (new SkaterListAsyncTask()).execute("http://www.isuresults.com/ws/ws/wsmen.htm");
         //TODO - add pairs and ice dance
 
         // set up bottom navigation
@@ -134,8 +134,11 @@ public class LandingActivity extends AppCompatActivity {
                     String name = link.text();
 
                     // add pair to map
-                    skaterMap.put(skaterID, name);
+                    if(!(skaterID.equals(""))) {
+                        skaterMap.put(skaterID, name);
+                    }
                 });
+
 
                 // update the database
                 mDatabase.child("skaters").updateChildren(skaterMap);

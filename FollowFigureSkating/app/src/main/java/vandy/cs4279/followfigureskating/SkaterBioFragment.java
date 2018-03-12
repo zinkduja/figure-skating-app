@@ -44,6 +44,13 @@ public class SkaterBioFragment extends Fragment {
     private TextView mCoachView;
     private TextView mChoreographerView;
     private TextView mFormerCoachesView;
+    private TextView mShortProgramView;
+    private TextView mFreeProgramView;
+    private TextView mBestShortView;
+    private TextView mBestShortCompView;
+    private TextView mBestTopView;
+    private TextView mBestTopCompView;
+
     private ImageView mSkaterPhoto;
 
     public SkaterBioFragment() {
@@ -85,6 +92,12 @@ public class SkaterBioFragment extends Fragment {
         mCoachView = (TextView) rootView.findViewById(R.id.coach);
         mChoreographerView = (TextView) rootView.findViewById(R.id.choreographer);
         mFormerCoachesView = (TextView) rootView.findViewById(R.id.formerCoaches);
+        mShortProgramView = (TextView) rootView.findViewById(R.id.shortprogram);
+        mFreeProgramView = (TextView) rootView.findViewById(R.id.freeprogram);
+        mBestShortView = (TextView) rootView.findViewById(R.id.bestShort);
+        mBestShortCompView = (TextView) rootView.findViewById(R.id.bestShortComp);
+        mBestTopView = (TextView) rootView.findViewById(R.id.bestTop);
+        mBestTopCompView = (TextView) rootView.findViewById(R.id.bestTopComp);
 
         mSkaterPhoto = (ImageView) rootView.findViewById(R.id.skaterPhoto);
 
@@ -107,7 +120,7 @@ public class SkaterBioFragment extends Fragment {
         //TODO - populate page with info
         //get data from webpage here
 
-        (new ParsePageAsyncTask()).execute("http://www.isuresults.com/bios/isufs00013802.htm");
+        (new ParsePageAsyncTask()).execute(new String[]{"http://www.isuresults.com/bios/isufs00000005.htm"});
 
         //check if data is different from database
         //make sure to check if database contains null (first time running app)
@@ -127,6 +140,7 @@ public class SkaterBioFragment extends Fragment {
             try {
                 Document doc = Jsoup.connect(strings[0]).get();
                 // Get info from webpage
+                System.out.println(doc);
                 Element dob = doc.getElementById("FormView1_person_dobLabel");
                 Element heightNum = doc.getElementById("FormView1_person_heightLabel");
                 String height = heightNum.text();
@@ -137,9 +151,18 @@ public class SkaterBioFragment extends Fragment {
                 Element choreo = doc.getElementById("FormView1_person_media_information_choreographerLabel");
                 Element former = doc.getElementById("FormView1_person_media_information_former_coachLabel");
                 Element nation = doc.getElementById("FormView1_person_nationLabel");
+                Element shortProgram = doc.getElementById("FormView1_Label3");
+                Element freeProgram = doc.getElementById("FormView1_Label4");
+                Element bestShortComp = doc.getElementById("FormView1_GridView3_ctl03_HyperLink1");
+                Element bestShort = doc.getElementById("FormView1_GridView3");
+                System.out.println(bestShort);
+                Element bestTopComp = doc.getElementById("FormView1_GridView3_ctl02_HyperLink1");
+                Element bestTop = doc.getElementById("FormView1_GridView3");
 
                 newSkater = new Skater(mSkaterName, dob.text(), height, hometown.text(),
-                        coach.text(), choreo.text(), former.text(), nation.text());
+                        coach.text(), choreo.text(), former.text(), nation.text(), shortProgram.text(),
+                        freeProgram.text(), bestTop.text(), bestTopComp.text(), bestShort.text(),
+                        bestShortComp.text());
 
                 /*//get the image of the skater from wikipedia
                 Document wikiDoc = Jsoup.connect().get();
@@ -169,6 +192,12 @@ public class SkaterBioFragment extends Fragment {
             mCoachView.setText(s.getmCoach());
             mChoreographerView.setText(s.getmChoreographer());
             mFormerCoachesView.setText(s.getmFormerCoaches());
+            mShortProgramView.setText(s.getmShortProgram());
+            mFreeProgramView.setText(s.getmFreeProgram());
+            //mBestTopView.setText(s.getmBestTop());
+            mBestTopCompView.setText(s.getmBestTopComp());
+            //mBestShortView.setText(s.getmBestShort());
+            mBestShortCompView.setText(s.getmBestShortComp());
         }
     }
 }
