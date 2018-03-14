@@ -1,33 +1,41 @@
 package vandy.cs4279.followfigureskating;
 
-import android.app.FragmentManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public class LandingActivity extends AppCompatActivity {
 
     private final static String TAG = "Landing Activity";
+
+    protected Map<String, Bitmap> mNationBmpMap;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -90,11 +98,7 @@ public class LandingActivity extends AppCompatActivity {
                         .replace(R.id.frame_layout, SkatersFragment.newInstance())
                         .commit();
             }
-
         }
-
-
-
     }
 
     /**
@@ -111,7 +115,46 @@ public class LandingActivity extends AppCompatActivity {
                 .commit();
     }
 
-    private static class SkaterListAsyncTask extends AsyncTask<String, Void, Void> {
+    private Bitmap loadImageFromURL(String fileUrl){
+        try {
+            URL myFileUrl = new URL (fileUrl);
+            HttpURLConnection conn =
+                    (HttpURLConnection) myFileUrl.openConnection();
+            conn.setDoInput(true);
+            conn.connect();
+
+            InputStream is = conn.getInputStream();
+            return BitmapFactory.decodeStream(is);
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private void getFlagsFromDB(DatabaseReference databaseReference) {
+        mNationBmpMap = new HashMap<>();
+
+        databaseReference.child("images").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                dataSnapshot.getChildren().forEach(child -> {
+                    Bitmap bmp = loadImageFromURL(child.getValue().toString());
+                    mNationBmpMap.put(child.getKey(), bmp);
+                });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG, "Database error: " + databaseError.getMessage());
+            }
+        });
+    }
+
+    private class SkaterListAsyncTask extends AsyncTask<String, Void, Void> {
 
         private DatabaseReference mDatabase;
 
@@ -119,31 +162,31 @@ public class LandingActivity extends AppCompatActivity {
         protected Void doInBackground(String... strings) {
 
             try {
-                // set up database and jsoup
+                // set up skaters child of database and jsoup
                 mDatabase = FirebaseDatabase.getInstance().getReference();
-                Map<String, Object> skaterMap = new HashMap<>();
                 Document doc = Jsoup.connect(strings[0]).get();
                 Element skaterTable = doc.getElementById("DataList1");
 
                 // get all skater names
-                Elements skaters = skaterTable.select("a[href]");
-                skaters.forEach(link -> {
-                    // get ISU ID and name of each skater
-                    String skaterID = link.attr("href");
-                    skaterID = skaterID.replaceAll("[^0-9]", "");
-                    String name = link.text();
+                Elements skaters = skaterTable.getElementsByClass("name");
+                skaters.remove(0);
 
-                    // add pair to map
-                    if(!(skaterID.equals(""))) {
-                        skaterMap.put(skaterID, name);
+                skaters.forEach(skater -> {
+                    // get ISU ID and name of each skater
+                    if(!skater.child(0).hasClass("noLink")) {
+                        String skaterID = skater.child(0).attr("href");
+                        skaterID = skaterID.replaceAll("[^0-9]", "");
+                        String name = skater.child(0).text();
+                        String country = skater.child(2).text();
+
+                        // update the database
+                        mDatabase.child("skaters").child(skaterID).setValue(name);
                     }
                 });
 
-
-                // update the database
-                mDatabase.child("skaters").updateChildren(skaterMap);
-
                 Log.w(TAG, "database successfully updated");
+
+                getFlagsFromDB(mDatabase);
 
             } catch (Throwable t) {
                 t.printStackTrace();

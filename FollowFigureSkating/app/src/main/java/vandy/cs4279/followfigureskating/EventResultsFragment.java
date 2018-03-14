@@ -60,7 +60,12 @@ public class EventResultsFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onClick(View view) {
+        //pass the name of the skater to the fragment
         SkaterBioFragment sbFrag = SkaterBioFragment.newInstance();
+        Bundle data = new Bundle();
+        data.putString("name", ((TextView) view).getText().toString());
+        sbFrag.setArguments(data);
+
         getFragmentManager().beginTransaction()
                 .add(sbFrag, "SKATER_BIO_FRAG")
                 // Add this transaction to the back stack

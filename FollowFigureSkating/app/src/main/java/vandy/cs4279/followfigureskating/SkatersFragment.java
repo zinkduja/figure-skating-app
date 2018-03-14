@@ -181,7 +181,7 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
     @Override
     public void onClick(View view) {
         //pass the name of the skater to the fragment
-        SkaterBioFragment sbFrag = new SkaterBioFragment();
+        SkaterBioFragment sbFrag = SkaterBioFragment.newInstance();
         Bundle data = new Bundle();
         data.putString("name", ((TextView) view).getText().toString());
         sbFrag.setArguments(data);
