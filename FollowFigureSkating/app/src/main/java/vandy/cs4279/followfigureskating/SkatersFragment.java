@@ -101,7 +101,7 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
      * @param layout - the enclosing LinearLayout
      * @return - the ImageView generated
      */
-    public ImageView createSkaterPic(LinearLayout layout) {
+    private ImageView createSkaterPic(LinearLayout layout) {
         ImageView temp = new ImageView(layout.getContext());
 
         temp.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
@@ -118,7 +118,7 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
      * @param skaterName - name of the skater
      * @return - the TextView generated
      */
-    public TextView createSkaterText(LinearLayout layout, String skaterName) {
+    private TextView createSkaterText(LinearLayout layout, String skaterName) {
         TextView temp = new TextView(layout.getContext());
 
         temp.setLayoutParams(new LinearLayout.LayoutParams(533, LinearLayout.LayoutParams.MATCH_PARENT, 1));
@@ -134,7 +134,7 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
     /**
      * Fetches all skater names from the database and populates mSkaterNameList.
      */
-    public void getSkatersFromDB() {
+    private void getSkatersFromDB() {
         mDatabase.child("skaters").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

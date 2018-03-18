@@ -14,6 +14,31 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="right">
+
+                <TextView
+                    android:id="@+id/favText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/aclonica"
+                    android:gravity="center"
+                    android:text="Follow: "
+                    android:textColor="@android:color/black" />
+
+                <com.github.ivbaranov.mfb.MaterialFavoriteButton
+                    android:id="@+id/followButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    app:mfb_animate_favorite="true"
+                    app:mfb_animate_unfavorite="false"
+                    app:mfb_type="heart" />
+            </LinearLayout>
+
             <ImageView
                 android:id="@+id/skaterPhoto"
                 android:layout_width="match_parent"

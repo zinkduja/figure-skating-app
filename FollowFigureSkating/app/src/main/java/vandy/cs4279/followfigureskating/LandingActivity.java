@@ -97,6 +97,10 @@ public class LandingActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.frame_layout, SkatersFragment.newInstance())
                         .commit();
+            } else if (list.get(len-1) instanceof FavoritesFragment) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.frame_layout, FavoritesFragment.newInstance())
+                        .commit();
             }
         }
     }

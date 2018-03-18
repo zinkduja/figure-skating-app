@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 /**
@@ -36,7 +37,27 @@ public class MenResultsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_men_results, container, false);
+        // inflate the layout and set onClickListener
+        View rootView = inflater.inflate(R.layout.fragment_men_results, container, false);
+        //TODO - replace with dynamic rows
+
+        return rootView;
     }
+
+    /*@Override
+    public void onClick(View view) {
+        //pass the name of the skater to the fragment
+        SkaterBioFragment sbFrag = SkaterBioFragment.newInstance();
+        Bundle data = new Bundle();
+        data.putString("name", ((TextView) view).getText().toString());
+        sbFrag.setArguments(data);
+
+        //getFragmentManager().popBackStack();
+        getFragmentManager().beginTransaction()
+                .add(sbFrag, "SKATER_BIO_FRAG")
+                // Add this transaction to the back stack
+                .addToBackStack("")
+                .replace(R.id.resultsMenPage, sbFrag)
+                .commit();
+    }*/
 }

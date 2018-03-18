@@ -2,9 +2,11 @@ package vandy.cs4279.followfigureskating;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTabHost;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 /**
@@ -13,6 +15,8 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class WomenResultsFragment extends Fragment {
+
+    private FragmentTabHost mHost;
 
     public WomenResultsFragment() {
         // Required empty public constructor
@@ -36,7 +40,9 @@ public class WomenResultsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_women_results, container, false);
+        // inflate the layout and set onClickListener
+        View rootView = inflater.inflate(R.layout.fragment_women_results, container, false);
+
+        return rootView;
     }
 }
