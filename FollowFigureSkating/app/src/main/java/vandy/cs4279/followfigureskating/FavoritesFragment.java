@@ -93,6 +93,9 @@ public class FavoritesFragment extends Fragment {
         return mView;
     }
 
+    /**
+     * Set up the TabHost for this page.
+     */
     private void setUpTabHost() {
         TabHost host = (TabHost)mView.findViewById(R.id.tabHost);
         host.setup();
@@ -110,15 +113,21 @@ public class FavoritesFragment extends Fragment {
         host.addTab(spec);
     }
 
+    /**
+     * Sets a message for if the user has no favorite skaters.
+     */
     private void setNoFavoritesMessage() {
-        LinearLayout skaterLayout = (LinearLayout) mView.findViewById(R.id.Skaters);
-        TextView msg = new TextView(skaterLayout.getContext());
+        LinearLayout skatersLayout = (LinearLayout) mView.findViewById(R.id.skatersLayout);
+        TextView msg = new TextView(skatersLayout.getContext());
         msg.setTextAppearance(R.style.baseFont);
         msg.setText("Not following any skaters");
 
-        skaterLayout.addView(msg);
+        skatersLayout.addView(msg);
     }
 
+    /**
+     * Get the favorite skaters from the database.
+     */
     private void getSkatersFromDB() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -187,7 +196,7 @@ public class FavoritesFragment extends Fragment {
         protected Void doInBackground(DataSnapshot... dataSnapshots) {
             try {
                 dataSnapshots[0].getChildren().forEach(skater -> {
-                    LinearLayout skatersLayout = mView.findViewById(R.id.Skaters);
+                    LinearLayout skatersLayout = mView.findViewById(R.id.skatersLayout);
                     LinearLayout layout = new LinearLayout(skatersLayout.getContext());
                     layout.setOrientation(LinearLayout.HORIZONTAL);
                     layout.setPadding(0, 10, 0, 20);
@@ -214,7 +223,7 @@ public class FavoritesFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Void param) {
-            LinearLayout skatersLayout = mView.findViewById(R.id.Skaters);
+            LinearLayout skatersLayout = (LinearLayout) mView.findViewById(R.id.skatersLayout);
 
             // add layouts to page
             mSkaterList.forEach(skatersLayout::addView);

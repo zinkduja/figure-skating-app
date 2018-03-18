@@ -1,16 +1,12 @@
 package vandy.cs4279.followfigureskating;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTabHost;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
+import android.widget.TabHost;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -25,9 +21,8 @@ public class EventResultsFragment extends Fragment {
 
     private String TAG = "EventResultsFragment";
 
-    private FragmentTabHost mTabHost;
+    private View mView;
     private View.OnClickListener mListener;
-    private TableLayout mTableLayout;
 
     public EventResultsFragment() {
         // Required empty public constructor
@@ -51,13 +46,9 @@ public class EventResultsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mTabHost = new FragmentTabHost(getActivity());
-        mTabHost.setup(getActivity(), getChildFragmentManager(), R.id.tabhost);
-
-        mTabHost.addTab(mTabHost.newTabSpec("women").setIndicator("Women"),
-                WomenResultsFragment.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("men").setIndicator("Men"),
-                MenResultsFragment.class, null);
+        // Inflate the layout for this fragment
+        mView = inflater.inflate(R.layout.fragment_event_results, container, false);
+        setUpTabHost();
 
         mListener = new View.OnClickListener() {
             @Override
@@ -76,43 +67,65 @@ public class EventResultsFragment extends Fragment {
             }
         };
 
-        /*mTabHost.setCurrentTabByTag("men");
-        TextView text = (TextView) mTabHost.getCurrentTabView().findViewById(R.id.tableCell2);
-        text.setOnClickListener(mListener);*/
+        //TODO - replace with actual data
+        setListeners();
 
-        //mTabHost.setCurrentTabByTag("women");
-        //createWomenHeading();
-
-        return mTabHost;
+        return mView;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mTabHost = null;
+    /**
+     * Set up the TabHost for this page.
+     */
+    private void setUpTabHost() {
+        TabHost host = (TabHost)mView.findViewById(R.id.resultsTabHost);
+        host.setup();
+
+        //Tab 1
+        TabHost.TabSpec spec = host.newTabSpec("women");
+        spec.setContent(R.id.womenTab);
+        spec.setIndicator("Women");
+        host.addTab(spec);
+
+        //Tab 2
+        spec = host.newTabSpec("men");
+        spec.setContent(R.id.menTab);
+        spec.setIndicator("Men");
+        host.addTab(spec);
     }
 
-    private void createWomenHeading() {
-        /*View rootView = mTabHost.getCurrentTabView().get
+    private void setListeners() {
+        TextView textView = (TextView) mView.findViewById(R.id.wTableCell2);
+        textView.setOnClickListener(mListener);
+        textView = (TextView) mView.findViewById(R.id.wTableCell8);
+        textView.setOnClickListener(mListener);
+        textView = (TextView) mView.findViewById(R.id.wTableCell14);
+        textView.setOnClickListener(mListener);
+        textView = (TextView) mView.findViewById(R.id.wTableCell20);
+        textView.setOnClickListener(mListener);
+        textView = (TextView) mView.findViewById(R.id.wTableCell26);
+        textView.setOnClickListener(mListener);
+        textView = (TextView) mView.findViewById(R.id.wTableCell32);
+        textView.setOnClickListener(mListener);
+        textView = (TextView) mView.findViewById(R.id.wTableCell38);
+        textView.setOnClickListener(mListener);
+        textView = (TextView) mView.findViewById(R.id.wTableCell44);
+        textView.setOnClickListener(mListener);
 
-        LinearLayout linearLayout = new LinearLayout(rootView.getContext());
-        linearLayout.setOrientation(LinearLayout.VERTICAL);
-        ScrollView scrollView = new ScrollView(linearLayout.getContext());
-        mTableLayout = new TableLayout(scrollView.getContext());
-        mTableLayout.setStretchAllColumns(true);
-
-        TableRow tableRow = new TableRow(mTableLayout.getContext());
-        TextView textView = new TextView(tableRow.getContext());
-        textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT));
-        textView.setTextAppearance(R.style.smallBaseFont);
-        textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        textView.setText("Place");
-
-        tableRow.addView(textView);
-        mTableLayout.addView(tableRow);
-        scrollView.addView(mTableLayout);
-        linearLayout.addView(scrollView);
-        rootView.add*/
+        textView = (TextView) mView.findViewById(R.id.tableCell2);
+        textView.setOnClickListener(mListener);
+        textView = (TextView) mView.findViewById(R.id.tableCell8);
+        textView.setOnClickListener(mListener);
+        textView = (TextView) mView.findViewById(R.id.tableCell14);
+        textView.setOnClickListener(mListener);
+        textView = (TextView) mView.findViewById(R.id.tableCell20);
+        textView.setOnClickListener(mListener);
+        textView = (TextView) mView.findViewById(R.id.tableCell26);
+        textView.setOnClickListener(mListener);
+        textView = (TextView) mView.findViewById(R.id.tableCell32);
+        textView.setOnClickListener(mListener);
+        textView = (TextView) mView.findViewById(R.id.tableCell38);
+        textView.setOnClickListener(mListener);
+        textView = (TextView) mView.findViewById(R.id.tableCell44);
+        textView.setOnClickListener(mListener);
     }
 }

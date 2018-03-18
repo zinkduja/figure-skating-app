@@ -92,6 +92,7 @@ public class LandingActivity extends AppCompatActivity {
         List list = getSupportFragmentManager().getFragments();
         int len = list.size();
 
+        // fixes some back button issues
         if (len >= 0) {
             if (list.get(len-1) instanceof SkatersFragment) {
                 getSupportFragmentManager().beginTransaction()
@@ -100,6 +101,10 @@ public class LandingActivity extends AppCompatActivity {
             } else if (list.get(len-1) instanceof FavoritesFragment) {
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.frame_layout, FavoritesFragment.newInstance())
+                        .commit();
+            } else if (list.get(len-1) instanceof EventResultsFragment) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.frame_layout, EventResultsFragment.newInstance())
                         .commit();
             }
         }

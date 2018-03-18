@@ -1,6 +1,5 @@
 package vandy.cs4279.followfigureskating;
 
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.ivbaranov.mfb.MaterialFavoriteButton;
@@ -23,9 +21,6 @@ import com.google.firebase.database.ValueEventListener;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import java.io.IOException;
 
 import vandy.cs4279.followfigureskating.dbClasses.Skater;
 
@@ -131,23 +126,34 @@ public class SkaterBioFragment extends Fragment {
         if(user != null) {
             // get rid of the ".com" of the email
             String[] email = user.getEmail().split("\\.");
-            mDatabase.child("favorites").child("skaters").child(email[0]).equalTo(mSkaterName)
+            mDatabase.child("favorites").child("skaters").child(email[0])
                     .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             // set up button
-                            followButton.setFavorite((dataSnapshot.getValue() != null));
-                            followButton.setOnFavoriteChangeListener(
-                                    new MaterialFavoriteButton.OnFavoriteChangeListener() {
-                                        @Override
-                                        public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean favorite) {
-                                            if (favorite) {
-                                                addFavorite();
-                                            } else {
-                                                removeFavorite();
+                            if(dataSnapshot.exists()) {
+                                // check if skater is a favorite
+                                boolean fav = false;
+                                for(DataSnapshot child : dataSnapshot.getChildren()) {
+                                    if(child.getValue().equals(mSkaterName)) {
+                                        fav = true;
+                                    }
+                                }
+                                followButton.setFavorite(fav);
+
+                                followButton.setOnFavoriteChangeListener(
+                                        new MaterialFavoriteButton.OnFavoriteChangeListener() {
+                                            @Override
+                                            public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean favorite) {
+                                                if (favorite) {
+                                                    addFavorite();
+                                                } else {
+                                                    removeFavorite();
+                                                }
                                             }
-                                        }
-                                    });
+                                        });
+                            }
+
                         }
 
                         @Override
