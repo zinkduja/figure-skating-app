@@ -11,8 +11,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -35,6 +39,7 @@ public class SkaterBioFragment extends Fragment {
 
     private DatabaseReference mDatabase;
     private String mSkaterName;
+    private String mSkaterID;
 
     private TextView mSkaterNameView;
     private TextView mSkaterNationView;
@@ -52,6 +57,9 @@ public class SkaterBioFragment extends Fragment {
     private TextView mBestTopCompView;
 
     private ImageView mSkaterPhoto;
+
+    final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference ref = database.getReference();
 
     public SkaterBioFragment() {
         // Required empty public constructor
@@ -104,6 +112,10 @@ public class SkaterBioFragment extends Fragment {
         //get the skater's name that was passed in
         mSkaterName = getArguments().getString("name");
 
+        //getSkaterFromDB();
+        System.out.println("post skater: " + mSkaterID);
+
+
         return rootView;
     }
 
@@ -119,6 +131,7 @@ public class SkaterBioFragment extends Fragment {
     public void populatePage() {
         //TODO - populate page with info
         //get data from webpage here
+        System.out.println(mSkaterID);
 
         (new ParsePageAsyncTask()).execute(new String[]{"http://www.isuresults.com/bios/isufs00000005.htm"});
 
@@ -128,6 +141,34 @@ public class SkaterBioFragment extends Fragment {
         //if needed, update the database:
         //Skater skater = new Skater(mSkaterName, ...);
         //mDatabase.child("skaterBios").child(skaterIsuID).setValue(skater);
+    }
+
+    public void getSkaterFromDB() {
+        mDatabase.child("skaters").equalTo(mSkaterName).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+                System.out.println("id!: " + mSkaterID);
+                for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                    System.out.println("id!: " + mSkaterID);
+                    System.out.println(dataSnapshot.getKey());
+                    mSkaterID = dataSnapshot.getKey();
+                }
+            }
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {}
+
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG, "Database error: " + databaseError.getMessage());
+            }
+        });
     }
 
     private class ParsePageAsyncTask extends AsyncTask<String, Void, Skater> {
@@ -140,7 +181,7 @@ public class SkaterBioFragment extends Fragment {
             try {
                 Document doc = Jsoup.connect(strings[0]).get();
                 // Get info from webpage
-                System.out.println(doc);
+                //System.out.println(doc);
                 Element dob = doc.getElementById("FormView1_person_dobLabel");
                 Element heightNum = doc.getElementById("FormView1_person_heightLabel");
                 String height = heightNum.text();
