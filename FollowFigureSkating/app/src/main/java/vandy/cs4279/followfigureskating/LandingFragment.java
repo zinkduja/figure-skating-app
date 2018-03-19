@@ -8,6 +8,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 
 /**
@@ -16,6 +18,9 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class LandingFragment extends Fragment {
+
+    private View.OnClickListener mButtonListener;
+    private View.OnClickListener mTextListener;
 
     public LandingFragment() {
         // Required empty public constructor
@@ -40,10 +45,55 @@ public class LandingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_landing, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_landing, container, false);
+
+        createListeners();
+
+        //TODO - add listeners
+        //Button button = rootView.findViewById(R.id.eventButton);
+        //button.setOnClickListener(mButtonListener);
+        TextView text = rootView.findViewById(R.id.event4);
+        text.setOnClickListener(mTextListener);
+
+        return rootView;
     }
 
-    //gets overriden in Landing Activity
-    public void onEventButtonPressed(View view) {
+    /**
+     * Create OnClickListeners for the Button and the TextViews.
+     */
+    private void createListeners() {
+        mButtonListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //pass the name of the event to the fragment
+                EventSummaryFragment esFrag = EventSummaryFragment.newInstance();
+                Bundle data = new Bundle();
+                data.putString("event", ((Button) v).getText().toString());
+                esFrag.setArguments(data);
+
+                getFragmentManager().beginTransaction()
+                        .add(esFrag, "EVENT_SUMMARY_FRAG")
+                        .addToBackStack("")
+                        .replace(R.id.frame_layout, esFrag)
+                        .commit();
+            }
+        };
+
+        mTextListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //pass the name of the event to the fragment
+                EventSummaryFragment esFrag = EventSummaryFragment.newInstance();
+                Bundle data = new Bundle();
+                data.putString("event", ((TextView) v).getText().toString());
+                esFrag.setArguments(data);
+
+                getFragmentManager().beginTransaction()
+                        .add(esFrag, "EVENT_SUMMARY_FRAG")
+                        .addToBackStack("")
+                        .replace(R.id.frame_layout, esFrag)
+                        .commit();
+            }
+        };
     }
 }

@@ -21,8 +21,7 @@
             android:id="@+id/eventButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onEventButtonPressed"
-            android:text="Current Event" />
+            android:text="ISU World Figure Skating Championships" />
 
         <TextView
             android:id="@+id/blank"
@@ -31,34 +30,57 @@
             android:text="\n\n" />
 
         <TextView
+            android:id="@+id/upcomingText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/aclonica"
+            android:text="Upcoming Events"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="20sp" />
+
+        <TextView
             android:id="@+id/event1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Other Event - From (date) To (date) \n"
+            android:text="Balkan Games - Mar 30 to Apr 1 \n"
             android:textAlignment="center"
             android:textColor="@android:color/black"
             android:textSize="18sp" />
+
         <TextView
             android:id="@+id/event2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Other Event - From (date) To (date) \n"
+            android:text="Triglav Trophy & Narcisa Cup - Apr 4 to Apr 8 \n"
             android:textAlignment="center"
             android:textColor="@android:color/black"
             android:textSize="18sp" />
+
         <TextView
             android:id="@+id/event3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Other Event - From (date) To (date) \n"
+            android:text="Egna Spring Trophy - From Apr 5 to Apr 8 \n"
             android:textAlignment="center"
             android:textColor="@android:color/black"
             android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/recentText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/aclonica"
+            android:text="Recent Events"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="20sp" />
+
         <TextView
             android:id="@+id/event4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Other Event - From (date) To (date) \n"
+            android:text="2018 Winter Olympics"
             android:textAlignment="center"
             android:textColor="@android:color/black"
             android:textSize="18sp" />
