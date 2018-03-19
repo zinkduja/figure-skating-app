@@ -1,6 +1,5 @@
 package vandy.cs4279.followfigureskating;
 
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,6 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.database.ChildEventListener;
+import com.github.ivbaranov.mfb.MaterialFavoriteButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,9 +23,6 @@ import com.google.firebase.database.ValueEventListener;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import java.io.IOException;
 
 import vandy.cs4279.followfigureskating.dbClasses.Skater;
 
@@ -55,6 +54,7 @@ public class SkaterBioFragment extends Fragment {
     private TextView mBestShortCompView;
     private TextView mBestTopView;
     private TextView mBestTopCompView;
+
 
     private ImageView mSkaterPhoto;
 
@@ -91,6 +91,9 @@ public class SkaterBioFragment extends Fragment {
         }
         View rootView = inflater.inflate(R.layout.fragment_skater_bio, container, false);
 
+        // set up following icon
+        setUpFollowingIcon(rootView);
+
         //get all necessary Views
         mSkaterNameView = (TextView) rootView.findViewById(R.id.skaterName);
         mSkaterNationView = (TextView) rootView.findViewById(R.id.skaterNation);
@@ -107,13 +110,10 @@ public class SkaterBioFragment extends Fragment {
         mBestTopView = (TextView) rootView.findViewById(R.id.bestTop);
         mBestTopCompView = (TextView) rootView.findViewById(R.id.bestTopComp);
 
-        mSkaterPhoto = (ImageView) rootView.findViewById(R.id.skaterPhoto);
-
         //get the skater's name that was passed in
         mSkaterName = getArguments().getString("name");
 
-        //getSkaterFromDB();
-        System.out.println("post skater: " + mSkaterID);
+
 
 
         return rootView;
@@ -122,47 +122,103 @@ public class SkaterBioFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        populatePage();
+        getSkaterFromDB();
     }
 
     /**
-     * Populates the page with information from the database.
+     * Set up the follow icon for a skater.
+     * @param rootView - main View
      */
-    public void populatePage() {
-        //TODO - populate page with info
-        //get data from webpage here
-        System.out.println(mSkaterID);
+    private void setUpFollowingIcon (View rootView) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        MaterialFavoriteButton followButton =
+                (MaterialFavoriteButton) rootView.findViewById(R.id.followButton);
 
-        (new ParsePageAsyncTask()).execute(new String[]{"http://www.isuresults.com/bios/isufs00000005.htm"});
+        // check if the skater is favorited or not
+        if(user != null) {
+            // get rid of the ".com" of the email
+            String[] email = user.getEmail().split("\\.");
+            mDatabase.child("favorites").child("skaters").child(email[0])
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            // set up button
+                            if(dataSnapshot.exists()) {
+                                // check if skater is a favorite
+                                boolean fav = false;
+                                for(DataSnapshot child : dataSnapshot.getChildren()) {
+                                    if(child.getValue().equals(mSkaterName)) {
+                                        fav = true;
+                                    }
+                                }
+                                followButton.setFavorite(fav);
 
-        //check if data is different from database
-        //make sure to check if database contains null (first time running app)
+                                followButton.setOnFavoriteChangeListener(
+                                        new MaterialFavoriteButton.OnFavoriteChangeListener() {
+                                            @Override
+                                            public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean favorite) {
+                                                if (favorite) {
+                                                    addFavorite();
+                                                } else {
+                                                    removeFavorite();
+                                                }
+                                            }
+                                        });
+                            }
 
-        //if needed, update the database:
-        //Skater skater = new Skater(mSkaterName, ...);
-        //mDatabase.child("skaterBios").child(skaterIsuID).setValue(skater);
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            Log.e(TAG, "Database error: " + databaseError.getMessage());
+                        }
+                    });
+        } else {
+            Log.e(TAG, "User somehow not logged in");
+        }
     }
 
+    /**
+     * Add current skater to favorites for current user.
+     */
+    private void addFavorite() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if(user != null) {
+            // get rid of the ".com" of the email
+            String[] email = user.getEmail().split("\\.");
+            mDatabase.child("favorites").child("skaters").child(email[0]).push().setValue(mSkaterName);
+        } else {
+            Log.e(TAG, "User somehow not logged in");
+        }
+    }
+
+    /**
+     * Remove current skater from favorites for current user.
+     */
+    private void removeFavorite() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if(user != null) {
+            // get rid of the ".com" of the email
+            String[] email = user.getEmail().split("\\.");
+            mDatabase.child("favorites").child("skaters").child(email[0]).equalTo(mSkaterName).getRef().removeValue();
+        } else {
+            Log.e(TAG, "User somehow not logged in");
+        }
+    }
+
+
     public void getSkaterFromDB() {
-        mDatabase.child("skaters").equalTo(mSkaterName).addChildEventListener(new ChildEventListener() {
+        mDatabase.child("skaters").orderByValue().equalTo(mSkaterName).addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-                System.out.println("id!: " + mSkaterID);
+            public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
-                    System.out.println("id!: " + mSkaterID);
-                    System.out.println(dataSnapshot.getKey());
-                    mSkaterID = dataSnapshot.getKey();
+                    mSkaterID = childSnapshot.getKey();
+                    String mUrl = "http://www.isuresults.com/bios/isufs"+mSkaterID+".htm";
+                    (new ParsePageAsyncTask()).execute(new String[]{mUrl});
                 }
             }
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {}
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {}
-
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -176,12 +232,10 @@ public class SkaterBioFragment extends Fragment {
 
         @Override
         protected Skater doInBackground(String... strings) {
-            //StringBuffer buffer = new StringBuffer();
             Skater newSkater = new Skater();
             try {
                 Document doc = Jsoup.connect(strings[0]).get();
                 // Get info from webpage
-                //System.out.println(doc);
                 Element dob = doc.getElementById("FormView1_person_dobLabel");
                 Element heightNum = doc.getElementById("FormView1_person_heightLabel");
                 String height = heightNum.text();
@@ -196,7 +250,6 @@ public class SkaterBioFragment extends Fragment {
                 Element freeProgram = doc.getElementById("FormView1_Label4");
                 Element bestShortComp = doc.getElementById("FormView1_GridView3_ctl03_HyperLink1");
                 Element bestShort = doc.getElementById("FormView1_GridView3");
-                System.out.println(bestShort);
                 Element bestTopComp = doc.getElementById("FormView1_GridView3_ctl02_HyperLink1");
                 Element bestTop = doc.getElementById("FormView1_GridView3");
 
@@ -204,17 +257,6 @@ public class SkaterBioFragment extends Fragment {
                         coach.text(), choreo.text(), former.text(), nation.text(), shortProgram.text(),
                         freeProgram.text(), bestTop.text(), bestTopComp.text(), bestShort.text(),
                         bestShortComp.text());
-
-                /*//get the image of the skater from wikipedia
-                Document wikiDoc = Jsoup.connect().get();
-                Elements info = wikiDoc.getElementsByClass("infobox vcard");
-                for(Element e : info) {
-                    if(e.hasClass("image")) {
-                        Uri pic = Uri.parse(e.text());
-                        mSkaterPhoto.setImageURI(pic);
-                        break;
-                    }
-                }*/
 
             } catch (Throwable t) {
                 t.printStackTrace();

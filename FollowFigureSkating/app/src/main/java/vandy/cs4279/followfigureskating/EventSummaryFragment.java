@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 
@@ -37,6 +38,10 @@ public class EventSummaryFragment extends Fragment implements View.OnClickListen
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        if(container != null) {
+            container.removeAllViews();
+        }
+
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_event_summary, container, false);
         TextView text = (TextView) rootView.findViewById(R.id.cell2);
