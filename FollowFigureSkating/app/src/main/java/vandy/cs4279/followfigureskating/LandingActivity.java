@@ -110,20 +110,6 @@ public class LandingActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Handles when the user clicks on the Event Button.
-     * @param view - current View
-     */
-    public void onEventButtonPressed(View view) {
-        EventSummaryFragment esFrag = EventSummaryFragment.newInstance();
-        getSupportFragmentManager().beginTransaction()
-                .add(esFrag, "EVENT_SUMMARY_FRAG")
-                // Add this transaction to the back stack
-                .addToBackStack("")
-                .replace(R.id.frame_layout, esFrag)
-                .commit();
-    }
-
     private Bitmap loadImageFromURL(String fileUrl){
         try {
             URL myFileUrl = new URL (fileUrl);
