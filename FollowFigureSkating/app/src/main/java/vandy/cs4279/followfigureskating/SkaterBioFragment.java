@@ -7,8 +7,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.database.ChildEventListener;
 import com.github.ivbaranov.mfb.MaterialFavoriteButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -36,6 +38,7 @@ public class SkaterBioFragment extends Fragment {
 
     private DatabaseReference mDatabase;
     private String mSkaterName;
+    private String mSkaterID;
 
     private TextView mSkaterNameView;
     private TextView mSkaterNationView;
@@ -51,6 +54,12 @@ public class SkaterBioFragment extends Fragment {
     private TextView mBestShortCompView;
     private TextView mBestTopView;
     private TextView mBestTopCompView;
+
+
+    private ImageView mSkaterPhoto;
+
+    final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference ref = database.getReference();
 
     public SkaterBioFragment() {
         // Required empty public constructor
@@ -104,13 +113,16 @@ public class SkaterBioFragment extends Fragment {
         //get the skater's name that was passed in
         mSkaterName = getArguments().getString("name");
 
+
+
+
         return rootView;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        populatePage();
+        getSkaterFromDB();
     }
 
     /**
@@ -196,19 +208,23 @@ public class SkaterBioFragment extends Fragment {
         }
     }
 
-    /**
-     * Populates the page with information from the database.
-     */
-    public void populatePage() {
-        //get data from webpage
-        (new ParsePageAsyncTask()).execute(new String[]{"http://www.isuresults.com/bios/isufs00000005.htm"});
 
-        //check if data is different from database
-        //make sure to check if database contains null (first time running app)
+    public void getSkaterFromDB() {
+        mDatabase.child("skaters").orderByValue().equalTo(mSkaterName).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                    mSkaterID = childSnapshot.getKey();
+                    String mUrl = "http://www.isuresults.com/bios/isufs"+mSkaterID+".htm";
+                    (new ParsePageAsyncTask()).execute(new String[]{mUrl});
+                }
+            }
 
-        //if needed, update the database:
-        //Skater skater = new Skater(mSkaterName, ...);
-        //mDatabase.child("skaterBios").child(skaterIsuID).setValue(skater);
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG, "Database error: " + databaseError.getMessage());
+            }
+        });
     }
 
     private class ParsePageAsyncTask extends AsyncTask<String, Void, Skater> {
@@ -216,7 +232,6 @@ public class SkaterBioFragment extends Fragment {
 
         @Override
         protected Skater doInBackground(String... strings) {
-            //StringBuffer buffer = new StringBuffer();
             Skater newSkater = new Skater();
             try {
                 Document doc = Jsoup.connect(strings[0]).get();
