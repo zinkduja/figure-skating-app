@@ -1,6 +1,7 @@
 package vandy.cs4279.followfigureskating;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -58,6 +60,9 @@ public class LandingFragment extends Fragment {
         TextView text = rootView.findViewById(R.id.event4);
         text.setOnClickListener(mTextListener);
 
+        //TODO - add to dynamic adding
+        createBlanks(rootView);
+
         return rootView;
     }
 
@@ -81,5 +86,17 @@ public class LandingFragment extends Fragment {
                         .commit();
             }
         };
+    }
+
+    private void createBlanks(View rootView) {
+        // add blanks at end (underneath the bottom nav bar)
+        LinearLayout layout = rootView.findViewById(R.id.landingLayout);
+        TextView textView;
+        for(int i=0; i < 3; i++) {
+            textView = new TextView(layout.getContext());
+            textView.setText("blank");
+            textView.setTextColor(Color.WHITE);
+            layout.addView(textView);
+        }
     }
 }

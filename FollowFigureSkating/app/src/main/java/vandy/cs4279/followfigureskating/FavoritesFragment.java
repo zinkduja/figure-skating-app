@@ -1,8 +1,10 @@
 package vandy.cs4279.followfigureskating;
 
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -36,7 +38,7 @@ public class FavoritesFragment extends Fragment {
 
     private View.OnClickListener mListener;
     private View mView;
-    private List<LinearLayout> mSkaterList;
+    private List<CardView> mSkaterList;
 
     private DatabaseReference mDatabase;
 
@@ -197,9 +199,20 @@ public class FavoritesFragment extends Fragment {
             try {
                 dataSnapshots[0].getChildren().forEach(skater -> {
                     LinearLayout skatersLayout = mView.findViewById(R.id.skatersLayout);
-                    LinearLayout layout = new LinearLayout(skatersLayout.getContext());
+
+                    // set up CardView
+                    CardView cardView = new CardView(skatersLayout.getContext());
+                    cardView.setCardBackgroundColor(getResources().getColor(R.color.paleBlue));
+                    CardView.LayoutParams params = new CardView.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT, 200, Gravity.CENTER);
+                    params.setMargins(5, 0, 5, 30);
+                    cardView.setLayoutParams(params);
+                    cardView.setRadius(4);
+
+                    // set up LinearLayout
+                    LinearLayout layout = new LinearLayout(cardView.getContext());
                     layout.setOrientation(LinearLayout.HORIZONTAL);
-                    layout.setPadding(0, 10, 0, 20);
+                    layout.setPadding(0, 5, 0, 5);
 
                     // add image formatting
                     ImageView pic = createSkaterPic(layout);
@@ -210,7 +223,8 @@ public class FavoritesFragment extends Fragment {
                     name.setOnClickListener(mListener);
                     layout.addView(name);
 
-                    mSkaterList.add(layout);
+                    cardView.addView(layout);
+                    mSkaterList.add(cardView);
                 });
                 Log.w(TAG, "Successful fetch of favorite skaters from database");
 
@@ -227,6 +241,14 @@ public class FavoritesFragment extends Fragment {
 
             // add layouts to page
             mSkaterList.forEach(skatersLayout::addView);
+            // add blanks at end (underneath the bottom nav bar)
+            TextView textView;
+            for(int i=0; i < 3; i++) {
+                textView = new TextView(skatersLayout.getContext());
+                textView.setText("blank");
+                textView.setTextColor(Color.WHITE);
+                skatersLayout.addView(textView);
+            }
         }
     }
 }

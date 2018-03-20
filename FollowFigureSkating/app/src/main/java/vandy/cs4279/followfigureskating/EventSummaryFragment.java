@@ -43,6 +43,7 @@ public class EventSummaryFragment extends Fragment {
     private String mEvent;
     private TableLayout mTable;
     private List<TableRow> mRows;
+    private boolean isPrevColored; //used to color rows
 
     public EventSummaryFragment() {
         // Required empty public constructor
@@ -157,6 +158,7 @@ public class EventSummaryFragment extends Fragment {
      */
     private void createTitleRow() {
         TableRow row = new TableRow(mTable.getContext());
+
         TextView textView = new TextView(row.getContext());
         textView.setText("Date");
         textView.setTextAppearance(R.style.smallBaseFont);
@@ -178,6 +180,7 @@ public class EventSummaryFragment extends Fragment {
         row.addView(textView);
 
         mRows.add(row);
+        isPrevColored = true;
     }
 
     /**
@@ -189,23 +192,33 @@ public class EventSummaryFragment extends Fragment {
      */
     private void createTableRow(String date, String time, String category, String segment) {
         TableRow row = new TableRow(mTable.getContext());
+        if (!date.isEmpty()) { // color rows with new date
+            isPrevColored = !isPrevColored;
+        }
+        if(!isPrevColored) {
+            row.setBackgroundColor(getResources().getColor(R.color.paleBlue));
+        }
 
+        //date view
         TextView textView = new TextView(row.getContext());
         textView.setText(date);
         textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
         textView.setTextAppearance(R.style.basicFont);
         row.addView(textView);
 
+        // time view
         textView = new TextView(row.getContext());
         textView.setText(time.isEmpty() ? DASHES : time.substring(0,5));
         textView.setTextAppearance(R.style.basicFont);
         row.addView(textView);
 
+        // category view
         textView = new TextView(row.getContext());
         textView.setText(category.isEmpty() ? (DASHES+DASHES+DASHES) : category);
         textView.setTextAppearance(R.style.basicFont);
         row.addView(textView);
 
+        // segment view
         textView = new TextView(row.getContext());
         if(!segment.isEmpty()) {
             textView.setOnClickListener(mListener);

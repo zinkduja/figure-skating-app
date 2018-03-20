@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -40,8 +41,8 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
     private ProgressBar mLoadingBar;
 
     private ArrayList<String> mSkaterNameList;
-    private ArrayList<LinearLayout> mSkaterViewList;
-    private ArrayList<LinearLayout> mCurSkaterViewList;
+    private ArrayList<CardView> mSkaterViewList;
+    private ArrayList<CardView> mCurSkaterViewList;
 
     private DatabaseReference mDatabase;
 
@@ -160,10 +161,11 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
         mCurSkaterViewList.clear();
 
         // filter the views by newText
-        mSkaterViewList.forEach(skaterLayout -> {
-            String skaterName = ((TextView) (skaterLayout.getChildAt(1))).getText().toString();
+        mSkaterViewList.forEach(skaterCard -> {
+            LinearLayout layout = (LinearLayout) skaterCard.getChildAt(0);
+            String skaterName = ((TextView) (layout.getChildAt(1))).getText().toString();
             if (skaterName.toLowerCase().contains(newText.toLowerCase())) {
-                mCurSkaterViewList.add(skaterLayout);
+                mCurSkaterViewList.add(skaterCard);
             }
         });
 
@@ -171,8 +173,8 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
         mVertLL.removeAllViewsInLayout();
 
         // add the filtered views to the page
-        mCurSkaterViewList.forEach(skaterLayout -> {
-            mVertLL.addView(skaterLayout);
+        mCurSkaterViewList.forEach(skaterCard -> {
+            mVertLL.addView(skaterCard);
         });
 
         return false;
@@ -215,31 +217,48 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
 
         @Override
         protected void onPostExecute(Void param) {
+            // make sure loading bar is hidden
+            mView.findViewById(R.id.loadingBar).setVisibility(View.GONE);
+
             // fill the page in with the skaters
             mSkaterNameList.forEach(skater -> {
-                //if(skater.startsWith("A")) {
-                    LinearLayout layout = new LinearLayout(mVertLL.getContext());
-                    layout.setOrientation(LinearLayout.HORIZONTAL);
-                    layout.setPadding(0, 0, 0, 30);
+                // set up CardView
+                CardView cardView = new CardView(mVertLL.getContext());
+                cardView.setCardBackgroundColor(getResources().getColor(R.color.paleBlue));
+                CardView.LayoutParams params = new CardView.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT, 200, Gravity.CENTER);
+                params.setMargins(5, 0, 5, 30);
+                cardView.setLayoutParams(params);
+                cardView.setRadius(4);
 
-                    // add image formatting
-                    ImageView pic = createSkaterPic(layout);
-                    layout.addView(pic);
+                // set up LinearLayout
+                LinearLayout layout = new LinearLayout(cardView.getContext());
+                layout.setOrientation(LinearLayout.HORIZONTAL);
+                layout.setPadding(0, 5, 0, 5);
 
-                    // add text formatting
-                    TextView name = createSkaterText(layout, skater);
-                    layout.addView(name);
+                // add image formatting
+                ImageView pic = createSkaterPic(layout);
+                layout.addView(pic);
 
-                    // set listeners and add to main layout
-                    name.setOnClickListener(getFragment());
-                    mVertLL.addView(layout);
-                    mSkaterViewList.add(layout);
-                //}
+                // add text formatting
+                TextView name = createSkaterText(layout, skater);
+                layout.addView(name);
+
+                // set listeners and add to main layout
+                name.setOnClickListener(getFragment());
+                cardView.addView(layout);
+                mVertLL.addView(cardView);
+                mSkaterViewList.add(cardView);
             });
 
-            // make sure loading bar
-            //((LinearLayout)(mView.findViewById(R.id.mainLayout))).
-            mView.findViewById(R.id.loadingBar).setVisibility(View.GONE);
+            // add blanks at end (underneath the bottom nav bar)
+            TextView textView;
+            for(int i=0; i < 3; i++) {
+                textView = new TextView(mVertLL.getContext());
+                textView.setText("blank");
+                textView.setTextColor(Color.WHITE);
+                mVertLL.addView(textView);
+            }
         }
     }
 }
