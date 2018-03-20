@@ -136,7 +136,7 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
      * Fetches all skater names from the database and populates mSkaterNameList.
      */
     private void getSkatersFromDB() {
-        mDatabase.child("skaters").addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.child("skaters").orderByValue().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // fetch the data
