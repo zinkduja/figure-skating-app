@@ -1,5 +1,6 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,79 +12,260 @@
         android:orientation="vertical"
         android:gravity="center_horizontal">
 
+        <TextView
+            android:id="@+id/landingTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/aclonica"
+            android:text="Figure Skating Events"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="24sp" />
+
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_skate_foreground" />
+            android:layout_height="30dp"
+            android:layout_marginBottom="30dp"
+            android:src="@drawable/fancy_line" />
 
-        <Button
-            android:id="@+id/eventButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ISU World Figure Skating Championships" />
-
-        <TextView
-            android:id="@+id/blank"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="\n\n" />
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:padding="20px"
+            tools:layout_editor_absoluteX="10dp"
+            tools:layout_editor_absoluteY="66dp">
 
-        <TextView
-            android:id="@+id/upcomingText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/aclonica"
-            android:text="Upcoming Events"
-            android:textAlignment="center"
-            android:textColor="@android:color/black"
-            android:textSize="20sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/event1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Balkan Games - Mar 30 to Apr 1 \n"
-            android:textAlignment="center"
-            android:textColor="@android:color/black"
-            android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/currentText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/aclonica"
+                    android:text="- Ongoing -"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/event2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Triglav Trophy & Narcisa Cup - Apr 4 to Apr 8 \n"
-            android:textAlignment="center"
-            android:textColor="@android:color/black"
-            android:textSize="18sp" />
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_view1"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    app:cardBackgroundColor="@color/paleBlue"
+                    card_view:cardCornerRadius="4dp">
 
-        <TextView
-            android:id="@+id/event3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Egna Spring Trophy - From Apr 5 to Apr 8 \n"
-            android:textAlignment="center"
-            android:textColor="@android:color/black"
-            android:textSize="18sp" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/recentText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/aclonica"
-            android:text="Recent Events"
-            android:textAlignment="center"
-            android:textColor="@android:color/black"
-            android:textSize="20sp" />
+                        <TextView
+                            android:id="@+id/curEvent1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingHorizontal="@dimen/cardview_default_radius"
+                            android:text="ISU World Figure Skating Championships"
+                            android:textColor="@android:color/black"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/event4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="2018 Winter Olympics"
-            android:textAlignment="center"
-            android:textColor="@android:color/black"
-            android:textSize="18sp" />
+                        <TextView
+                            android:id="@+id/curTime1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Mar 19 - Mar 25"
+                            android:textColor="@android:color/black"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <TextView
+                    android:id="@+id/upcomingText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/aclonica"
+                    android:text="- Upcoming Events -"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp" />
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_view2"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    app:cardBackgroundColor="@color/paleBlue"
+                    card_view:cardCornerRadius="4dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/event1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingHorizontal="@dimen/cardview_default_radius"
+                            android:text="Balkan Games"
+                            android:textColor="@android:color/black"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/time1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Mar 30 - Apr 1"
+                            android:textColor="@android:color/black"
+                            android:textSize="18sp" />
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_view3"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    app:cardBackgroundColor="@color/paleBlue"
+                    card_view:cardCornerRadius="4dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/event2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingHorizontal="@dimen/cardview_default_radius"
+                            android:text="Triglav Trophy and Narcisa Cup"
+                            android:textColor="@android:color/black"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/time2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Apr 4 - Apr 8"
+                            android:textColor="@android:color/black"
+                            android:textSize="18sp" />
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_view4"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    app:cardBackgroundColor="@color/paleBlue"
+                    card_view:cardCornerRadius="4dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/event3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingHorizontal="@dimen/cardview_default_radius"
+                            android:text="Egna Spring Trophy"
+                            android:textColor="@android:color/black"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/time3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Apr 5 - Apr 8"
+                            android:textColor="@android:color/black"
+                            android:textSize="18sp" />
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <TextView
+                    android:id="@+id/recentText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/aclonica"
+                    android:text="- Recent Events -"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp" />
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_view5"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    app:cardBackgroundColor="@color/paleBlue"
+                    card_view:cardCornerRadius="4dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/event4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingHorizontal="@dimen/cardview_default_radius"
+                            android:text="2018 Winter Olympics"
+                            android:textColor="@android:color/black"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/time4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Feb 9 - Feb 25"
+                            android:textColor="@android:color/black"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+            </LinearLayout>
+        </ScrollView>
 
     </LinearLayout>
 

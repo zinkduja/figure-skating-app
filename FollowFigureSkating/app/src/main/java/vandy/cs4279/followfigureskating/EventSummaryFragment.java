@@ -1,5 +1,8 @@
 package vandy.cs4279.followfigureskating;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -7,15 +10,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -28,9 +37,12 @@ public class EventSummaryFragment extends Fragment {
     private final String TAG = "EventSummaryFragment";
     private final String RESULTS = "Results";
     private final String CUR_SKATE = "Currently Skating";
+    private final String DASHES = "---------";
 
     private View.OnClickListener mListener;
     private String mEvent;
+    private TableLayout mTable;
+    private List<TableRow> mRows;
 
     public EventSummaryFragment() {
         // Required empty public constructor
@@ -49,6 +61,7 @@ public class EventSummaryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mRows = new ArrayList<>();
     }
 
     @Override
@@ -66,21 +79,19 @@ public class EventSummaryFragment extends Fragment {
         TextView title = (TextView) rootView.findViewById(R.id.eventTitle);
         title.setText(mEvent);
 
-        // set up the table
-        try{
-            createTable(rootView);
-        } catch (IOException e) {
-            Log.e(TAG, e.getMessage());
-        }
+        // fill in the table
+        mRows.clear();
+        (new CreateTableAsyncTask()).execute(rootView);
 
         return rootView;
     }
 
+    //TODO - change how to determine results or cur skating
     private void createListener() {
         mListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle data = new Bundle();
+                /*Bundle data = new Bundle();
                 data.putString("event", mEvent);
                 String type = ((TextView) v).getText().toString();
                 if (type.equals(RESULTS)) {
@@ -97,27 +108,133 @@ public class EventSummaryFragment extends Fragment {
                             .addToBackStack("")
                             .replace(R.id.summaryPage, csFrag)
                             .commit();
-                } else {
-                    Log.e(TAG, "TextView is not \'Results\' or \'Currently Skating\'.");
-                }
+                }*/
+                EventResultsFragment erFrag = EventResultsFragment.newInstance();
+                getFragmentManager().beginTransaction()
+                        .add(erFrag, "EVENT_RESULTS_FRAG")
+                        .addToBackStack("")
+                        .replace(R.id.frame_layout, erFrag)
+                        .commit();
             }
         };
     }
 
     private void createTable(View rootView) throws IOException {
-        /*//TODO - change url based on event
+        //TODO - change url based on event
         Document doc = Jsoup.connect("http://www.isuresults.com/results/season1718/owg2018/").get();
-        TableLayout table = rootView.findViewById(R.id.eventTable);
+        mTable = rootView.findViewById(R.id.eventTable);
 
-        // should only be one table
-        Elements webTables = doc.select("table[width=100%]");
-        webTables.get(0).child(0).children().forEach(row -> {
+        // get the time setting (should be only 1 element)
+        Elements caption = doc.getElementsByClass("caption5");
+        ((TextView)(rootView.findViewById(R.id.timeHolder))).setText(caption.get(0).text());
+
+        // get the 'Time Schedule' table
+        Elements webTables = doc.getElementsByTag("table");
+        Element table = webTables.get(5).child(0);
+        table.child(0).remove();
+
+        createTitleRow();
+        table.children().forEach(row -> {
             // date, time, category, segment
+            String date = row.child(0).text();
+            String time = row.child(1).text();
+            String category = row.child(2).text();
+            String segment = row.child(3).text();
+            createTableRow(date, time, category, segment);
+        });
 
-        });*/
+        //insert three blank rows (because of the bottom nav bar)
+        for(int i=0; i < 3; i++) {
+            TableRow blank = new TableRow(mTable.getContext());
+            TextView empty = new TextView(blank.getContext());
+            blank.addView(empty);
+            mRows.add(blank);
+        }
     }
 
-    private void createTableRow(TableLayout table) {
-        TableRow row = new TableRow(table.getContext());
+    /**
+     * Create the title row for the summary table.
+     */
+    private void createTitleRow() {
+        TableRow row = new TableRow(mTable.getContext());
+        TextView textView = new TextView(row.getContext());
+        textView.setText("Date");
+        textView.setTextAppearance(R.style.smallBaseFont);
+        row.addView(textView);
+
+        textView = new TextView(row.getContext());
+        textView.setText("Time");
+        textView.setTextAppearance(R.style.smallBaseFont);
+        row.addView(textView);
+
+        textView = new TextView(row.getContext());
+        textView.setText("Category");
+        textView.setTextAppearance(R.style.smallBaseFont);
+        row.addView(textView);
+
+        textView = new TextView(row.getContext());
+        textView.setText("Segment");
+        textView.setTextAppearance(R.style.smallBaseFont);
+        row.addView(textView);
+
+        mRows.add(row);
+    }
+
+    /**
+     * Create a row for the summary table.
+     * @param date - String for the date
+     * @param time - String for the time
+     * @param category - String for the category
+     * @param segment - String for the segment
+     */
+    private void createTableRow(String date, String time, String category, String segment) {
+        TableRow row = new TableRow(mTable.getContext());
+
+        TextView textView = new TextView(row.getContext());
+        textView.setText(date);
+        textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
+        textView.setTextAppearance(R.style.basicFont);
+        row.addView(textView);
+
+        textView = new TextView(row.getContext());
+        textView.setText(time.isEmpty() ? DASHES : time.substring(0,5));
+        textView.setTextAppearance(R.style.basicFont);
+        row.addView(textView);
+
+        textView = new TextView(row.getContext());
+        textView.setText(category.isEmpty() ? (DASHES+DASHES+DASHES) : category);
+        textView.setTextAppearance(R.style.basicFont);
+        row.addView(textView);
+
+        textView = new TextView(row.getContext());
+        if(!segment.isEmpty()) {
+            textView.setOnClickListener(mListener);
+        }
+        textView.setText(segment.isEmpty() ? (DASHES+DASHES) : segment);
+        textView.setTextAppearance(R.style.basicFont);
+        row.addView(textView);
+
+        mRows.add(row);
+    }
+
+    private class CreateTableAsyncTask extends AsyncTask<View, Void, Void> {
+        @Override
+        protected Void doInBackground(View... views) {
+            // set up the table
+            try{
+                createTable(views[0]);
+            } catch (IOException e) {
+                Log.e(TAG, e.getMessage());
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void param) {
+            mRows.forEach(row -> {
+                mTable.addView(row);
+            });
+        }
     }
 }

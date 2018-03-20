@@ -44,10 +44,13 @@ public class LandingFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        if(container != null) {
+            container.removeAllViews();
+        }
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_landing, container, false);
 
-        createListeners();
+        createListener();
 
         //TODO - add listeners
         //Button button = rootView.findViewById(R.id.eventButton);
@@ -61,24 +64,7 @@ public class LandingFragment extends Fragment {
     /**
      * Create OnClickListeners for the Button and the TextViews.
      */
-    private void createListeners() {
-        mButtonListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //pass the name of the event to the fragment
-                EventSummaryFragment esFrag = EventSummaryFragment.newInstance();
-                Bundle data = new Bundle();
-                data.putString("event", ((Button) v).getText().toString());
-                esFrag.setArguments(data);
-
-                getFragmentManager().beginTransaction()
-                        .add(esFrag, "EVENT_SUMMARY_FRAG")
-                        .addToBackStack("")
-                        .replace(R.id.frame_layout, esFrag)
-                        .commit();
-            }
-        };
-
+    private void createListener() {
         mTextListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {

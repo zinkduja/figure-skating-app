@@ -17,106 +17,44 @@
             android:id="@+id/eventTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:fontFamily="@font/aclonica"
-            android:text="TextView"
+            android:text="Title of Event"
             android:textAlignment="center"
             android:textColor="@android:color/black"
-            android:textSize="20sp" />
+            android:textSize="24sp" />
 
-        <TableLayout
-            android:id="@+id/eventTable"
+        <TextView
+            android:id="@+id/timeHolder"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:stretchColumns="*">
+            android:layout_height="wrap_content"
+            android:text="(time)"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
 
-            <TableRow
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:padding="20px"
+        tools:layout_editor_absoluteX="10dp"
+        tools:layout_editor_absoluteY="66dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TableLayout
+                android:id="@+id/eventTable"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:stretchColumns="*">
+            </TableLayout>
 
-                <TextView
-                    android:id="@+id/cell1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Men's Short Program: "
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp" />
+        </LinearLayout>
+    </ScrollView>
 
-                <TextView
-                    android:id="@+id/cell2"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Results \n"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp" />
-
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/cell3"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Men's Free Skating"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/cell4"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Currently Skating \n"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp" />
-
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/cell5"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Women's Short Program: "
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/cell6"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Results \n"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp" />
-
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/cell7"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Women's Free Skating:"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/cell8"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Results"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp" />
-
-            </TableRow>
-
-        </TableLayout>
     </LinearLayout>
 </FrameLayout>
