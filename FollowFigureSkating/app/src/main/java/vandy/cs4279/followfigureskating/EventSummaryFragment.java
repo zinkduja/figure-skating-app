@@ -40,7 +40,10 @@ public class EventSummaryFragment extends Fragment {
     private final String DASHES = "---------";
 
     private View.OnClickListener mListener;
+    private View mView;
+
     private String mEvent;
+    private String mTime;
     private TableLayout mTable;
     private List<TableRow> mRows;
     private boolean isPrevColored; //used to color rows
@@ -72,19 +75,19 @@ public class EventSummaryFragment extends Fragment {
             container.removeAllViews();
         }
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_event_summary, container, false);
+        mView = inflater.inflate(R.layout.fragment_event_summary, container, false);
         mEvent = getArguments().getString("event");
         createListener();
 
         // set event title
-        TextView title = (TextView) rootView.findViewById(R.id.eventTitle);
+        TextView title = (TextView) mView.findViewById(R.id.eventTitle);
         title.setText(mEvent);
 
         // fill in the table
         mRows.clear();
-        (new CreateTableAsyncTask()).execute(rootView);
+        (new CreateTableAsyncTask()).execute();
 
-        return rootView;
+        return mView;
     }
 
     //TODO - change how to determine results or cur skating
@@ -111,6 +114,11 @@ public class EventSummaryFragment extends Fragment {
                             .commit();
                 }*/
                 EventResultsFragment erFrag = EventResultsFragment.newInstance();
+                Bundle data = new Bundle();
+                data.putString("event", mEvent);
+                String type = ((TextView) v).getText().toString();
+                erFrag.setArguments(data);
+
                 getFragmentManager().beginTransaction()
                         .add(erFrag, "EVENT_RESULTS_FRAG")
                         .addToBackStack("")
@@ -120,14 +128,14 @@ public class EventSummaryFragment extends Fragment {
         };
     }
 
-    private void createTable(View rootView) throws IOException {
+    private void createTable() throws IOException {
         //TODO - change url based on event
         Document doc = Jsoup.connect("http://www.isuresults.com/results/season1718/owg2018/").get();
-        mTable = rootView.findViewById(R.id.eventTable);
+        mTable = mView.findViewById(R.id.eventTable);
 
         // get the time setting (should be only 1 element)
         Elements caption = doc.getElementsByClass("caption5");
-        ((TextView)(rootView.findViewById(R.id.timeHolder))).setText(caption.get(0).text());
+        mTime = caption.get(0).text();
 
         // get the 'Time Schedule' table
         Elements webTables = doc.getElementsByTag("table");
@@ -230,12 +238,12 @@ public class EventSummaryFragment extends Fragment {
         mRows.add(row);
     }
 
-    private class CreateTableAsyncTask extends AsyncTask<View, Void, Void> {
+    private class CreateTableAsyncTask extends AsyncTask<Void, Void, Void> {
         @Override
-        protected Void doInBackground(View... views) {
+        protected Void doInBackground(Void... params) {
             // set up the table
             try{
-                createTable(views[0]);
+                createTable();
             } catch (IOException e) {
                 Log.e(TAG, e.getMessage());
             }
@@ -245,6 +253,8 @@ public class EventSummaryFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Void param) {
+            ((TextView)(mView.findViewById(R.id.timeHolder))).setText(mTime);
+
             mRows.forEach(row -> {
                 mTable.addView(row);
             });

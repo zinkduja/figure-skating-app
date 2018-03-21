@@ -253,6 +253,7 @@ public class SkaterBioFragment extends Fragment {
                 Element bestTopComp = doc.getElementById("FormView1_GridView3_ctl02_HyperLink1");
                 Element bestTop = doc.getElementById("FormView1_GridView3");
 
+                //TODO - check if elements are null
                 newSkater = new Skater(mSkaterName, dob.text(), height, hometown.text(),
                         coach.text(), choreo.text(), former.text(), nation.text(), shortProgram.text(),
                         freeProgram.text(), bestTop.text(), bestTopComp.text(), bestShort.text(),
