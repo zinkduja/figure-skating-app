@@ -249,9 +249,19 @@ public class SkaterBioFragment extends Fragment {
                 Element shortProgram = doc.getElementById("FormView1_Label3");
                 Element freeProgram = doc.getElementById("FormView1_Label4");
                 Element bestShortComp = doc.getElementById("FormView1_GridView3_ctl03_HyperLink1");
+                if(bestShortComp == (null)){
+                    bestShortComp = doc.getElementById("FormView1_GridView3_ctl03_Label");
+                }
                 Element bestShort = doc.getElementById("FormView1_GridView3");
                 Element bestTopComp = doc.getElementById("FormView1_GridView3_ctl02_HyperLink1");
+                if(bestTopComp == (null)) {
+                    bestTopComp = doc.getElementById("FormView1_GridView3_ctl02_Label");
+                }
                 Element bestTop = doc.getElementById("FormView1_GridView3");
+                System.out.println(freeProgram.text());
+                System.out.println(bestTop.text());
+                System.out.println(bestTopComp.text());
+                System.out.println(bestShort.text());
 
                 newSkater = new Skater(mSkaterName, dob.text(), height, hometown.text(),
                         coach.text(), choreo.text(), former.text(), nation.text(), shortProgram.text(),
