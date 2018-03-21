@@ -308,6 +308,11 @@
 
                 </TableLayout>
 
+                <TextView
+                    android:id="@+id/blank3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
                 <View
                     android:id="@+id/line2"
                     android:layout_width="match_parent"
@@ -412,7 +417,7 @@
                 </TableLayout>
 
                 <TextView
-                    android:id="@+id/blank3"
+                    android:id="@+id/blank4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -421,6 +426,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/blank5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/blank6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/blank7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
         </LinearLayout>
