@@ -138,6 +138,7 @@ public class SkaterBioFragment extends Fragment {
         if(user != null) {
             // get rid of the ".com" of the email
             String[] email = user.getEmail().split("\\.");
+
             mDatabase.child("favorites").child("skaters").child(email[0])
                     .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -151,26 +152,27 @@ public class SkaterBioFragment extends Fragment {
                                         fav = true;
                                     }
                                 }
+
                                 followButton.setFavorite(fav);
-
-                                followButton.setOnFavoriteChangeListener(
-                                        new MaterialFavoriteButton.OnFavoriteChangeListener() {
-                                            @Override
-                                            public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean favorite) {
-                                                if (favorite) {
-                                                    addFavorite();
-                                                } else {
-                                                    removeFavorite();
-                                                }
-                                            }
-                                        });
                             }
-
                         }
 
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
                             Log.e(TAG, "Database error: " + databaseError.getMessage());
+                        }
+                    });
+
+            // set up listener for button
+            followButton.setOnFavoriteChangeListener(
+                    new MaterialFavoriteButton.OnFavoriteChangeListener() {
+                        @Override
+                        public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean favorite) {
+                            if (favorite) {
+                                addFavorite();
+                            } else {
+                                removeFavorite();
+                            }
                         }
                     });
         } else {
