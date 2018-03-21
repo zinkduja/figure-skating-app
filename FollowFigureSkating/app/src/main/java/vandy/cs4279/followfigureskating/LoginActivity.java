@@ -200,6 +200,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void onSuccessfulLoginOrRegister() {
         Intent intent = new Intent(this, LandingActivity.class);
         startActivity(intent);
+        finish(); // prevents user from going 'back' to here
     }
 
     public void onClick(View view) {

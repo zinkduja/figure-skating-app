@@ -23,6 +23,7 @@ public class EventResultsFragment extends Fragment {
 
     private View mView;
     private View.OnClickListener mListener;
+    private static String mEvent;
 
     public EventResultsFragment() {
         // Required empty public constructor
@@ -48,7 +49,13 @@ public class EventResultsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_event_results, container, false);
-        //setUpTabHost();
+        if(getArguments() != null) {
+            mEvent = getArguments().getString("event");
+        }
+
+        // set event title
+        TextView title = (TextView) mView.findViewById(R.id.resultsTitle);
+        title.setText(mEvent);
 
         mListener = new View.OnClickListener() {
             @Override

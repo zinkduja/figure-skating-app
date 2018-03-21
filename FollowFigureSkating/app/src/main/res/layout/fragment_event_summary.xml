@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:fontFamily="@font/aclonica"
+            android:paddingTop="5dp"
             android:text="Title of Event"
             android:textAlignment="center"
             android:textColor="@android:color/black"

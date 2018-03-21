@@ -92,8 +92,7 @@ public class LandingActivity extends AppCompatActivity {
         List list = getSupportFragmentManager().getFragments();
         int len = list.size();
 
-        // fixes some back button issues
-        if (len >= 0) {
+        if(len > 0) {
             if (list.get(len-1) instanceof SkatersFragment) {
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.frame_layout, SkatersFragment.newInstance())
