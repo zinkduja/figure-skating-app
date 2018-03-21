@@ -48,7 +48,7 @@ public class EventResultsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_event_results, container, false);
-        setUpTabHost();
+        //setUpTabHost();
 
         mListener = new View.OnClickListener() {
             @Override
@@ -72,10 +72,10 @@ public class EventResultsFragment extends Fragment {
 
         return mView;
     }
-
-    /**
+/*
+    *//**
      * Set up the TabHost for this page.
-     */
+     *//*
     private void setUpTabHost() {
         TabHost host = (TabHost)mView.findViewById(R.id.resultsTabHost);
         host.setup();
@@ -91,7 +91,7 @@ public class EventResultsFragment extends Fragment {
         spec.setContent(R.id.menTab);
         spec.setIndicator("Men");
         host.addTab(spec);
-    }
+    }*/
 
     private void setListeners() {
         TextView textView = (TextView) mView.findViewById(R.id.wTableCell2);
@@ -109,23 +109,6 @@ public class EventResultsFragment extends Fragment {
         textView = (TextView) mView.findViewById(R.id.wTableCell38);
         textView.setOnClickListener(mListener);
         textView = (TextView) mView.findViewById(R.id.wTableCell44);
-        textView.setOnClickListener(mListener);
-
-        textView = (TextView) mView.findViewById(R.id.tableCell2);
-        textView.setOnClickListener(mListener);
-        textView = (TextView) mView.findViewById(R.id.tableCell8);
-        textView.setOnClickListener(mListener);
-        textView = (TextView) mView.findViewById(R.id.tableCell14);
-        textView.setOnClickListener(mListener);
-        textView = (TextView) mView.findViewById(R.id.tableCell20);
-        textView.setOnClickListener(mListener);
-        textView = (TextView) mView.findViewById(R.id.tableCell26);
-        textView.setOnClickListener(mListener);
-        textView = (TextView) mView.findViewById(R.id.tableCell32);
-        textView.setOnClickListener(mListener);
-        textView = (TextView) mView.findViewById(R.id.tableCell38);
-        textView.setOnClickListener(mListener);
-        textView = (TextView) mView.findViewById(R.id.tableCell44);
         textView.setOnClickListener(mListener);
     }
 }
