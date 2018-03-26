@@ -60,12 +60,15 @@ public class FavoritesFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        mSkaterList = new ArrayList<>();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        if(container != null) {
+            container.removeAllViews();
+        }
+
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_favorites, container, false);
         setUpTabHost();
@@ -76,21 +79,19 @@ public class FavoritesFragment extends Fragment {
                 //pass the name of the skater to the fragment
                 SkaterBioFragment sbFrag = SkaterBioFragment.newInstance();
                 Bundle data = new Bundle();
-                data.putString("name", ((TextView) v).getText().toString());
+                LinearLayout layout = (LinearLayout)(((CardView) v).getChildAt(0));
+                data.putString("name", ((TextView)(layout.getChildAt(1))).getText().toString());
                 sbFrag.setArguments(data);
 
                 getFragmentManager().beginTransaction()
-                        .add(sbFrag, "SKATER_BIO_FRAG")
-                        .addToBackStack("")
-                        .replace(R.id.favoritesPage, sbFrag)
+                        .addToBackStack("SKATER_BIO_FRAG")
+                        .replace(R.id.frame_layout, sbFrag)
                         .commit();
             }
         };
 
+        mSkaterList = new ArrayList<>();
         getSkatersFromDB();
-
-        //TextView tv = mView.findViewById(R.id.textView1);
-        //tv.setOnClickListener(mListener);
 
         return mView;
     }
@@ -219,11 +220,11 @@ public class FavoritesFragment extends Fragment {
                     layout.addView(pic);
 
                     // add text formatting
-                    TextView name = createSkaterText(layout, skater.getValue().toString());
-                    name.setOnClickListener(mListener);
+                    TextView name = createSkaterText(layout, skater.getKey());
                     layout.addView(name);
 
                     cardView.addView(layout);
+                    cardView.setOnClickListener(mListener);
                     mSkaterList.add(cardView);
                 });
                 Log.w(TAG, "Successful fetch of favorite skaters from database");

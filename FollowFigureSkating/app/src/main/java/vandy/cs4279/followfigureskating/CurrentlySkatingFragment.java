@@ -2,6 +2,7 @@ package vandy.cs4279.followfigureskating;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class CurrentlySkatingFragment extends Fragment {
+
+    private final String TAG = "CurrentlySkatingFragment";
 
     public CurrentlySkatingFragment() {
         // Required empty public constructor
