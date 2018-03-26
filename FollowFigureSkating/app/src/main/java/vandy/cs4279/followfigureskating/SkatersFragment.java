@@ -185,15 +185,15 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
         //pass the name of the skater to the fragment
         SkaterBioFragment sbFrag = SkaterBioFragment.newInstance();
         Bundle data = new Bundle();
-        data.putString("name", ((TextView) view).getText().toString());
+        LinearLayout layout = (LinearLayout)(((CardView) view).getChildAt(0));
+        data.putString("name", ((TextView)(layout.getChildAt(1))).getText().toString());
         sbFrag.setArguments(data);
 
         //start the fragment
         getFragmentManager()
                 .beginTransaction()
-                .add(sbFrag, "SKATER_BIO_FRAG")
-                .addToBackStack("")
-                .replace(R.id.skaterPage, sbFrag)
+                .addToBackStack("SKATER_BIO_FRAG")
+                .replace(R.id.frame_layout, sbFrag)
                 .commit();
     }
 
@@ -245,8 +245,8 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
                 layout.addView(name);
 
                 // set listeners and add to main layout
-                name.setOnClickListener(getFragment());
                 cardView.addView(layout);
+                cardView.setOnClickListener(getFragment());
                 mVertLL.addView(cardView);
                 mSkaterViewList.add(cardView);
             });

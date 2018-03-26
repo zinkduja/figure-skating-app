@@ -7,6 +7,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginLeft="5dp"
         android:orientation="vertical">
 
         <TextView
@@ -24,8 +25,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/aclonica"
-            android:text="Account Settings"
             android:padding="20px"
+            android:text="Account Settings"
             android:textAlignment="center"
             android:textColor="@android:color/black"
             android:textSize="24sp" />
@@ -41,49 +42,38 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/aclonica"
-                android:text="\nCategory 1"
+                android:text="\nFollowing"
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
 
-            <Switch
-                android:id="@+id/switch1"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:showText="true"
-                android:padding="5px"
-                android:text="Setting 1"
-                android:textSize="18sp" />
+                android:orientation="horizontal">
 
-            <Switch
-                android:id="@+id/switch2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:showText="true"
-                android:padding="5px"
-                android:text="Setting 2"
-                android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/stopFollowingText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Stop following all skaters"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp" />
 
-            <Switch
-                android:id="@+id/switch3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:showText="true"
-                android:padding="5px"
-                android:text="Setting 3"
-                android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/stopFollowingLink"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:text="Stop"
+                    android:textAlignment="textEnd"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp" />
 
-            <Switch
-                android:id="@+id/switch4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:showText="true"
-                android:padding="5px"
-                android:text="Setting 4"
-                android:textSize="18sp" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/settingType2"
@@ -100,8 +90,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:showText="true"
                 android:padding="5px"
+                android:showText="true"
                 android:text="Setting 2"
                 android:textSize="18sp" />
 
@@ -110,8 +100,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:showText="true"
                 android:padding="5px"
+                android:showText="true"
                 android:text="Setting 3"
                 android:textSize="18sp" />
 
@@ -120,8 +110,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:showText="true"
                 android:padding="5px"
+                android:showText="true"
                 android:text="Setting 4"
                 android:textSize="18sp" />
 
@@ -140,8 +130,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:showText="true"
                 android:padding="5px"
+                android:showText="true"
                 android:text="Setting 1"
                 android:textSize="18sp" />
 
@@ -159,8 +149,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:showText="true"
                 android:padding="5px"
+                android:showText="true"
                 android:text="Setting 3"
                 android:textSize="18sp" />
 
@@ -169,19 +159,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:showText="true"
                 android:padding="5px"
+                android:showText="true"
                 android:text="Setting 4"
-                android:textSize="18sp" />
-
-            <Switch
-                android:id="@+id/switch5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="5px"
-                android:showText="true"
-                android:text="Setting 1"
                 android:textSize="18sp" />
 
         </LinearLayout>

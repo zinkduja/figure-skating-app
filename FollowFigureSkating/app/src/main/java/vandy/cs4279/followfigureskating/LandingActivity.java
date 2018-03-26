@@ -2,6 +2,9 @@ package vandy.cs4279.followfigureskating;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -34,8 +37,6 @@ import java.util.Map;
 public class LandingActivity extends AppCompatActivity {
 
     private final static String TAG = "Landing Activity";
-
-    protected Map<String, Bitmap> mNationBmpMap;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -70,6 +71,7 @@ public class LandingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FF01798C")));
 
         // update the skaters from the ISU website
         (new SkaterListAsyncTask()).execute("http://www.isuresults.com/ws/ws/wsladies.htm");
@@ -87,65 +89,14 @@ public class LandingActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed () {
-        super.onBackPressed();
-
-        List list = getSupportFragmentManager().getFragments();
-        int len = list.size();
-
-        if(len > 0) {
-            if (list.get(len-1) instanceof SkatersFragment) {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.frame_layout, SkatersFragment.newInstance())
-                        .commit();
-            } else if (list.get(len-1) instanceof FavoritesFragment) {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.frame_layout, FavoritesFragment.newInstance())
-                        .commit();
-            } else if (list.get(len-1) instanceof EventResultsFragment) {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.frame_layout, EventResultsFragment.newInstance())
-                        .commit();
-            }
+        Log.d(TAG, "onBackPressed:" + getSupportFragmentManager().getFragments().toString());
+        Fragment curFrag = getSupportFragmentManager().findFragmentById(R.id.frame_layout);
+        if(curFrag instanceof LandingFragment || curFrag instanceof SkatersFragment
+                || curFrag instanceof FavoritesFragment || curFrag instanceof UserSettingsFragment) {
+            // do not go back
+        } else {
+            super.onBackPressed();
         }
-    }
-
-    private Bitmap loadImageFromURL(String fileUrl){
-        try {
-            URL myFileUrl = new URL (fileUrl);
-            HttpURLConnection conn =
-                    (HttpURLConnection) myFileUrl.openConnection();
-            conn.setDoInput(true);
-            conn.connect();
-
-            InputStream is = conn.getInputStream();
-            return BitmapFactory.decodeStream(is);
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-            return null;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    private void getFlagsFromDB(DatabaseReference databaseReference) {
-        mNationBmpMap = new HashMap<>();
-
-        databaseReference.child("images").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                dataSnapshot.getChildren().forEach(child -> {
-                    Bitmap bmp = loadImageFromURL(child.getValue().toString());
-                    mNationBmpMap.put(child.getKey(), bmp);
-                });
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.e(TAG, "Database error: " + databaseError.getMessage());
-            }
-        });
     }
 
     private class SkaterListAsyncTask extends AsyncTask<String, Void, Void> {
@@ -179,8 +130,6 @@ public class LandingActivity extends AppCompatActivity {
                 });
 
                 Log.w(TAG, "database successfully updated");
-
-                getFlagsFromDB(mDatabase);
 
             } catch (Throwable t) {
                 t.printStackTrace();

@@ -67,9 +67,8 @@ public class EventResultsFragment extends Fragment {
                 sbFrag.setArguments(data);
 
                 getFragmentManager().beginTransaction()
-                        .add(sbFrag, "SKATER_BIO_FRAG")
-                        .addToBackStack("")
-                        .replace(R.id.resultsPage, sbFrag)
+                        .addToBackStack("SKATER_BIO_FRAG")
+                        .replace(R.id.frame_layout, sbFrag)
                         .commit();
             }
         };

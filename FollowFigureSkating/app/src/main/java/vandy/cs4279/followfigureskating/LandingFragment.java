@@ -6,6 +6,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,8 @@ import android.widget.TextView;
  * create an instance of this fragment.
  */
 public class LandingFragment extends Fragment {
+
+    private final String TAG = "LandingFragment";
 
     private View.OnClickListener mButtonListener;
     private View.OnClickListener mTextListener;
@@ -54,11 +58,8 @@ public class LandingFragment extends Fragment {
 
         createListener();
 
-        //TODO - add listeners
-        //Button button = rootView.findViewById(R.id.eventButton);
-        //button.setOnClickListener(mButtonListener);
-        TextView text = rootView.findViewById(R.id.event4);
-        text.setOnClickListener(mTextListener);
+        CardView card = rootView.findViewById(R.id.card_view5);
+        card.setOnClickListener(mTextListener);
 
         //TODO - add to dynamic adding
         createBlanks(rootView);
@@ -76,12 +77,12 @@ public class LandingFragment extends Fragment {
                 //pass the name of the event to the fragment
                 EventSummaryFragment esFrag = EventSummaryFragment.newInstance();
                 Bundle data = new Bundle();
-                data.putString("event", ((TextView) v).getText().toString());
+                LinearLayout layout = (LinearLayout)(((CardView) v).getChildAt(0));
+                data.putString("event", ((TextView)(layout.getChildAt(0))).getText().toString());
                 esFrag.setArguments(data);
 
                 getFragmentManager().beginTransaction()
-                        .add(esFrag, "EVENT_SUMMARY_FRAG")
-                        .addToBackStack("")
+                        .addToBackStack("EVENT_SUMMARY_FRAG")
                         .replace(R.id.frame_layout, esFrag)
                         .commit();
             }

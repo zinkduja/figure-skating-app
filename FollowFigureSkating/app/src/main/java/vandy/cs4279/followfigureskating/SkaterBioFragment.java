@@ -78,7 +78,7 @@ public class SkaterBioFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //set up reference to database
+        // set up reference to database
         mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
@@ -113,9 +113,6 @@ public class SkaterBioFragment extends Fragment {
         //get the skater's name that was passed in
         mSkaterName = getArguments().getString("name");
 
-
-
-
         return rootView;
     }
 
@@ -148,13 +145,26 @@ public class SkaterBioFragment extends Fragment {
                                 // check if skater is a favorite
                                 boolean fav = false;
                                 for(DataSnapshot child : dataSnapshot.getChildren()) {
-                                    if(child.getValue().equals(mSkaterName)) {
+                                    if(child.getKey().equals(mSkaterName)) {
                                         fav = true;
                                     }
                                 }
 
                                 followButton.setFavorite(fav);
                             }
+
+                            // set up listener for button
+                            followButton.setOnFavoriteChangeListener(
+                                    new MaterialFavoriteButton.OnFavoriteChangeListener() {
+                                        @Override
+                                        public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean favorite) {
+                                            if (favorite) {
+                                                addFavorite();
+                                            } else {
+                                                removeFavorite();
+                                            }
+                                        }
+                                    });
                         }
 
                         @Override
@@ -163,18 +173,7 @@ public class SkaterBioFragment extends Fragment {
                         }
                     });
 
-            // set up listener for button
-            followButton.setOnFavoriteChangeListener(
-                    new MaterialFavoriteButton.OnFavoriteChangeListener() {
-                        @Override
-                        public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean favorite) {
-                            if (favorite) {
-                                addFavorite();
-                            } else {
-                                removeFavorite();
-                            }
-                        }
-                    });
+
         } else {
             Log.e(TAG, "User somehow not logged in");
         }
@@ -189,7 +188,8 @@ public class SkaterBioFragment extends Fragment {
         if(user != null) {
             // get rid of the ".com" of the email
             String[] email = user.getEmail().split("\\.");
-            mDatabase.child("favorites").child("skaters").child(email[0]).push().setValue(mSkaterName);
+            mDatabase.child("favorites").child("skaters").child(email[0]).child(mSkaterName).setValue(true);
+                    //.push().setValue(mSkaterName);
         } else {
             Log.e(TAG, "User somehow not logged in");
         }
@@ -204,7 +204,12 @@ public class SkaterBioFragment extends Fragment {
         if(user != null) {
             // get rid of the ".com" of the email
             String[] email = user.getEmail().split("\\.");
-            mDatabase.child("favorites").child("skaters").child(email[0]).equalTo(mSkaterName).getRef().removeValue();
+            mDatabase.child("favorites")
+                    .child("skaters")
+                    .child(email[0])
+                    .child(mSkaterName)
+                    .removeValue();
+
         } else {
             Log.e(TAG, "User somehow not logged in");
         }

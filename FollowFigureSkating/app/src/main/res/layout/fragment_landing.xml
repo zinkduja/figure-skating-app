@@ -47,6 +47,7 @@
                     android:id="@+id/currentText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:fontFamily="@font/aclonica"
                     android:text="- Ongoing -"
                     android:textAlignment="center"

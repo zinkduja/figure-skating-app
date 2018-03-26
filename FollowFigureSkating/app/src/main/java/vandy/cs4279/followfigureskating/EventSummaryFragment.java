@@ -120,8 +120,7 @@ public class EventSummaryFragment extends Fragment {
                 erFrag.setArguments(data);
 
                 getFragmentManager().beginTransaction()
-                        .add(erFrag, "EVENT_RESULTS_FRAG")
-                        .addToBackStack("")
+                        .addToBackStack("EVENT_RESULTS_FRAG")
                         .replace(R.id.frame_layout, erFrag)
                         .commit();
             }

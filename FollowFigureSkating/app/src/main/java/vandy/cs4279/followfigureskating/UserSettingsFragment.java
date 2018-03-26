@@ -3,11 +3,16 @@ package vandy.cs4279.followfigureskating;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 /**
@@ -15,9 +20,14 @@ import com.google.firebase.auth.FirebaseAuth;
  * Use the {@link UserSettingsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class UserSettingsFragment extends Fragment implements View.OnClickListener {
+public class UserSettingsFragment extends Fragment {
 
+    private final String TAG = "UserSettingsFragment";
+
+    private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
+    private View.OnClickListener mLogoutListener;
+    private View.OnClickListener mFollowingListener;
 
     public UserSettingsFragment() {
         // Required empty public constructor
@@ -37,8 +47,9 @@ public class UserSettingsFragment extends Fragment implements View.OnClickListen
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //initialize auth
+        // initialize auth and database
         mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
     @Override
@@ -47,8 +58,12 @@ public class UserSettingsFragment extends Fragment implements View.OnClickListen
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user_settings, container, false);
 
-        //set onClickListener
-        view.findViewById(R.id.logout_link).setOnClickListener(this);
+        // create listeners
+        createListeners();
+
+        // set onClickListeners
+        view.findViewById(R.id.logout_link).setOnClickListener(mLogoutListener);
+        view.findViewById(R.id.stopFollowingLink).setOnClickListener(mFollowingListener);
 
         return view;
     }
@@ -66,9 +81,39 @@ public class UserSettingsFragment extends Fragment implements View.OnClickListen
         startActivity(intent);
     }
 
-    public void onClick(View view) {
-        if(view.getId() == R.id.logout_link) {
-            signOut();
-        }
+    /**
+     * Create the two OnClickListeners.
+     * mLogoutListener will log the user out
+     * mFollowingListener will remove all skaters from the 'favorites' list
+     */
+    private void createListeners() {
+        mLogoutListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.w(TAG, "User logged out.");
+                signOut();
+            }
+        };
+
+        mFollowingListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                if(user != null) {
+                    // get rid of the ".com" of the email
+                    String[] email = user.getEmail().split("\\.");
+                    mDatabase.child("favorites")
+                            .child("skaters")
+                            .child(email[0])
+                            .removeValue();
+
+                    Log.w(TAG, "Stopped following all skaters.");
+                    Toast.makeText(getActivity(), "Stopped following skaters", Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.e(TAG, "User somehow not logged in");
+                }
+            }
+        };
     }
 }

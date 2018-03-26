@@ -63,7 +63,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:background="@android:color/holo_blue_bright"
+                android:background="@color/paleBlue"
                 android:text="@string/action_sign_in_short"
                 android:textStyle="bold" />
 
@@ -73,7 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:background="@android:color/holo_blue_bright"
+                android:background="@color/paleBlue"
                 android:text="@string/action_register"
                 android:textStyle="bold" />
 

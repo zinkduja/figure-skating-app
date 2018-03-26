@@ -42,7 +42,7 @@
                 android:id="@+id/login_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@android:color/holo_blue_bright"
+                android:background="@color/paleBlue"
                 android:fontFamily="@font/aclonica"
                 android:onClick="launchLoginActivity"
                 android:text="Login"
