@@ -1,5 +1,6 @@
 package vandy.cs4279.followfigureskating;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -10,6 +11,11 @@ import android.widget.TabHost;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 
 /**
@@ -24,6 +30,13 @@ public class EventResultsFragment extends Fragment {
     private View mView;
     private View.OnClickListener mListener;
     private static String mEvent;
+
+    private TextView mRank1;
+    private TextView mName1;
+    private TextView mNation1;
+    private TextView mPoints1;
+    private TextView mSP1;
+    private TextView mFS1;
 
     public EventResultsFragment() {
         // Required empty public constructor
@@ -74,47 +87,53 @@ public class EventResultsFragment extends Fragment {
         };
 
         //TODO - replace with actual data
-        setListeners();
 
         return mView;
     }
-/*
-    *//**
-     * Set up the TabHost for this page.
-     *//*
-    private void setUpTabHost() {
-        TabHost host = (TabHost)mView.findViewById(R.id.resultsTabHost);
-        host.setup();
 
-        //Tab 1
-        TabHost.TabSpec spec = host.newTabSpec("women");
-        spec.setContent(R.id.womenTab);
-        spec.setIndicator("Women");
-        host.addTab(spec);
-
-        //Tab 2
-        spec = host.newTabSpec("men");
-        spec.setContent(R.id.menTab);
-        spec.setIndicator("Men");
-        host.addTab(spec);
-    }*/
-
-    private void setListeners() {
-        TextView textView = (TextView) mView.findViewById(R.id.wTableCell2);
-        textView.setOnClickListener(mListener);
-        textView = (TextView) mView.findViewById(R.id.wTableCell8);
-        textView.setOnClickListener(mListener);
-        textView = (TextView) mView.findViewById(R.id.wTableCell14);
-        textView.setOnClickListener(mListener);
-        textView = (TextView) mView.findViewById(R.id.wTableCell20);
-        textView.setOnClickListener(mListener);
-        textView = (TextView) mView.findViewById(R.id.wTableCell26);
-        textView.setOnClickListener(mListener);
-        textView = (TextView) mView.findViewById(R.id.wTableCell32);
-        textView.setOnClickListener(mListener);
-        textView = (TextView) mView.findViewById(R.id.wTableCell38);
-        textView.setOnClickListener(mListener);
-        textView = (TextView) mView.findViewById(R.id.wTableCell44);
-        textView.setOnClickListener(mListener);
+    @Override
+    public void onStart() {
+        super.onStart();
+        (new ParsePageAsyncTask()).execute(new String[]{"http://www.isuresults.com/results/season1718/owg2018/CAT001RS.HTM"});
     }
+
+    private class ParsePageAsyncTask extends AsyncTask<String, Void, Elements> {
+        Element image;
+
+        @Override
+        protected Elements doInBackground(String... strings) {
+            Elements firstLine = new Elements();
+            try {
+                Document doc = Jsoup.connect(strings[0]).get();
+                // Get info from webpage
+                Element table = doc.select("table table table").get(0);
+                firstLine = table.select("tr");
+            } catch (Throwable t) {
+                t.printStackTrace();
+            }
+            return firstLine;
+        }
+
+        @Override
+        protected void onPostExecute(Elements s) {
+            TableLayout table = mView.findViewById(R.id.resultsTable);
+            Elements cols;
+            for (int j = 1 ; j < s.size(); j+=2) {
+                TableRow rowToAdd = new TableRow(getActivity());
+                TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+                rowToAdd.setLayoutParams(lp);
+                cols = s.get(j).select("td");
+                for (int i = 0; i <= 8; i++) {
+                    if (i == 0 || i == 1 || i == 2 || i == 6 || i == 7 || i == 8) {
+                        TextView rowThing = new TextView(getActivity());
+                        rowThing.setText(cols.get(i).text());
+                        rowThing.setTextColor(0xFF000000);
+                        rowToAdd.addView(rowThing);
+                    }
+                }
+                table.addView(rowToAdd, j/2+1);
+            }
+        }
+
+        }
 }
