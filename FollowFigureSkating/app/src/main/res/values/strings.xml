@@ -82,6 +82,8 @@
 
     <string name="pref_title_new_message_notifications">New message notifications</string>
 
+    <string name="confirm_remove_all_skaters">Are you sure?</string>
+
     <string name="pref_title_ringtone">Ringtone</string>
     <string name="pref_ringtone_silent">Silent</string>
 
@@ -94,8 +96,10 @@
     <string name="following">Following</string>
     <string name="skaters">Skaters</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <!-- Additional strings -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="login_label">Login</string>
     <string name="action_register">Register</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

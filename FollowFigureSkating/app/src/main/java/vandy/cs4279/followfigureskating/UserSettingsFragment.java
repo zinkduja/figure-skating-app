@@ -1,5 +1,7 @@
 package vandy.cs4279.followfigureskating;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -27,7 +29,9 @@ public class UserSettingsFragment extends Fragment {
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
     private View.OnClickListener mLogoutListener;
-    private View.OnClickListener mFollowingListener;
+    private View.OnClickListener mStopListener;
+    private View.OnClickListener mConfirmListener;
+    private AlertDialog mAlertDialog;
 
     public UserSettingsFragment() {
         // Required empty public constructor
@@ -58,12 +62,13 @@ public class UserSettingsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user_settings, container, false);
 
-        // create listeners
+        // create listeners and Dialog
+        createDialog();
         createListeners();
 
         // set onClickListeners
         view.findViewById(R.id.logout_link).setOnClickListener(mLogoutListener);
-        view.findViewById(R.id.stopFollowingLink).setOnClickListener(mFollowingListener);
+        view.findViewById(R.id.stopFollowingLink).setOnClickListener(mStopListener);
 
         return view;
     }
@@ -81,10 +86,40 @@ public class UserSettingsFragment extends Fragment {
         startActivity(intent);
     }
 
+    private void createDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage(R.string.confirm_remove_all_skaters)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                        if(user != null) {
+                            // get rid of the ".com" of the email
+                            String[] email = user.getEmail().split("\\.");
+                            mDatabase.child("favorites")
+                                    .child("skaters")
+                                    .child(email[0])
+                                    .removeValue();
+
+                            Log.w(TAG, "Stopped following all skaters.");
+                        } else {
+                            Log.e(TAG, "User somehow not logged in");
+                        }
+                    }
+                })
+                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+                    }
+                });
+        // Create the AlertDialog object and return it
+        mAlertDialog = builder.create();
+    }
+
     /**
      * Create the two OnClickListeners.
      * mLogoutListener will log the user out
-     * mFollowingListener will remove all skaters from the 'favorites' list
+     * mStopListener will show an AlertDialog so the user can confirm
      */
     private void createListeners() {
         mLogoutListener = new View.OnClickListener() {
@@ -95,24 +130,10 @@ public class UserSettingsFragment extends Fragment {
             }
         };
 
-        mFollowingListener = new View.OnClickListener() {
+        mStopListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-                if(user != null) {
-                    // get rid of the ".com" of the email
-                    String[] email = user.getEmail().split("\\.");
-                    mDatabase.child("favorites")
-                            .child("skaters")
-                            .child(email[0])
-                            .removeValue();
-
-                    Log.w(TAG, "Stopped following all skaters.");
-                    Toast.makeText(getActivity(), "Stopped following skaters", Toast.LENGTH_SHORT).show();
-                } else {
-                    Log.e(TAG, "User somehow not logged in");
-                }
+                mAlertDialog.show();
             }
         };
     }
