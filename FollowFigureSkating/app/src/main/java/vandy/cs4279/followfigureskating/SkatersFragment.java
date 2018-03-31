@@ -140,7 +140,7 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // fetch the data
-                (new SkatersFragment.FetchSkatersAsyncTask()).execute(dataSnapshot);
+                (new FetchSkatersAsyncTask()).execute(dataSnapshot);
             }
 
             @Override

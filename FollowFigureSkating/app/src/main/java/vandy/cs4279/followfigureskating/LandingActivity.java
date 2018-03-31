@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.EventLog;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -78,6 +79,10 @@ public class LandingActivity extends AppCompatActivity {
         (new SkaterListAsyncTask()).execute("http://www.isuresults.com/ws/ws/wsmen.htm");
         //TODO - add pairs and ice dance
 
+        // update the events from the ISU website
+        (new EventListAsyncTask())
+                .execute("https://www.isu.org/figure-skating/figure-skating-events/figure-skating-calendar");
+
         // set up bottom navigation
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -129,7 +134,52 @@ public class LandingActivity extends AppCompatActivity {
                     }
                 });
 
-                Log.w(TAG, "database successfully updated");
+                Log.i(TAG, "skater database successfully updated");
+
+            } catch (Throwable t) {
+                t.printStackTrace();
+            }
+
+            return null;
+        }
+    }
+
+    private class EventListAsyncTask extends AsyncTask<String, Void, Void> {
+
+        private DatabaseReference mDatabase;
+
+        @Override
+        protected Void doInBackground(String... strings) {
+
+            try {
+                // set up events child of database and jsoup
+                mDatabase = FirebaseDatabase.getInstance().getReference();
+                Document doc = Jsoup.connect(strings[0]).get();
+                Element eventList = doc.getElementById("eventlist");
+                Elements events = eventList.getElementsByClass("content");
+
+                // get basic information for events
+                events.forEach(event -> {
+                    Element first = event.child(0).child(0);
+                    if(!first.text().equals("Cancelled")) {
+                        String title = first.attr("title");
+                        String link = first.absUrl("href");
+
+                        // get the start/end date and year
+                        String[] dates = event.child(1).child(0).text().split("-");
+                        String startDate = dates[0].substring(0, dates[0].length()-1);
+                        String endDate = dates[1].split(",")[0].substring(1);
+                        String year = dates[1].split(",")[1].substring(1);
+
+                        // update the database
+                        mDatabase.child("competitions").child(title).child("startDate").setValue(startDate);
+                        mDatabase.child("competitions").child(title).child("endDate").setValue(endDate);
+                        mDatabase.child("competitions").child(title).child("year").setValue(year);
+                        mDatabase.child("competitions").child(title).child("link").setValue(link);
+                    }
+                });
+
+                Log.i(TAG, "event database successfully updated");
 
             } catch (Throwable t) {
                 t.printStackTrace();
