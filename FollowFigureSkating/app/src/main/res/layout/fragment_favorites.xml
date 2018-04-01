@@ -14,9 +14,10 @@
         <TextView
             android:id="@+id/title3"
             android:layout_width="match_parent"
-            android:layout_height="75dp"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/aclonica"
-            android:paddingTop="25dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="20dp"
             android:text="Following!"
             android:textAlignment="center"
             android:textColor="@android:color/black"
@@ -71,11 +72,12 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/textView"
+                        <LinearLayout
+                            android:id="@+id/eventsLayout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Not Implemented Yet" />
+                            android:orientation="vertical"></LinearLayout>
+
                     </LinearLayout>
 
                 </FrameLayout>

@@ -55,11 +55,7 @@ public class SkaterBioFragment extends Fragment {
     private TextView mBestTopView;
     private TextView mBestTopCompView;
 
-
-    private ImageView mSkaterPhoto;
-
-    final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference ref = database.getReference();
+    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     public SkaterBioFragment() {
         // Required empty public constructor
@@ -131,7 +127,6 @@ public class SkaterBioFragment extends Fragment {
         MaterialFavoriteButton followButton =
                 (MaterialFavoriteButton) rootView.findViewById(R.id.followButton);
 
-        // check if the skater is favorited or not
         if(user != null) {
             // get rid of the ".com" of the email
             String[] email = user.getEmail().split("\\.");
@@ -189,7 +184,6 @@ public class SkaterBioFragment extends Fragment {
             // get rid of the ".com" of the email
             String[] email = user.getEmail().split("\\.");
             mDatabase.child("favorites").child("skaters").child(email[0]).child(mSkaterName).setValue(true);
-                    //.push().setValue(mSkaterName);
         } else {
             Log.e(TAG, "User somehow not logged in");
         }
@@ -209,13 +203,14 @@ public class SkaterBioFragment extends Fragment {
                     .child(email[0])
                     .child(mSkaterName)
                     .removeValue();
-
         } else {
             Log.e(TAG, "User somehow not logged in");
         }
     }
 
-
+    /**
+     * Fetch all the skaters from the database.
+     */
     public void getSkaterFromDB() {
         mDatabase.child("skaters").orderByValue().equalTo(mSkaterName).addValueEventListener(new ValueEventListener() {
             @Override

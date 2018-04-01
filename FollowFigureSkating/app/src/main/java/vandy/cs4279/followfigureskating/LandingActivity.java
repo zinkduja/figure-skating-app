@@ -163,7 +163,6 @@ public class LandingActivity extends AppCompatActivity {
                     Element first = event.child(0).child(0);
                     if(!first.text().equals("Cancelled")) {
                         String title = first.attr("title");
-                        String link = first.absUrl("href");
 
                         // get the start/end date and year
                         String[] dates = event.child(1).child(0).text().split("-");
@@ -175,7 +174,6 @@ public class LandingActivity extends AppCompatActivity {
                         mDatabase.child("competitions").child(title).child("startDate").setValue(startDate);
                         mDatabase.child("competitions").child(title).child("endDate").setValue(endDate);
                         mDatabase.child("competitions").child(title).child("year").setValue(year);
-                        mDatabase.child("competitions").child(title).child("link").setValue(link);
                     }
                 });
 

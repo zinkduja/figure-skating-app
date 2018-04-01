@@ -36,9 +36,11 @@ public class FavoritesFragment extends Fragment {
 
     private final String TAG = "FavoritesFragment";
 
-    private View.OnClickListener mListener;
+    private View.OnClickListener mSkaterListener;
+    private View.OnClickListener mEventListener;
     private View mView;
     private List<CardView> mSkaterList;
+    private List<CardView> mEventList;
 
     private DatabaseReference mDatabase;
 
@@ -73,25 +75,14 @@ public class FavoritesFragment extends Fragment {
         mView = inflater.inflate(R.layout.fragment_favorites, container, false);
         setUpTabHost();
 
-        mListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //pass the name of the skater to the fragment
-                SkaterBioFragment sbFrag = SkaterBioFragment.newInstance();
-                Bundle data = new Bundle();
-                LinearLayout layout = (LinearLayout)(((CardView) v).getChildAt(0));
-                data.putString("name", ((TextView)(layout.getChildAt(1))).getText().toString());
-                sbFrag.setArguments(data);
+        // set up OnClickListeners
+        createListeners();
 
-                getFragmentManager().beginTransaction()
-                        .addToBackStack("SKATER_BIO_FRAG")
-                        .replace(R.id.frame_layout, sbFrag)
-                        .commit();
-            }
-        };
-
+        // fetch info from database
         mSkaterList = new ArrayList<>();
+        mEventList = new ArrayList<>();
         getSkatersFromDB();
+        getEventsFromDB();
 
         return mView;
     }
@@ -116,16 +107,64 @@ public class FavoritesFragment extends Fragment {
         host.addTab(spec);
     }
 
+    private void createListeners() {
+        mSkaterListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //pass the name of the skater to the fragment
+                SkaterBioFragment sbFrag = SkaterBioFragment.newInstance();
+                Bundle data = new Bundle();
+                LinearLayout layout = (LinearLayout)(((CardView) v).getChildAt(0));
+                data.putString("name", ((TextView)(layout.getChildAt(1))).getText().toString());
+                sbFrag.setArguments(data);
+
+                getFragmentManager().beginTransaction()
+                        .addToBackStack("SKATER_BIO_FRAG")
+                        .replace(R.id.frame_layout, sbFrag)
+                        .commit();
+            }
+        };
+
+        mEventListener = new View.OnClickListener() {
+            @Override //TODO
+            public void onClick(View v) {
+                //pass the name of the event to the fragment
+                SkaterBioFragment sbFrag = SkaterBioFragment.newInstance();
+                Bundle data = new Bundle();
+                LinearLayout layout = (LinearLayout)(((CardView) v).getChildAt(0));
+                data.putString("name", ((TextView)(layout.getChildAt(1))).getText().toString());
+                sbFrag.setArguments(data);
+
+                getFragmentManager().beginTransaction()
+                        .addToBackStack("SKATER_BIO_FRAG")
+                        .replace(R.id.frame_layout, sbFrag)
+                        .commit();
+            }
+        };
+    }
+
     /**
      * Sets a message for if the user has no favorite skaters.
      */
-    private void setNoFavoritesMessage() {
+    private void setNoFavoriteSkatersMessage() {
         LinearLayout skatersLayout = (LinearLayout) mView.findViewById(R.id.skatersLayout);
         TextView msg = new TextView(skatersLayout.getContext());
         msg.setTextAppearance(R.style.baseFont);
         msg.setText("Not following any skaters");
 
         skatersLayout.addView(msg);
+    }
+
+    /**
+     * Sets a message for if the user has no favorite events.
+     */
+    private void setNoFavoriteEventsMessage() {
+        LinearLayout eventsLayout = (LinearLayout) mView.findViewById(R.id.eventsLayout);
+        TextView msg = new TextView(eventsLayout.getContext());
+        msg.setTextAppearance(R.style.baseFont);
+        msg.setText("Not following any events");
+
+        eventsLayout.addView(msg);
     }
 
     /**
@@ -138,14 +177,47 @@ public class FavoritesFragment extends Fragment {
             // get rid of the ".com" of the email
             String[] email = user.getEmail().split("\\.");
 
-            mDatabase.child("favorites").child("skaters").child(email[0]).addListenerForSingleValueEvent(new ValueEventListener() {
+            mDatabase.child("favorites").child("skaters").child(email[0]).orderByValue()
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     // fetch the data
                     if(dataSnapshot.getValue() != null) {
-                        (new FavoritesFragment.FetchSkatersAsyncTask()).execute(dataSnapshot);
+                        (new FetchSkatersAsyncTask()).execute(dataSnapshot);
                     } else {
-                        setNoFavoritesMessage();
+                        setNoFavoriteSkatersMessage();
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.e(TAG, "Database error: " + databaseError.getMessage());
+                }
+            });
+        } else {
+            Log.e(TAG, "User somehow not logged in");
+        }
+    }
+
+    /**
+     * Get the favorite events from the database.
+     */
+    private void getEventsFromDB() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if(user != null) {
+            // get rid of the ".com" of the email
+            String[] email = user.getEmail().split("\\.");
+
+            mDatabase.child("favorites").child("events").child(email[0]).orderByValue()
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    // fetch the data
+                    if(dataSnapshot.getValue() != null) {
+                        (new FetchEventsAsyncTask()).execute(dataSnapshot);
+                    } else {
+                        setNoFavoriteEventsMessage();
                     }
                 }
 
@@ -194,6 +266,24 @@ public class FavoritesFragment extends Fragment {
         return temp;
     }
 
+    /**
+     * Factory method to create and format a TextView for each event.
+     * @param layout - the enclosing LinearLayout
+     * @param eventTitle - title of the event
+     * @return - the TextView generated
+     */
+    private TextView createEventText(CardView layout, String eventTitle) {
+        TextView temp = new TextView(layout.getContext());
+
+        temp.setGravity(Gravity.CENTER);
+        temp.setPadding(27, 27, 27, 27);
+        temp.setText(eventTitle);
+        temp.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        temp.setTextAppearance(R.style.baseFont);
+
+        return temp;
+    }
+
     private class FetchSkatersAsyncTask extends AsyncTask<DataSnapshot, Void, Void> {
         @Override
         protected Void doInBackground(DataSnapshot... dataSnapshots) {
@@ -224,7 +314,7 @@ public class FavoritesFragment extends Fragment {
                     layout.addView(name);
 
                     cardView.addView(layout);
-                    cardView.setOnClickListener(mListener);
+                    cardView.setOnClickListener(mSkaterListener);
                     mSkaterList.add(cardView);
                 });
                 Log.w(TAG, "Successful fetch of favorite skaters from database");
@@ -249,6 +339,55 @@ public class FavoritesFragment extends Fragment {
                 textView.setText("blank");
                 textView.setTextColor(Color.WHITE);
                 skatersLayout.addView(textView);
+            }
+        }
+    }
+
+    private class FetchEventsAsyncTask extends AsyncTask<DataSnapshot, Void, Void> {
+        @Override
+        protected Void doInBackground(DataSnapshot... dataSnapshots) {
+            try {
+                dataSnapshots[0].getChildren().forEach(event -> {
+                    LinearLayout eventsLayout = mView.findViewById(R.id.eventsLayout);
+
+                    // set up CardView
+                    CardView cardView = new CardView(eventsLayout.getContext());
+                    cardView.setCardBackgroundColor(getResources().getColor(R.color.paleBlue));
+                    CardView.LayoutParams params = new CardView.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT, 200, Gravity.CENTER);
+                    params.setMargins(5, 0, 5, 30);
+                    cardView.setLayoutParams(params);
+                    cardView.setRadius(4);
+
+                    // add text formatting
+                    TextView title = createEventText(cardView, event.getKey());
+                    cardView.addView(title);
+
+                    cardView.setOnClickListener(mEventListener);
+                    mEventList.add(cardView);
+                });
+                Log.w(TAG, "Successful fetch of favorite skaters from database");
+
+            } catch (Throwable t) {
+                t.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void param) {
+            LinearLayout eventsLayout = (LinearLayout) mView.findViewById(R.id.eventsLayout);
+
+            // add layouts to page
+            mEventList.forEach(eventsLayout::addView);
+            // add blanks at end (underneath the bottom nav bar)
+            TextView textView;
+            for(int i=0; i < 3; i++) {
+                textView = new TextView(eventsLayout.getContext());
+                textView.setText("blank");
+                textView.setTextColor(Color.WHITE);
+                eventsLayout.addView(textView);
             }
         }
     }
