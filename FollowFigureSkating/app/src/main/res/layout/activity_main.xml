@@ -6,53 +6,33 @@
     android:layout_height="match_parent"
     tools:context="vandy.cs4279.followfigureskating.MainActivity">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/skater"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:contentDescription="@android:string/unknownName"
-            app:srcCompat="@drawable/skater" />
+            app:srcCompat="@drawable/transparentlogo" />
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/login_button"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:ems="10"
+            android:layout_alignBottom="@+id/skater"
+            android:layout_centerHorizontal="true"
+            android:layout_marginVertical="50dp"
+            android:background="@color/paleBlue"
             android:fontFamily="@font/aclonica"
-            android:inputType="textMultiLine"
-            android:lineSpacingExtra="12sp"
-            android:singleLine="false"
-            android:text="Follow\nFigure Skating!"
-            android:textAlignment="center"
-            android:textColor="@android:color/black"
-            android:textSize="30sp" />
+            android:onClick="launchLoginActivity"
+            android:text="@string/login"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <Button
-                android:id="@+id/login_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/paleBlue"
-                android:fontFamily="@font/aclonica"
-                android:onClick="launchLoginActivity"
-                android:text="Login"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </android.support.constraint.ConstraintLayout>
-
-    </LinearLayout>
+    </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

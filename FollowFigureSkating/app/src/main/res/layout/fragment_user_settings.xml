@@ -10,15 +10,31 @@
         android:layout_marginLeft="5dp"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/logout_link"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/aclonica"
-            android:paddingRight="5dp"
-            android:text="Logout\n"
-            android:textAlignment="textEnd"
-            android:textColor="@android:color/black" />
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/aboutLink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/aclonica"
+                android:text="About"
+                android:textColor="@android:color/black"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/logout_link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:fontFamily="@font/aclonica"
+                android:paddingRight="5dp"
+                android:text="Logout\n"
+                android:textAlignment="textEnd"
+                android:textColor="@android:color/black" />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/title"
@@ -53,7 +69,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/stopFollowingText"
+                    android:id="@+id/stopFollowingSkatersText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -63,7 +79,7 @@
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/stopFollowingLink"
+                    android:id="@+id/stopFollowingSkatersLink"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
@@ -72,7 +88,34 @@
                     android:textAllCaps="true"
                     android:textColor="@android:color/black"
                     android:textSize="18sp" />
+            </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/stopFollowingEventsText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Stop following all events"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/stopFollowingEventsLink"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:text="Stop"
+                    android:textAlignment="textEnd"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <TextView
@@ -82,46 +125,6 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/aclonica"
                 android:text="\nCategory 2"
-                android:textColor="@android:color/black"
-                android:textSize="18sp" />
-
-            <Switch
-                android:id="@+id/switch6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="5px"
-                android:showText="true"
-                android:text="Setting 2"
-                android:textSize="18sp" />
-
-            <Switch
-                android:id="@+id/switch7"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="5px"
-                android:showText="true"
-                android:text="Setting 3"
-                android:textSize="18sp" />
-
-            <Switch
-                android:id="@+id/switch8"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="5px"
-                android:showText="true"
-                android:text="Setting 4"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/settingType3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/aclonica"
-                android:text="\nCategory 3"
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
 
