@@ -126,18 +126,17 @@ public class FavoritesFragment extends Fragment {
         };
 
         mEventListener = new View.OnClickListener() {
-            @Override //TODO
+            @Override
             public void onClick(View v) {
                 //pass the name of the event to the fragment
-                SkaterBioFragment sbFrag = SkaterBioFragment.newInstance();
+                EventSummaryFragment esFrag = EventSummaryFragment.newInstance();
                 Bundle data = new Bundle();
-                LinearLayout layout = (LinearLayout)(((CardView) v).getChildAt(0));
-                data.putString("name", ((TextView)(layout.getChildAt(1))).getText().toString());
-                sbFrag.setArguments(data);
+                data.putString("name", ((TextView)((CardView) v).getChildAt(0)).getText().toString());
+                esFrag.setArguments(data);
 
                 getFragmentManager().beginTransaction()
-                        .addToBackStack("SKATER_BIO_FRAG")
-                        .replace(R.id.frame_layout, sbFrag)
+                        .addToBackStack("EVENT_SUMMARY_FRAG")
+                        .replace(R.id.frame_layout, esFrag)
                         .commit();
             }
         };
@@ -242,7 +241,7 @@ public class FavoritesFragment extends Fragment {
         temp.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
         temp.setForegroundGravity(Gravity.LEFT);
         temp.setBaselineAlignBottom(false);
-        temp.setImageResource(R.mipmap.ic_launcher); //TODO
+        temp.setImageResource(R.mipmap.ic_launcher);
 
         return temp;
     }

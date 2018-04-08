@@ -1,20 +1,15 @@
 package vandy.cs4279.followfigureskating;
 
-import android.content.Context;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
-import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -43,7 +38,6 @@ public class LandingFragment extends Fragment {
     private final String TAG = "LandingFragment";
 
     private View mView;
-    private View.OnClickListener mButtonListener;
     private View.OnClickListener mTextListener;
 
     private List<SkatingEvent> mCurrentEvents;
@@ -190,6 +184,7 @@ public class LandingFragment extends Fragment {
                             mCurrentEvents.add(skatingEvent);
                         }
                     } catch (ParseException e) {
+                        Log.w(TAG, "User switched to another tab before LandingFragment loaded.");
                         e.printStackTrace();
                     }
                 });
@@ -206,23 +201,29 @@ public class LandingFragment extends Fragment {
         @Override
         protected void onPostExecute(Void param) {
             // fill the page in with the events
-            mCurrentEvents.forEach(event -> {
-                LinearLayout layout = mView.findViewById(R.id.currentEventsLayout);
-                CardView cardView = createCardView(event, layout);
-                layout.addView(cardView);
-            });
+            // if user clicks to another tab before loading, swallow exception
+            try {
+                mCurrentEvents.forEach(event -> {
+                    LinearLayout layout = mView.findViewById(R.id.currentEventsLayout);
+                    CardView cardView = createCardView(event, layout);
+                    layout.addView(cardView);
+                });
 
-            mUpcomingEvents.forEach(event -> {
-                LinearLayout layout = mView.findViewById(R.id.upcomingEventsLayout);
-                CardView cardView = createCardView(event, layout);
-                layout.addView(cardView);
-            });
+                mUpcomingEvents.forEach(event -> {
+                    LinearLayout layout = mView.findViewById(R.id.upcomingEventsLayout);
+                    CardView cardView = createCardView(event, layout);
+                    layout.addView(cardView);
+                });
 
-            mRecentEvents.forEach(event -> {
-                LinearLayout layout = mView.findViewById(R.id.recentEventsLayout);
-                CardView cardView = createCardView(event, layout);
-                layout.addView(cardView);
-            });
+                mRecentEvents.forEach(event -> {
+                    LinearLayout layout = mView.findViewById(R.id.recentEventsLayout);
+                    CardView cardView = createCardView(event, layout);
+                    layout.addView(cardView);
+                });
+            } catch (IllegalStateException e)
+            {
+                Log.e(TAG, "User switched to another tab before LandingFragment loaded.");
+            }
         }
 
         private CardView createCardView(SkatingEvent event, LinearLayout outerLayout) {
