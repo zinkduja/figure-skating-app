@@ -131,7 +131,7 @@ public class FavoritesFragment extends Fragment {
                 //pass the name of the event to the fragment
                 EventSummaryFragment esFrag = EventSummaryFragment.newInstance();
                 Bundle data = new Bundle();
-                data.putString("name", ((TextView)((CardView) v).getChildAt(0)).getText().toString());
+                data.putString("event", ((TextView)((CardView) v).getChildAt(0)).getText().toString());
                 esFrag.setArguments(data);
 
                 getFragmentManager().beginTransaction()
@@ -316,7 +316,7 @@ public class FavoritesFragment extends Fragment {
                     cardView.setOnClickListener(mSkaterListener);
                     mSkaterList.add(cardView);
                 });
-                Log.w(TAG, "Successful fetch of favorite skaters from database");
+                Log.i(TAG, "Successful fetch of favorite skaters from database");
 
             } catch (Throwable t) {
                 t.printStackTrace();
@@ -365,7 +365,7 @@ public class FavoritesFragment extends Fragment {
                     cardView.setOnClickListener(mEventListener);
                     mEventList.add(cardView);
                 });
-                Log.w(TAG, "Successful fetch of favorite skaters from database");
+                Log.w(TAG, "Successful fetch of favorite events from database");
 
             } catch (Throwable t) {
                 t.printStackTrace();

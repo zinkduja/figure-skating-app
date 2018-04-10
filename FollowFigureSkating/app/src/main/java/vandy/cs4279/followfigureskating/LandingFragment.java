@@ -22,6 +22,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -44,6 +46,7 @@ public class LandingFragment extends Fragment {
     private List<SkatingEvent> mUpcomingEvents;
     private List<SkatingEvent> mRecentEvents;
 
+    private SimpleDateFormat mFormatter;
     private DatabaseReference mDatabase;
 
     public LandingFragment() {
@@ -64,6 +67,10 @@ public class LandingFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        mCurrentEvents = new ArrayList<>();
+        mUpcomingEvents = new ArrayList<>();
+        mRecentEvents = new ArrayList<>();
+        mFormatter = new SimpleDateFormat("MMM dd yyyy");
     }
 
     @Override
@@ -77,6 +84,11 @@ public class LandingFragment extends Fragment {
 
         // make the OnClickListener
         createListener();
+
+        // make sure all lists are empty
+        mCurrentEvents.clear();
+        mUpcomingEvents.clear();
+        mRecentEvents.clear();
 
         // make all the CardViews
         getEventsFromDB();
@@ -124,8 +136,7 @@ public class LandingFragment extends Fragment {
      * Fetches all events from the database.
      */
     private void getEventsFromDB() {
-        mDatabase.child("competitions").orderByChild("startDate")
-                .addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.child("competitions").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // fetch the data
@@ -143,10 +154,6 @@ public class LandingFragment extends Fragment {
         @Override
         protected Void doInBackground(DataSnapshot... dataSnapshots) {
             try {
-                mCurrentEvents = new ArrayList<>();
-                mUpcomingEvents = new ArrayList<>();
-                mRecentEvents = new ArrayList<>();
-
                 // fetch all the events' basic data
                 dataSnapshots[0].getChildren().forEach(event -> {
                     String title = event.getKey();
@@ -167,12 +174,12 @@ public class LandingFragment extends Fragment {
                     SkatingEvent skatingEvent = new SkatingEvent(title, startDate, endDate, year);
 
                     try{
+                        //Log.d(TAG, title + " " + startDate + " " + endDate);
                         // check the start and end dates
-                        SimpleDateFormat formatter = new SimpleDateFormat("MMM dd yyyy");
                         String completeStart = startDate + " " + year;
                         String completeEnd = endDate + " " + year;
-                        Date start = formatter.parse(completeStart);
-                        Date end = formatter.parse(completeEnd);
+                        Date start = mFormatter.parse(completeStart);
+                        Date end = mFormatter.parse(completeEnd);
                         Date today = new Date();
 
                         // add to appropriate list
@@ -184,7 +191,6 @@ public class LandingFragment extends Fragment {
                             mCurrentEvents.add(skatingEvent);
                         }
                     } catch (ParseException e) {
-                        Log.w(TAG, "User switched to another tab before LandingFragment loaded.");
                         e.printStackTrace();
                     }
                 });
@@ -203,6 +209,10 @@ public class LandingFragment extends Fragment {
             // fill the page in with the events
             // if user clicks to another tab before loading, swallow exception
             try {
+                sortEventsByDate(mCurrentEvents);
+                sortEventsByDate(mUpcomingEvents);
+                sortEventsByDate(mRecentEvents);
+
                 mCurrentEvents.forEach(event -> {
                     LinearLayout layout = mView.findViewById(R.id.currentEventsLayout);
                     CardView cardView = createCardView(event, layout);
@@ -257,6 +267,33 @@ public class LandingFragment extends Fragment {
             cardView.setOnClickListener(mTextListener);
 
             return cardView;
+        }
+
+        private void sortEventsByDate(List<SkatingEvent> list) {
+            list.sort(new Comparator<SkatingEvent>() {
+                @Override
+                public int compare(SkatingEvent o1, SkatingEvent o2) {
+                    String date1 = o1.getStart() + " " + o1.getYear();
+                    String date2 = o2.getStart() + " " + o2.getYear();
+                    try {
+                        Date d1 = mFormatter.parse(date1);
+                        Date d2 = mFormatter.parse(date2);
+
+                        if(d1.before(d2)) {
+                            return -1;
+                        } else if (d1.after(d2)) {
+                            return 1;
+                        } else {
+                            return 0;
+                        }
+
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    return 0;
+                }
+            });
         }
     }
 }

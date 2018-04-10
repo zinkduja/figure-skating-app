@@ -1,47 +1,39 @@
 package vandy.cs4279.followfigureskating;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.EventLog;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.ProgressBar;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class LandingActivity extends AppCompatActivity {
 
     private final static String TAG = "Landing Activity";
 
+    private Handler mHandler;
+    private AtomicInteger mProgressStatus;
+    private ProgressBar mProgressBar;
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             Fragment selectedFrag = null;
@@ -74,6 +66,11 @@ public class LandingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_landing);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FF01798C")));
 
+        mHandler = new Handler();
+        mProgressStatus = new AtomicInteger();
+        mProgressStatus.set(0);
+        mProgressBar = findViewById(R.id.progressBar);
+
         // update the skaters from the ISU website
         (new SkaterListAsyncTask()).execute("http://www.isuresults.com/ws/ws/wsladies.htm");
         (new SkaterListAsyncTask()).execute("http://www.isuresults.com/ws/ws/wsmen.htm");
@@ -86,7 +83,13 @@ public class LandingActivity extends AppCompatActivity {
         // set up bottom navigation
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+    }
 
+    /**
+     * When the progress bar is complete, this method will be called.
+     * Loads the LandingFragment, which is the home page.
+     */
+    private void loadHomePage(){
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.frame_layout, LandingFragment.newInstance())
                 .commit();
@@ -96,7 +99,7 @@ public class LandingActivity extends AppCompatActivity {
     public void onBackPressed () {
         Log.d(TAG, "onBackPressed:" + getSupportFragmentManager().getFragments().toString());
         Fragment curFrag = getSupportFragmentManager().findFragmentById(R.id.frame_layout);
-        if(curFrag instanceof LandingFragment || curFrag instanceof SkatersFragment
+        if (curFrag instanceof LandingFragment || curFrag instanceof SkatersFragment
                 || curFrag instanceof FavoritesFragment || curFrag instanceof UserSettingsFragment) {
             // do not go back
         } else {
@@ -136,6 +139,18 @@ public class LandingActivity extends AppCompatActivity {
 
                 Log.i(TAG, "skater database successfully updated");
 
+                // update the progress bar
+                mProgressStatus.incrementAndGet();
+                mHandler.post(new Runnable() {
+                    public void run() {
+                        mProgressBar.setProgress(mProgressStatus.get());
+                    }
+                });
+
+                if (mProgressStatus.get() == mProgressBar.getMax()) {
+                    loadHomePage();
+                }
+
             } catch (Throwable t) {
                 t.printStackTrace();
             }
@@ -163,6 +178,9 @@ public class LandingActivity extends AppCompatActivity {
                     Element first = event.child(0).child(0);
                     if(!first.text().equals("Cancelled")) {
                         String title = first.attr("title");
+                        title = title.replace("/", " ");
+                        String location = event.child(1).child(1).text();
+                        title += " (" + location.split(" /")[0] + ")"; // add city location to title
 
                         // get the start/end date and year
                         String[] dates = event.child(1).child(0).text().split("-");
@@ -179,7 +197,20 @@ public class LandingActivity extends AppCompatActivity {
 
                 Log.i(TAG, "event database successfully updated");
 
+                // update the progress bar
+                mProgressStatus.incrementAndGet();
+                mHandler.post(new Runnable() {
+                    public void run() {
+                        mProgressBar.setProgress(mProgressStatus.get());
+                    }
+                });
+
+                if (mProgressStatus.get() == mProgressBar.getMax()) {
+                    loadHomePage();
+                }
+
             } catch (Throwable t) {
+                Log.d(TAG, "error");
                 t.printStackTrace();
             }
 
