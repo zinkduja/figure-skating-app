@@ -79,10 +79,6 @@ public class LandingActivity extends AppCompatActivity {
         // update the events from the ISU website
         (new EventListAsyncTask())
                 .execute("https://www.isu.org/figure-skating/figure-skating-events/figure-skating-calendar");
-
-        // set up bottom navigation
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
     /**
@@ -90,6 +86,10 @@ public class LandingActivity extends AppCompatActivity {
      * Loads the LandingFragment, which is the home page.
      */
     private void loadHomePage(){
+        // set up bottom navigation
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.frame_layout, LandingFragment.newInstance())
                 .commit();
