@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -18,31 +17,32 @@ import com.google.firebase.database.FirebaseDatabase;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * A {@link Fragment} subclass that displays the settings for a user.
  * Use the {@link UserSettingsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class UserSettingsFragment extends Fragment {
 
-    private final String TAG = "UserSettingsFragment";
+    private final String TAG = "UserSettingsFragment"; // tag for the Logcat
 
-    private DatabaseReference mDatabase;
-    private FirebaseAuth mAuth;
-    private View.OnClickListener mLogoutListener;
-    private View.OnClickListener mStopSkaterListener;
-    private View.OnClickListener mStopEventListener;
-    private View.OnClickListener mAboutLister;
-    private AlertDialog mFollowingSkatersAlertDialog;
-    private AlertDialog mFollowingEventsAlertDialog;
-    private AlertDialog mAboutAlertDialog;
+    private View.OnClickListener mLogoutListener; // listener to logout
+    private View.OnClickListener mStopSkaterListener; // listener to stop following all skaters
+    private View.OnClickListener mStopEventListener; // listener to stop following all events
+    private View.OnClickListener mAboutLister; // listener to pull up app info
+
+    private AlertDialog mFollowingSkatersAlertDialog; // AlertDialog for stop following all skaters
+    private AlertDialog mFollowingEventsAlertDialog; // AlertDialog for stop following all skaters
+    private AlertDialog mAboutAlertDialog; // AlertDialog for pulling up app info
+
+    private DatabaseReference mDatabase; // reference to Firebase database
+    private FirebaseAuth mAuth; // Firebase authentication reference
 
     public UserSettingsFragment() {
         // Required empty public constructor
     }
 
     /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
+     * Use this factory method to create a new instance of this fragment.
      *
      * @return A new instance of fragment UserSettingsFragment.
      */
@@ -81,8 +81,7 @@ public class UserSettingsFragment extends Fragment {
     }
 
     /**
-     * Signs the user out and returns them to the
-     * Main Activity page.
+     * Signs the user out and returns them to the Main Activity page.
      */
     private void signOut() {
         mAuth.signOut();
@@ -94,7 +93,7 @@ public class UserSettingsFragment extends Fragment {
     }
 
     /**
-     * Create an AlertDialog to make sure the user wants to stop
+     * Creates an AlertDialog to make sure the user wants to stop
      * following all the skaters they are currently following.
      */
     private void createSkaterDialog() {
@@ -102,35 +101,34 @@ public class UserSettingsFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.skaters)
                 .setMessage(R.string.confirm_remove_all)
-                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                .setPositiveButton(R.string.yes, (DialogInterface dialog, int id) -> {
 
-                        if(user != null) {
-                            // get rid of the ".com" of the email
-                            String[] email = user.getEmail().split("\\.");
-                            mDatabase.child("favorites")
-                                    .child("skaters")
-                                    .child(email[0])
-                                    .removeValue();
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-                            Log.w(TAG, "Stopped following all skaters.");
-                        } else {
-                            Log.e(TAG, "User somehow not logged in");
-                        }
+                    // make sure the user is logged in
+                    if (user != null) {
+                        // get rid of the ".com" of the email
+                        String[] email = user.getEmail().split("\\.");
+                        mDatabase.child("favorites")
+                                .child("skaters")
+                                .child(email[0])
+                                .removeValue();
+
+                        Log.d(TAG, "Stopped following all skaters.");
+                    } else {
+                        Log.e(TAG, "User somehow not logged in");
                     }
                 })
-                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // User cancelled the dialog
-                    }
+                .setNegativeButton(R.string.no, (DialogInterface dialog, int id) -> {
+                    // User cancelled the dialog
                 });
+
         // Create the AlertDialog object and return it
         mFollowingSkatersAlertDialog = builder.create();
     }
 
     /**
-     * Create an AlertDialog to make sure the user wants to stop
+     * Creates an AlertDialog to make sure the user wants to stop
      * following all the events they are currently following.
      */
     private void createEventDialog() {
@@ -138,84 +136,70 @@ public class UserSettingsFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.events)
                 .setMessage(R.string.confirm_remove_all)
-                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                .setPositiveButton(R.string.yes, (DialogInterface dialog, int id) -> {
 
-                        if(user != null) {
-                            // get rid of the ".com" of the email
-                            String[] email = user.getEmail().split("\\.");
-                            mDatabase.child("favorites")
-                                    .child("events")
-                                    .child(email[0])
-                                    .removeValue();
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-                            Log.w(TAG, "Stopped following all events.");
-                        } else {
-                            Log.e(TAG, "User somehow not logged in");
-                        }
+                    // make sure the user is logged in
+                    if (user != null) {
+                        // get rid of the ".com" of the email
+                        String[] email = user.getEmail().split("\\.");
+                        mDatabase.child("favorites")
+                                .child("events")
+                                .child(email[0])
+                                .removeValue();
+
+                        Log.d(TAG, "Stopped following all events.");
+                    } else {
+                        Log.e(TAG, "User somehow not logged in");
                     }
                 })
-                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // User cancelled the dialog
-                    }
+                .setNegativeButton(R.string.no, (DialogInterface dialog, int id) -> {
+                    // User cancelled the dialog
                 });
+
         // Create the AlertDialog object and return it
         mFollowingEventsAlertDialog = builder.create();
     }
 
     /**
-     * Create an AlertDialog to show info about this app.
+     * Creates an AlertDialog to show info about this app.
      */
     private void createAboutDialog() {
         // create Dialog for "About"
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.app_name)
                 .setMessage(R.string.about_msg)
-                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        //do nothing, just close Dialog
-                    }
+                .setPositiveButton(R.string.ok, (DialogInterface dialog, int id) -> {
+                    //do nothing, just close Dialog
                 });
+
         // Create the AlertDialog object and return it
         mAboutAlertDialog = builder.create();
     }
 
     /**
-     * Create the OnClickListeners.
+     * Creates the OnClickListeners.
      * mLogoutListener will log the user out
      * mStopSkaterListener and mStopEventListener will show an AlertDialog so the user can confirm
      * mAboutListener will show info about this app
      */
     private void createListeners() {
-        mLogoutListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.w(TAG, "User logged out.");
-                signOut();
-            }
+        mLogoutListener = (View v) -> {
+            Log.d(TAG, "User logged out.");
+            signOut();
         };
 
-        mStopSkaterListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mFollowingSkatersAlertDialog.show();
-            }
+        mStopSkaterListener = (View v) -> {
+            mFollowingSkatersAlertDialog.show();
         };
 
-        mStopEventListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mFollowingEventsAlertDialog.show();
-            }
+        mStopEventListener = (View v) -> {
+            mFollowingEventsAlertDialog.show();
         };
 
-        mAboutLister = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mAboutAlertDialog.show();
-            }
+        mAboutLister = (View v) -> {
+            mAboutAlertDialog.show();
         };
     }
 }

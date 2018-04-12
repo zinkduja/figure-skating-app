@@ -21,21 +21,56 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * This Activity is the main Activity for the app.  It is the
+ * Activity used by all Fragments.  It has the BottomNavigationView
+ * that allows the user to easily navigate through the four main
+ * Fragments of the app.
+ */
 public class LandingActivity extends AppCompatActivity {
 
-    private final static String TAG = "Landing Activity";
+    private final static String TAG = "Landing Activity"; // tag for the Logcat
 
-    private Handler mHandler;
-    private AtomicInteger mProgressStatus;
-    private ProgressBar mProgressBar;
+    private Handler mHandler; // Handler for the BottomNavigationBat
+    private AtomicInteger mProgressStatus; // status of the progress bar
+    private ProgressBar mProgressBar; // loading progress bar
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+    // navigation bar for the four main Fragments
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        // set up the view for the Activity
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_landing);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FF01798C")));
+
+        // set up the BottomNavigationView
+        setUpBottomNav();
+
+        // initialize instance variables
+        mHandler = new Handler();
+        mProgressStatus = new AtomicInteger();
+        mProgressStatus.set(0);
+        mProgressBar = findViewById(R.id.progressBar);
+
+        // update the skaters from the ISU website
+        (new SkaterListAsyncTask()).execute("http://www.isuresults.com/ws/ws/wsladies.htm");
+        (new SkaterListAsyncTask()).execute("http://www.isuresults.com/ws/ws/wsmen.htm");
+        //TODO - add pairs and ice dance
+
+        // update the events from the ISU website
+        (new EventListAsyncTask())
+                .execute("https://www.isu.org/figure-skating/figure-skating-events/figure-skating-calendar");
+    }
+
+    /**
+     * Sets up the Fragments for the BottomNavigationView
+     */
+    private void setUpBottomNav() {
+        mOnNavigationItemSelectedListener = (@NonNull MenuItem item) -> {
             Fragment selectedFrag = null;
             switch (item.getItemId()) {
                 case R.id.navigation_home:
@@ -57,28 +92,7 @@ public class LandingActivity extends AppCompatActivity {
                     .commit();
 
             return true;
-        }
-    };
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_landing);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FF01798C")));
-
-        mHandler = new Handler();
-        mProgressStatus = new AtomicInteger();
-        mProgressStatus.set(0);
-        mProgressBar = findViewById(R.id.progressBar);
-
-        // update the skaters from the ISU website
-        (new SkaterListAsyncTask()).execute("http://www.isuresults.com/ws/ws/wsladies.htm");
-        (new SkaterListAsyncTask()).execute("http://www.isuresults.com/ws/ws/wsmen.htm");
-        //TODO - add pairs and ice dance
-
-        // update the events from the ISU website
-        (new EventListAsyncTask())
-                .execute("https://www.isu.org/figure-skating/figure-skating-events/figure-skating-calendar");
+        };
     }
 
     /**
@@ -107,9 +121,14 @@ public class LandingActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * AsyncTask to update the skater database. This is used
+     * because getting data from the web is necessary and cannot be done
+     * on the main UI.
+     */
     private class SkaterListAsyncTask extends AsyncTask<String, Void, Void> {
 
-        private DatabaseReference mDatabase;
+        private DatabaseReference mDatabase; // reference to Firebase database
 
         @Override
         protected Void doInBackground(String... strings) {
@@ -126,11 +145,10 @@ public class LandingActivity extends AppCompatActivity {
 
                 skaters.forEach(skater -> {
                     // get ISU ID and name of each skater
-                    if(!skater.child(0).hasClass("noLink")) {
+                    if( !skater.child(0).hasClass("noLink")) {
                         String skaterID = skater.child(0).attr("href");
                         skaterID = skaterID.replaceAll("[^0-9]", "");
                         String name = skater.child(0).text();
-                        String country = skater.child(2).text();
 
                         // update the database
                         mDatabase.child("skaters").child(skaterID).setValue(name);
@@ -141,10 +159,8 @@ public class LandingActivity extends AppCompatActivity {
 
                 // update the progress bar
                 mProgressStatus.incrementAndGet();
-                mHandler.post(new Runnable() {
-                    public void run() {
-                        mProgressBar.setProgress(mProgressStatus.get());
-                    }
+                mHandler.post(() -> {
+                    mProgressBar.setProgress(mProgressStatus.get());
                 });
 
                 if (mProgressStatus.get() == mProgressBar.getMax()) {
@@ -159,9 +175,14 @@ public class LandingActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * AsyncTask to update the event database. This is used
+     * because getting data from the web is necessary and cannot be done
+     * on the main UI.
+     */
     private class EventListAsyncTask extends AsyncTask<String, Void, Void> {
 
-        private DatabaseReference mDatabase;
+        private DatabaseReference mDatabase; // reference to Firebase database
 
         @Override
         protected Void doInBackground(String... strings) {
@@ -176,11 +197,13 @@ public class LandingActivity extends AppCompatActivity {
                 // get basic information for events
                 events.forEach(event -> {
                     Element first = event.child(0).child(0);
-                    if(!first.text().equals("Cancelled")) {
+
+                    // make sure the event wasn't cancelled
+                    if (!first.text().equals("Cancelled")) {
                         String title = first.attr("title");
                         title = title.replace("/", " ");
                         String location = event.child(1).child(1).text();
-                        title += " (" + location.split(" /")[0] + ")"; // add city location to title
+                        location = location.replace(" /", ", ");
 
                         // get the start/end date and year
                         String[] dates = event.child(1).child(0).text().split("-");
@@ -188,10 +211,13 @@ public class LandingActivity extends AppCompatActivity {
                         String endDate = dates[1].split(",")[0].substring(1);
                         String year = dates[1].split(",")[1].substring(1);
 
+                        title += "--" + startDate; //add startDate to title for unique key value
+
                         // update the database
                         mDatabase.child("competitions").child(title).child("startDate").setValue(startDate);
                         mDatabase.child("competitions").child(title).child("endDate").setValue(endDate);
                         mDatabase.child("competitions").child(title).child("year").setValue(year);
+                        mDatabase.child("competitions").child(title).child("location").setValue(location);
                     }
                 });
 
@@ -199,10 +225,8 @@ public class LandingActivity extends AppCompatActivity {
 
                 // update the progress bar
                 mProgressStatus.incrementAndGet();
-                mHandler.post(new Runnable() {
-                    public void run() {
-                        mProgressBar.setProgress(mProgressStatus.get());
-                    }
+                mHandler.post(() -> {
+                    mProgressBar.setProgress(mProgressStatus.get());
                 });
 
                 if (mProgressStatus.get() == mProgressBar.getMax()) {
@@ -210,8 +234,7 @@ public class LandingActivity extends AppCompatActivity {
                 }
 
             } catch (Throwable t) {
-                Log.d(TAG, "error");
-                t.printStackTrace();
+                Log.e(TAG, t.getMessage());
             }
 
             return null;

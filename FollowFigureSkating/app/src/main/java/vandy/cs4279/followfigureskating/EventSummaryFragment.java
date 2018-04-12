@@ -1,6 +1,5 @@
 package vandy.cs4279.followfigureskating;
 
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -9,9 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -29,7 +25,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,35 +32,34 @@ import java.util.List;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * A {@link Fragment} subclass that displays a summary table for a competition.
  * Use the {@link EventSummaryFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class EventSummaryFragment extends Fragment {
 
-    private final String TAG = "EventSummaryFragment";
-    private final String RESULTS = "Results";
-    private final String CUR_SKATE = "Currently Skating";
-    private final String DASHES = "---------";
+    private final String TAG = "EventSummaryFragment"; // tag for Logcat
 
-    private View.OnClickListener mListener;
-    private View mView;
+    private View.OnClickListener mListener; // listener to go to event results
+    private View mView; // View for the fragment
 
-    private String mEvent;
-    private String mTime;
-    private TableLayout mTable;
-    private List<TableRow> mRows;
-    private boolean isPrevColored; //used to color rows
+    private String mEvent; // title of the current event
+    private String mEventStart; // start date of the current event
+    private String mEventEnd; // end date of the current event
+    private String mTime; // time setting for the current event
 
-    private DatabaseReference mDatabase;
+    private TableLayout mTable; // table to hold the data
+    private List<TableRow> mRows; // list of table rows
+    private boolean isPrevColored; // boolean used to color rows
+
+    private DatabaseReference mDatabase; // reference to Firebase database
 
     public EventSummaryFragment() {
         // Required empty public constructor
     }
 
     /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
+     * Use this factory method to create a new instance of this fragment.
      *
      * @return A new instance of fragment EventSummaryFragment.
      */
@@ -86,13 +80,18 @@ public class EventSummaryFragment extends Fragment {
         if (container != null) {
             container.removeAllViews();
         }
-        // Inflate the layout for this fragment
+
+        // Inflate the layout for this fragment and get arguments
         mView = inflater.inflate(R.layout.fragment_event_summary, container, false);
         mEvent = getArguments().getString("event");
+        mEventStart = getArguments().getString("startDate");
+        mEventEnd = getArguments().getString("endDate");
+
+        // create the OnClickListener
         createListener();
 
         // set event title
-        TextView title = (TextView) mView.findViewById(R.id.eventTitle);
+        TextView title = mView.findViewById(R.id.eventTitle);
         title.setText(mEvent);
 
         // fill in the table
@@ -106,46 +105,49 @@ public class EventSummaryFragment extends Fragment {
     }
 
     //TODO - change how to determine results or cur skating
+    /**
+     * Creates an OnClickListener - goes to the results of a section of
+     * the current competition.
+     */
     private void createListener() {
-        mListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EventResultsFragment erFrag = EventResultsFragment.newInstance();
-                Bundle data = new Bundle();
-                data.putString("event", mEvent);
-                String type = ((TextView) v).getText().toString();
-                erFrag.setArguments(data);
+        mListener = (View v) -> {
+            // pass the event title to the fragment
+            EventResultsFragment erFrag = EventResultsFragment.newInstance();
+            Bundle data = new Bundle();
+            data.putString("event", mEvent);
+            erFrag.setArguments(data);
 
-                getFragmentManager().beginTransaction()
-                        .addToBackStack("EVENT_RESULTS_FRAG")
-                        .replace(R.id.frame_layout, erFrag)
-                        .commit();
-            }
+            // switch to the event results page
+            getFragmentManager().beginTransaction()
+                    .addToBackStack("EVENT_RESULTS_FRAG")
+                    .replace(R.id.frame_layout, erFrag)
+                    .commit();
         };
     }
 
     /**
-     * Set up the follow icon for a skater.
+     * Sets up the follow icon for a skater.
      */
-    private void setUpFollowingIcon () {
+    private void setUpFollowingIcon() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        MaterialFavoriteButton followButton =
-                (MaterialFavoriteButton) mView.findViewById(R.id.followEventButton);
+        MaterialFavoriteButton followButton = mView.findViewById(R.id.followEventButton);
 
-        if(user != null) {
+        // make sure the user is logged in
+        if (user != null) {
             // get rid of the ".com" of the email
             String[] email = user.getEmail().split("\\.");
 
+            // check database to see if current event is a user favorite
             mDatabase.child("favorites").child("events").child(email[0])
                     .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             // set up button
-                            if(dataSnapshot.exists()) {
-                                // check if event is a favorite
+                            if (dataSnapshot.exists()) {
+                                // check if event is a favorite and set the button
                                 boolean fav = false;
-                                for(DataSnapshot child : dataSnapshot.getChildren()) {
-                                    if(child.getKey().equals(mEvent)) {
+                                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                                    if (child.getKey().equals((mEvent + "--" + mEventStart))) {
                                         fav = true;
                                     }
                                 }
@@ -154,17 +156,13 @@ public class EventSummaryFragment extends Fragment {
                             }
 
                             // set up listener for button
-                            followButton.setOnFavoriteChangeListener(
-                                    new MaterialFavoriteButton.OnFavoriteChangeListener() {
-                                        @Override
-                                        public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean favorite) {
-                                            if (favorite) {
-                                                addFavorite();
-                                            } else {
-                                                removeFavorite();
-                                            }
-                                        }
-                                    });
+                            followButton.setOnFavoriteChangeListener((MaterialFavoriteButton buttonView, boolean favorite) -> {
+                                if (favorite) {
+                                    addFavorite();
+                                } else {
+                                    removeFavorite();
+                                }
+                            });
                         }
 
                         @Override
@@ -172,41 +170,48 @@ public class EventSummaryFragment extends Fragment {
                             Log.e(TAG, "Database error: " + databaseError.getMessage());
                         }
                     });
-
-
         } else {
             Log.e(TAG, "User somehow not logged in");
         }
     }
 
     /**
-     * Add current event to favorites for current user.
+     * Adds current event to favorites for current user.
      */
     private void addFavorite() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        if(user != null) {
+        // make sure the user is logged in
+        if (user != null) {
             // get rid of the ".com" of the email
             String[] email = user.getEmail().split("\\.");
-            mDatabase.child("favorites").child("events").child(email[0]).child(mEvent).setValue(true);
+
+            // add event to favorites
+            String key = mEvent + "--" + mEventStart + "--" + mEventEnd;
+            mDatabase.child("favorites").child("events").child(email[0])
+                    .child(key).setValue(true);
         } else {
             Log.e(TAG, "User somehow not logged in");
         }
     }
 
     /**
-     * Remove current skater from favorites for current user.
+     * Removes current skater from favorites for current user.
      */
     private void removeFavorite() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        if(user != null) {
+        // make sure the user is logged in
+        if (user != null) {
             // get rid of the ".com" of the email
             String[] email = user.getEmail().split("\\.");
+            String key = mEvent + "--" + mEventStart + "--" + mEventEnd;
+
+            // remove event from favorites
             mDatabase.child("favorites")
                     .child("events")
                     .child(email[0])
-                    .child(mEvent)
+                    .child(key)
                     .removeValue();
         } else {
             Log.e(TAG, "User somehow not logged in");
@@ -214,7 +219,7 @@ public class EventSummaryFragment extends Fragment {
     }
 
     /**
-     * Create the time table for the event.
+     * Creates the time table for the event.
      * @throws IOException
      */
     private void createTable() throws IOException {
@@ -231,6 +236,7 @@ public class EventSummaryFragment extends Fragment {
         Element table = webTables.get(5).child(0);
         table.child(0).remove();
 
+        // go through the table on the website and create table rows for the local table
         createTitleRow();
         table.children().forEach(row -> {
             // date, time, category, segment
@@ -241,7 +247,7 @@ public class EventSummaryFragment extends Fragment {
             createTableRow(date, time, category, segment);
         });
 
-        //insert three blank rows (because of the bottom nav bar)
+        // insert three blank rows (because of the bottom nav bar)
         for(int i=0; i < 3; i++) {
             TableRow blank = new TableRow(mTable.getContext());
             TextView empty = new TextView(blank.getContext());
@@ -251,37 +257,42 @@ public class EventSummaryFragment extends Fragment {
     }
 
     /**
-     * Create the title row for the summary table.
+     * Creates the title row for the summary table.
      */
     private void createTitleRow() {
         TableRow row = new TableRow(mTable.getContext());
 
+        // TextView for the date
         TextView textView = new TextView(row.getContext());
         textView.setText("Date");
         textView.setTextAppearance(R.style.smallBaseFont);
         row.addView(textView);
 
+        // TextView for the time
         textView = new TextView(row.getContext());
         textView.setText("Time");
         textView.setTextAppearance(R.style.smallBaseFont);
         row.addView(textView);
 
+        // TextView for the category
         textView = new TextView(row.getContext());
         textView.setText("Category");
         textView.setTextAppearance(R.style.smallBaseFont);
         row.addView(textView);
 
+        // TextView for the segment
         textView = new TextView(row.getContext());
         textView.setText("Segment");
         textView.setTextAppearance(R.style.smallBaseFont);
         row.addView(textView);
 
+        // add the row to the list of rows
         mRows.add(row);
         isPrevColored = true;
     }
 
     /**
-     * Create a row for the summary table.
+     * Creates a (non-title) row for the summary table.
      * @param date - String for the date
      * @param time - String for the time
      * @param category - String for the category
@@ -292,9 +303,12 @@ public class EventSummaryFragment extends Fragment {
         if (!date.isEmpty()) { // color rows with new date
             isPrevColored = !isPrevColored;
         }
-        if(!isPrevColored) {
+
+        if (!isPrevColored) {
             row.setBackgroundColor(getResources().getColor(R.color.paleBlue));
         }
+
+        String dashes = "---------"; // dashes used in table formatting
 
         //date view
         TextView textView = new TextView(row.getContext());
@@ -305,13 +319,13 @@ public class EventSummaryFragment extends Fragment {
 
         // time view
         textView = new TextView(row.getContext());
-        textView.setText(time.isEmpty() ? DASHES : time.substring(0,5));
+        textView.setText(time.isEmpty() ? dashes : time.substring(0,5));
         textView.setTextAppearance(R.style.basicFont);
         row.addView(textView);
 
         // category view
         textView = new TextView(row.getContext());
-        textView.setText(category.isEmpty() ? (DASHES+DASHES+DASHES) : category);
+        textView.setText(category.isEmpty() ? (dashes+dashes+dashes) : category);
         textView.setTextAppearance(R.style.basicFont);
         row.addView(textView);
 
@@ -320,19 +334,26 @@ public class EventSummaryFragment extends Fragment {
         if(!segment.isEmpty()) {
             textView.setOnClickListener(mListener);
         }
-        textView.setText(segment.isEmpty() ? (DASHES+DASHES) : segment);
+        textView.setText(segment.isEmpty() ? (dashes+dashes) : segment);
         textView.setTextAppearance(R.style.basicFont);
         row.addView(textView);
 
+        // add row to list of rows
         mRows.add(row);
     }
 
+    /**
+     * AsyncTask to create the summary table for the fragment. This is used
+     * because getting data from the web is necessary and cannot be done
+     * on the main UI.
+     */
     private class CreateTableAsyncTask extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... params) {
             // set up the table
-            try{
+            try {
                 createTable();
+                Log.i(TAG, "Information successfully pulled from ISU website");
             } catch (IOException e) {
                 Log.e(TAG, e.getMessage());
             }
@@ -344,9 +365,8 @@ public class EventSummaryFragment extends Fragment {
         protected void onPostExecute(Void param) {
             ((TextView)(mView.findViewById(R.id.timeHolder))).setText(mTime);
 
-            mRows.forEach(row -> {
-                mTable.addView(row);
-            });
+            // add all the rows to the table
+            mRows.forEach(mTable::addView);
         }
     }
 }

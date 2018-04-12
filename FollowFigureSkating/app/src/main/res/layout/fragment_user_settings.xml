@@ -118,55 +118,6 @@
                     android:textSize="18sp" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/settingType2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/aclonica"
-                android:text="\nCategory 2"
-                android:textColor="@android:color/black"
-                android:textSize="18sp" />
-
-            <Switch
-                android:id="@+id/switch9"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="5px"
-                android:showText="true"
-                android:text="Setting 1"
-                android:textSize="18sp" />
-
-            <Switch
-                android:id="@+id/switch10"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:showText="true"
-                android:text="Setting 2"
-                android:textSize="18sp" />
-
-            <Switch
-                android:id="@+id/switch11"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="5px"
-                android:showText="true"
-                android:text="Setting 3"
-                android:textSize="18sp" />
-
-            <Switch
-                android:id="@+id/switch12"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="5px"
-                android:showText="true"
-                android:text="Setting 4"
-                android:textSize="18sp" />
-
         </LinearLayout>
     </LinearLayout>
 

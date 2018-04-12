@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TabHost;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -19,7 +18,7 @@ import org.jsoup.select.Elements;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * A {@link Fragment} subclass that shows the results for a competition.
  * Use the {@link EventResultsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
@@ -27,9 +26,9 @@ public class EventResultsFragment extends Fragment {
 
     private String TAG = "EventResultsFragment";
 
-    private View mView;
-    private View.OnClickListener mListener;
-    private static String mEvent;
+    private View mView; // View for the fragment
+    private View.OnClickListener mListener; // listener to go to skater bio
+    private static String mEvent; // title of the current event
 
     private TextView mRank1;
     private TextView mName1;
@@ -43,8 +42,7 @@ public class EventResultsFragment extends Fragment {
     }
 
     /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
+     * Use this factory method to create a new instance of this fragment.
      *
      * @return A new instance of fragment EventResultsFragment.
      */
@@ -70,6 +68,7 @@ public class EventResultsFragment extends Fragment {
         TextView title = (TextView) mView.findViewById(R.id.resultsTitle);
         title.setText(mEvent);
 
+        // create the OnClickListener
         mListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,8 +85,6 @@ public class EventResultsFragment extends Fragment {
             }
         };
 
-        //TODO - replace with actual data
-
         return mView;
     }
 
@@ -98,7 +95,6 @@ public class EventResultsFragment extends Fragment {
     }
 
     private class ParsePageAsyncTask extends AsyncTask<String, Void, Elements> {
-        Element image;
 
         @Override
         protected Elements doInBackground(String... strings) {

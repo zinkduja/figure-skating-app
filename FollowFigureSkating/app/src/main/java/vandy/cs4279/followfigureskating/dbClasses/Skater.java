@@ -1,5 +1,10 @@
 package vandy.cs4279.followfigureskating.dbClasses;
 
+/**
+ * This class represents a single skater for the app.  It contains information for the
+ * skater necessary to populate the skater biography page, such as name, birth date, and height.
+ */
+
 public class Skater {
     private String mName;
     private String mDob;
@@ -16,8 +21,14 @@ public class Skater {
     private String mBestShort;
     private String mBestShortComp;
 
+    /**
+     * Default constructor
+     */
     public Skater(){}
 
+    /**
+     * Alternate constructor
+     */
     public Skater(String name, String dob, String height, String hometown, String coach,
             String choreographer, String formerCoaches, String nation, String shortP, String freeP,
                   String bestTop, String bestTopComp, String bestShort, String bestShortComp) {
@@ -37,6 +48,8 @@ public class Skater {
         mBestTopComp = bestTopComp;
 
     }
+
+    // Getter Methods
 
     public String getmName() {
         return mName;

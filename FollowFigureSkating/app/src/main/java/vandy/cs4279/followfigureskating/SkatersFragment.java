@@ -1,7 +1,6 @@
 package vandy.cs4279.followfigureskating;
 
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -25,26 +23,25 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import vandy.cs4279.followfigureskating.dbClasses.Skater;
-
 
 /**
- * A simple {@link Fragment} subclass.
+ * A {@link Fragment} subclass that displays a list of top skaters.
  * Use the {@link SkatersFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class SkatersFragment extends Fragment implements View.OnClickListener, SearchView.OnQueryTextListener{
 
-    private final String TAG = "Skaters Fragment";
-    private LinearLayout mVertLL;
-    private View mView;
-    private ProgressBar mLoadingBar;
+    private final String TAG = "Skaters Fragment"; // tag for the Logcat
 
-    private ArrayList<String> mSkaterNameList;
-    private ArrayList<CardView> mSkaterViewList;
-    private ArrayList<CardView> mCurSkaterViewList;
+    private View mView; // View for the fragment
+    private LinearLayout mVertLL; // main LinearLayout for the fragment
 
-    private DatabaseReference mDatabase;
+    private ArrayList<String> mSkaterNameList; // list of all skater names
+    private ArrayList<CardView> mSkaterViewList; // list of CardViews for all skaters
+    private ArrayList<CardView> mCurSkaterViewList; // list of CardViews for skaters that match
+                                                    // current search criteria
+
+    private DatabaseReference mDatabase; // reference to Firebase database
 
     public SkatersFragment() {
         // Required empty public constructor
@@ -59,8 +56,7 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
     }
 
     /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
+     * Use this factory method to create a new instance of this fragment.
      *
      * @return A new instance of fragment SkatersFragment.
      */
@@ -77,15 +73,12 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment and instantiate the ArrayLists
+        // Inflate the layout for this fragment and instantiate the Views and ArrayLists
         View rootView = inflater.inflate(R.layout.fragment_skaters, container, false);
         mView = rootView;
         mVertLL = rootView.findViewById(R.id.verticalLL);
         mSkaterViewList = new ArrayList<>();
         mCurSkaterViewList = new ArrayList<>();
-
-        // create and add loading bar
-        // mLoadingBar = new ProgressBar(main.getContext());
 
         // get skaters and populate page
         getSkatersFromDB();
@@ -105,10 +98,11 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
     private ImageView createSkaterPic(LinearLayout layout) {
         ImageView temp = new ImageView(layout.getContext());
 
-        temp.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+        temp.setLayoutParams(new LinearLayout.LayoutParams(0,
+                LinearLayout.LayoutParams.WRAP_CONTENT, 1));
         temp.setForegroundGravity(Gravity.LEFT);
         temp.setBaselineAlignBottom(false);
-        temp.setImageResource(R.mipmap.ic_launcher); //TODO
+        temp.setImageResource(R.mipmap.ic_launcher);
 
         return temp;
     }
@@ -122,7 +116,8 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
     private TextView createSkaterText(LinearLayout layout, String skaterName) {
         TextView temp = new TextView(layout.getContext());
 
-        temp.setLayoutParams(new LinearLayout.LayoutParams(533, LinearLayout.LayoutParams.MATCH_PARENT, 1));
+        temp.setLayoutParams(new LinearLayout.LayoutParams(533,
+                LinearLayout.LayoutParams.MATCH_PARENT, 1));
         temp.setGravity(Gravity.CENTER);
         temp.setPadding(27, 27, 27, 27);
         temp.setText(skaterName);
@@ -136,7 +131,8 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
      * Fetches all skater names from the database and populates mSkaterNameList.
      */
     private void getSkatersFromDB() {
-        mDatabase.child("skaters").orderByValue().addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.child("skaters").orderByValue()
+                .addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // fetch the data
@@ -173,23 +169,21 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
         mVertLL.removeAllViewsInLayout();
 
         // add the filtered views to the page
-        mCurSkaterViewList.forEach(skaterCard -> {
-            mVertLL.addView(skaterCard);
-        });
+        mCurSkaterViewList.forEach(mVertLL::addView);
 
         return false;
     }
 
     @Override
     public void onClick(View view) {
-        //pass the name of the skater to the fragment
+        // pass the name of the skater to the fragment
         SkaterBioFragment sbFrag = SkaterBioFragment.newInstance();
         Bundle data = new Bundle();
         LinearLayout layout = (LinearLayout)(((CardView) view).getChildAt(0));
         data.putString("name", ((TextView)(layout.getChildAt(1))).getText().toString());
         sbFrag.setArguments(data);
 
-        //start the fragment
+        // switch to the skater bio page
         getFragmentManager()
                 .beginTransaction()
                 .addToBackStack("SKATER_BIO_FRAG")
@@ -197,6 +191,9 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
                 .commit();
     }
 
+    /**
+     * AsyncTask to create the list of skaters for the fragment.
+     */
     private class FetchSkatersAsyncTask extends AsyncTask<DataSnapshot, Void, Void> {
         @Override
         protected Void doInBackground(DataSnapshot... dataSnapshots) {
@@ -206,10 +203,10 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
                     mSkaterNameList.add(String.valueOf(dsp.getValue()));
                 });
 
-                Log.w(TAG, "Successful fetch of skaters from database");
+                Log.i(TAG, "Successful fetch of skaters from database");
 
             } catch (Throwable t) {
-                t.printStackTrace();
+                Log.e(TAG, t.getMessage());
             }
 
             return null;
@@ -253,7 +250,7 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
 
             // add blanks at end (underneath the bottom nav bar)
             TextView textView;
-            for(int i=0; i < 3; i++) {
+            for (int i=0; i < 3; i++) {
                 textView = new TextView(mVertLL.getContext());
                 textView.setText("blank");
                 textView.setTextColor(Color.WHITE);
