@@ -190,11 +190,11 @@ public class LandingFragment extends Fragment {
                         Date today = new Date();
 
                         // add to appropriate list
-                        if(end.before(today)) {
+                        if (end.before(today) && mRecentEvents.size() < 3) {
                             mRecentEvents.add(skatingEvent);
-                        } else if (start.after(today)) {
+                        } else if (start.after(today) && mUpcomingEvents.size() < 3) {
                             mUpcomingEvents.add(skatingEvent);
-                        } else {
+                        } else if (mCurrentEvents.size() < 3) {
                             mCurrentEvents.add(skatingEvent);
                         }
                     } catch (ParseException e) {
