@@ -246,13 +246,18 @@ public class FavoritesFragment extends Fragment {
      * @param layout - the enclosing LinearLayout
      * @return - the ImageView generated
      */
-    private ImageView createSkaterPic(LinearLayout layout) {
+    private ImageView createSkaterPic(LinearLayout layout, String name) {
         ImageView temp = new ImageView(layout.getContext());
 
         temp.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
         temp.setForegroundGravity(Gravity.LEFT);
         temp.setBaselineAlignBottom(false);
-        temp.setImageResource(R.mipmap.ic_launcher);
+
+        if (name != null && name.contains("&")) {
+            temp.setImageResource(R.drawable.pair_skaters);
+        } else {
+            temp.setImageResource(R.drawable.single_skater);
+        }
 
         return temp;
     }
@@ -301,7 +306,7 @@ public class FavoritesFragment extends Fragment {
                     layout.setPadding(0, 5, 0, 5);
 
                     // add image formatting
-                    ImageView pic = createSkaterPic(layout);
+                    ImageView pic = createSkaterPic(layout, skater.getKey());
                     layout.addView(pic);
 
                     // add text formatting

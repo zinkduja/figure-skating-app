@@ -59,6 +59,8 @@ public class LandingActivity extends AppCompatActivity {
         // update the skaters from the ISU website
         (new SkaterListAsyncTask()).execute("http://www.isuresults.com/ws/ws/wsladies.htm");
         (new SkaterListAsyncTask()).execute("http://www.isuresults.com/ws/ws/wsmen.htm");
+        (new SkaterListAsyncTask()).execute("http://www.isuresults.com/ws/ws/wspairs.htm");
+        (new SkaterListAsyncTask()).execute("http://www.isuresults.com/ws/ws/wsdance.htm");
         //TODO - add pairs and ice dance
 
         // update the events from the ISU website
@@ -149,6 +151,7 @@ public class LandingActivity extends AppCompatActivity {
                         String skaterID = skater.child(0).attr("href");
                         skaterID = skaterID.replaceAll("[^0-9]", "");
                         String name = skater.child(0).text();
+                        name = name.replace("/", "&"); // for pairs and ice dance
 
                         // update the database
                         mDatabase.child("skaters").child(skaterID).setValue(name);
