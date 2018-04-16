@@ -71,7 +71,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/aclonica"
-                        android:text="Points"
+                        android:text="TSS"
                         android:textAlignment="center"
                         android:textColor="@android:color/black" />
 
@@ -80,7 +80,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/aclonica"
-                        android:text="SP"
+                        android:text="TES"
                         android:textAlignment="center"
                         android:textColor="@android:color/black" />
 
@@ -89,7 +89,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/aclonica"
-                        android:text="FS"
+                        android:text="PCS"
                         android:textAlignment="center"
                         android:textColor="@android:color/black" />
                 </TableRow>

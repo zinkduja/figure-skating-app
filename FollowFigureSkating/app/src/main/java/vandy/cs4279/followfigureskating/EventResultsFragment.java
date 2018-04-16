@@ -32,13 +32,8 @@ public class EventResultsFragment extends Fragment {
     private String mHTML;
     private boolean isShort;
     private boolean isTeam;
-
-    private TextView mRank1;
-    private TextView mName1;
-    private TextView mNation1;
-    private TextView mPoints1;
-    private TextView mSP1;
-    private TextView mFS1;
+    private boolean isOverall;
+    private boolean isPrevColored = false;
 
     public EventResultsFragment() {
         // Required empty public constructor
@@ -70,6 +65,7 @@ public class EventResultsFragment extends Fragment {
         mHTML = getArguments().getString("html");
         isShort = getArguments().getBoolean("isShort");
         isTeam = getArguments().getBoolean("isTeam");
+        isOverall = getArguments().getBoolean("isOverall");
 
         // set event title
         TextView title = (TextView) mView.findViewById(R.id.resultsTitle);
@@ -98,7 +94,7 @@ public class EventResultsFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        String mURL = "http://www.isuresults.com/results/season1718/owg2018/SEG"+mHTML+".HTM";
+        String mURL = "http://www.isuresults.com/results/season1718/owg2018/"+mHTML+".HTM";
         (new ParsePageAsyncTask()).execute(new String[]{mURL});
     }
 
@@ -121,32 +117,134 @@ public class EventResultsFragment extends Fragment {
         @Override
         protected void onPostExecute(Elements s) {
             TableLayout table = mView.findViewById(R.id.resultsTable);
-            System.out.println(s);
+
+            TextView score1 = mView.findViewById(R.id.wTableHeader4);
+            TextView score2 = mView.findViewById(R.id.wTableHeader5);
+            TextView score3 = mView.findViewById(R.id.wTableHeader6);
+            if(isOverall) {
+                if(isTeam) {
+                    score1.setText("Total Points");
+                    score2.setText("");
+                    score3.setText("");
+                }
+                else {
+                    score1.setText("Points");
+                    score2.setText("SP");
+                    score3.setText("FS");
+                }
+            }
+            //System.out.println(s);
             Elements cols;
-            for (int j = 1 ; j < s.size(); j++) {
-                TableRow rowToAdd = new TableRow(getActivity());
-                TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
-                rowToAdd.setLayoutParams(lp);
-                cols = s.get(j).select("td");
-                for (int i = 0; i <= 8; i++) {
-                    if(!isShort || isTeam) {
-                        if (i == 0 || i == 1 || i == 2 || i == 3 || i == 4 || i == 6) {
-                            TextView rowThing = new TextView(getActivity());
-                            rowThing.setText(cols.get(i).text());
-                            rowThing.setTextColor(0xFF000000);
-                            rowToAdd.addView(rowThing);
+            if(isOverall) {
+                if(isTeam) {
+                    for (int j = 1; j < s.size(); j += 2) {
+                        TableRow rowToAdd = new TableRow(getActivity());
+                        if (isPrevColored) { // color rows with new date
+                            isPrevColored = !isPrevColored;
                         }
-                    }
-                    else {
-                        if (i == 0 || i == 2 || i == 3 || i == 4 || i == 5 || i == 7) {
-                            TextView rowThing = new TextView(getActivity());
-                            rowThing.setText(cols.get(i).text());
-                            rowThing.setTextColor(0xFF000000);
-                            rowToAdd.addView(rowThing);
+
+                        if (!isPrevColored) {
+                            rowToAdd.setBackgroundColor(getResources().getColor(R.color.paleBlue));
                         }
+                        TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+                        rowToAdd.setLayoutParams(lp);
+                        cols = s.get(j).select("td");
+                        for (int i = 0; i <= 6; i++) {
+                            if (i == 0 || i == 1 || i == 2 || i == 6) {
+                                TextView rowThing = new TextView(getActivity());
+                                String x = cols.get(i).text();
+                                int y = x.indexOf('/');
+                                if (y != -1) {
+                                    x = x.substring(0, y - 1) + System.getProperty("line.separator") + x.substring(y - 1, x.length());
+                                }
+                                rowThing.setText(x);
+                                rowThing.setTextColor(0xFF000000);
+                                rowToAdd.addView(rowThing);
+                            }
+                        }
+                        table.addView(rowToAdd, j / 2 + 1);
                     }
                 }
-                table.addView(rowToAdd, j);
+                else {
+                    for (int j = 1; j < s.size(); j += 2) {
+                        TableRow rowToAdd = new TableRow(getActivity());
+                        if (isPrevColored) { // color rows with new date
+                            isPrevColored = !isPrevColored;
+                        }
+
+                        if (!isPrevColored) {
+                            rowToAdd.setBackgroundColor(getResources().getColor(R.color.paleBlue));
+                        }
+                        TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+                        rowToAdd.setLayoutParams(lp);
+                        cols = s.get(j).select("td");
+                        for (int i = 0; i <= 8; i++) {
+                            if (i == 0 || i == 1 || i == 2 || i == 6 || i == 7 || i == 8) {
+                                TextView rowThing = new TextView(getActivity());
+                                String x = cols.get(i).text();
+                                int y = x.indexOf('/');
+                                if (y != -1) {
+                                    x = x.substring(0, y - 1) + System.getProperty("line.separator") + x.substring(y - 1, x.length());
+                                }
+                                rowThing.setText(x);
+                                rowThing.setTextColor(0xFF000000);
+                                rowToAdd.addView(rowThing);
+                            }
+                        }
+                        table.addView(rowToAdd, j / 2 + 1);
+                    }
+                }
+            }
+            else {
+                for (int j = 1; j < s.size(); j++) {
+                    TableRow rowToAdd = new TableRow(getActivity());
+                    if (!isPrevColored) {
+                        rowToAdd.setBackgroundColor(getResources().getColor(R.color.paleBlue));
+                        isPrevColored = true;
+                    }
+                    else {
+                        isPrevColored = !isPrevColored;
+                    }
+
+
+                    TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+                    rowToAdd.setLayoutParams(lp);
+                    cols = s.get(j).select("td");
+                    for (int i = 0; i <= 8; i++) {
+                        if (!isShort || isTeam) {
+                            if (i == 0 || i == 1 || i == 2 || i == 3 || i == 4 || i == 6) {
+                                TextView rowThing = new TextView(getActivity());
+                                String x = cols.get(i).text();
+                                int y = x.indexOf('/');
+                                if(y!=-1) {
+                                    x = x.substring(0, y-1) + System.getProperty("line.separator") + x.substring(y-1, x.length());
+                                }
+                                rowThing.setText(x);
+                                rowThing.setTextColor(0xFF000000);
+                                rowToAdd.addView(rowThing);
+                            }
+                        } else {
+                            if (i == 0 || i == 2 || i == 3 || i == 4 || i == 5 || i == 7) {
+                                TextView rowThing = new TextView(getActivity());
+                                String x = cols.get(i).text();
+                                int y = x.indexOf('/');
+                                if(y!=-1) {
+                                    x = x.substring(0, y-1) + System.getProperty("line.separator") + x.substring(y-1, x.length());
+                                }
+                                rowThing.setText(x);
+                                rowThing.setTextColor(0xFF000000);
+                                rowToAdd.addView(rowThing);
+                            }
+                        }
+                    }
+                    table.addView(rowToAdd, j);
+                }
+            }
+            for(int i=0; i < 3; i++) {
+                TableRow blank = new TableRow(table.getContext());
+                TextView empty = new TextView(blank.getContext());
+                blank.addView(empty);
+                table.addView(blank);
             }
         }
 

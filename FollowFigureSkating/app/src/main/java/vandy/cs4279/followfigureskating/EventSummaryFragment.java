@@ -127,6 +127,9 @@ public class EventSummaryFragment extends Fragment {
             if(v.getTag(R.id.isTeam).equals("Team")) {
                 data.putBoolean("isTeam", true);
             }
+            if(v.getTag(R.id.isOverall).equals("Yes")) {
+                data.putBoolean("isOverall", true);
+            }
             erFrag.setArguments(data);
 
             // switch to the event results page
@@ -253,8 +256,9 @@ public class EventSummaryFragment extends Fragment {
         textView.setGravity(Gravity.CENTER);
         textView.setOnClickListener(mListener);
         textView.setTag(R.id.html, "TEC001RS");
+        textView.setTag(R.id.isOverall, "Yes");
         textView.setTag(R.id.isShort, "no");
-        textView.setTag(R.id.isTeam, "no");
+        textView.setTag(R.id.isTeam, "Team");
         textView.setTextColor(0xFF000000);
         row1.addView(textView);
         mResultRows.add(row1);
@@ -264,6 +268,7 @@ public class EventSummaryFragment extends Fragment {
         textView.setText("Men Single Skating");
         textView.setOnClickListener(mListener);
         textView.setTag(R.id.html, "CAT001RS");
+        textView.setTag(R.id.isOverall, "Yes");
         textView.setTag(R.id.isShort, "no");
         textView.setTag(R.id.isTeam, "no");
         textView.setGravity(Gravity.CENTER);
@@ -276,6 +281,7 @@ public class EventSummaryFragment extends Fragment {
         textView.setText("Ladies Single Skating");
         textView.setOnClickListener(mListener);
         textView.setTag(R.id.html, "CAT002RS");
+        textView.setTag(R.id.isOverall, "Yes");
         textView.setTag(R.id.isShort, "no");
         textView.setTag(R.id.isTeam, "no");
         textView.setTextColor(0xFF000000);
@@ -288,6 +294,7 @@ public class EventSummaryFragment extends Fragment {
         textView.setText("Pairs Skating");
         textView.setOnClickListener(mListener);
         textView.setTag(R.id.html, "CAT003RS");
+        textView.setTag(R.id.isOverall, "Yes");
         textView.setTag(R.id.isShort, "no");
         textView.setTag(R.id.isTeam, "no");
         textView.setGravity(Gravity.CENTER);
@@ -301,6 +308,7 @@ public class EventSummaryFragment extends Fragment {
         textView.setTextColor(0xFF000000);
         textView.setOnClickListener(mListener);
         textView.setTag(R.id.html, "CAT004RS");
+        textView.setTag(R.id.isOverall, "Yes");
         textView.setTag(R.id.isShort, "no");
         textView.setTag(R.id.isTeam, "no");
         textView.setGravity(Gravity.CENTER);
@@ -423,35 +431,36 @@ public class EventSummaryFragment extends Fragment {
         textView.setTextAppearance(R.style.basicFont);
         textView.setTag(R.id.isShort, "no");
         textView.setTag(R.id.isTeam, "no");
+        textView.setTag(R.id.isOverall, "no");
         if(segment.equals("Short Program") || segment.equals("Short Dance")) {
             textView.setTag(R.id.isShort, "SP");
         }
         if (category.equals("Men Single Skating")) {
-            textView.setTag(R.id.html, segment.equals("Short Program") ? "001" : "002");
+            textView.setTag(R.id.html, segment.equals("Short Program") ? "SEG001" : "SEG002");
         }
         else if (category.equals("Ladies Single Skating")) {
-            textView.setTag(R.id.html, segment.equals("Short Program") ? "003" : "004");
+            textView.setTag(R.id.html, segment.equals("Short Program") ? "SEG003" : "SEG004");
         }
         else if (category.equals("Pair Skating")) {
-            textView.setTag(R.id.html, segment.equals("Short Program") ? "005" : "006");
+            textView.setTag(R.id.html, segment.equals("Short Program") ? "SEG005" : "SEG006");
         }
         else if (category.equals("Ice Dance")) {
-            textView.setTag(R.id.html, segment.equals("Short Dance") ? "007" : "008");
+            textView.setTag(R.id.html, segment.equals("Short Dance") ? "SEG007" : "SEG008");
         }
         else if (category.equals("Team Men")) {
-            textView.setTag(R.id.html, segment.equals("Short Program") ? "009" : "010");
+            textView.setTag(R.id.html, segment.equals("Short Program") ? "SEG009" : "SEG010");
             textView.setTag(R.id.isTeam, "Team");
         }
         else if (category.equals("Team Ladies")) {
-            textView.setTag(R.id.html, segment.equals("Short Program") ? "011" : "012");
+            textView.setTag(R.id.html, segment.equals("Short Program") ? "SEG011" : "SEG012");
             textView.setTag(R.id.isTeam, "Team");
         }
         else if (category.equals("Team Pairs")) {
-            textView.setTag(R.id.html, segment.equals("Short Program") ? "013" : "014");
+            textView.setTag(R.id.html, segment.equals("Short Program") ? "SEG013" : "SEG014");
             textView.setTag(R.id.isTeam, "Team");
         }
         else if (category.equals("Team Ice Dance")) {
-            textView.setTag(R.id.html, segment.equals("Short Dance") ? "015" : "016");
+            textView.setTag(R.id.html, segment.equals("Short Dance") ? "SEG015" : "SEG016");
             textView.setTag(R.id.isTeam, "Team");
         }
 
