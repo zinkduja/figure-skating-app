@@ -105,6 +105,9 @@
     <string name="no">No</string>
     <string name="login">Login</string>
     <string name="ok">OK</string>
+    <item type="id" name="isShort"/>
+    <item type="id" name="html"/>
+    <item type="id" name="isTeam"/>
 
     <string name="about_msg">Version: 1.0.0\n\nBuilt: 4/11/18\n\nCreated by: Josie Zink-Duda
         and Shreya Shanker\n\nLogo Credit: Lia Zink-Duda</string>

@@ -63,6 +63,13 @@
             android:orientation="vertical">
 
             <TableLayout
+                android:id="@+id/resultsTable"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:stretchColumns="*">
+            </TableLayout>
+
+            <TableLayout
                 android:id="@+id/eventTable"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +50,9 @@ public class EventSummaryFragment extends Fragment {
     private String mTime; // time setting for the current event
 
     private TableLayout mTable; // table to hold the data
+    private TableLayout mResultsTable; //table to hold the major results table
     private List<TableRow> mRows; // list of table rows
+    private List<TableRow> mResultRows; //list of result table rows
     private boolean isPrevColored; // boolean used to color rows
 
     private DatabaseReference mDatabase; // reference to Firebase database
@@ -71,6 +74,7 @@ public class EventSummaryFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mRows = new ArrayList<>();
+        mResultRows = new ArrayList<>();
         mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
@@ -96,6 +100,7 @@ public class EventSummaryFragment extends Fragment {
 
         // fill in the table
         mRows.clear();
+        mResultRows.clear();
         (new CreateTableAsyncTask()).execute();
 
         // set up following icon
@@ -115,6 +120,13 @@ public class EventSummaryFragment extends Fragment {
             EventResultsFragment erFrag = EventResultsFragment.newInstance();
             Bundle data = new Bundle();
             data.putString("event", mEvent);
+            data.putString("html", (String) v.getTag(R.id.html));
+            if(v.getTag(R.id.isShort).equals("SP")) {
+                data.putBoolean("isShort", true);
+            }
+            if(v.getTag(R.id.isTeam).equals("Team")) {
+                data.putBoolean("isTeam", true);
+            }
             erFrag.setArguments(data);
 
             // switch to the event results page
@@ -226,6 +238,79 @@ public class EventSummaryFragment extends Fragment {
         //TODO - change url based on event
         Document doc = Jsoup.connect("http://www.isuresults.com/results/season1718/owg2018/").get();
         mTable = mView.findViewById(R.id.eventTable);
+        mResultsTable = mView.findViewById(R.id.resultsTable);
+        TableRow row1 = new TableRow(mResultsTable.getContext());
+        TextView textView = new TextView(row1.getContext());
+        textView.setText("Overall Results");
+        textView.setGravity(Gravity.CENTER);
+        textView.setTextAppearance(R.style.smallBaseFont);
+        row1.addView(textView);
+        mResultRows.add(row1);
+
+        row1 = new TableRow(mResultsTable.getContext());
+        textView= new TextView(row1.getContext());
+        textView.setText("Team Event");
+        textView.setGravity(Gravity.CENTER);
+        textView.setOnClickListener(mListener);
+        textView.setTag(R.id.html, "TEC001RS");
+        textView.setTag(R.id.isShort, "no");
+        textView.setTag(R.id.isTeam, "no");
+        textView.setTextColor(0xFF000000);
+        row1.addView(textView);
+        mResultRows.add(row1);
+
+        row1 = new TableRow(mResultsTable.getContext());
+        textView= new TextView(row1.getContext());
+        textView.setText("Men Single Skating");
+        textView.setOnClickListener(mListener);
+        textView.setTag(R.id.html, "CAT001RS");
+        textView.setTag(R.id.isShort, "no");
+        textView.setTag(R.id.isTeam, "no");
+        textView.setGravity(Gravity.CENTER);
+        textView.setTextColor(0xFF000000);
+        row1.addView(textView);
+        mResultRows.add(row1);
+
+        row1 = new TableRow(mResultsTable.getContext());
+        textView = new TextView(row1.getContext());
+        textView.setText("Ladies Single Skating");
+        textView.setOnClickListener(mListener);
+        textView.setTag(R.id.html, "CAT002RS");
+        textView.setTag(R.id.isShort, "no");
+        textView.setTag(R.id.isTeam, "no");
+        textView.setTextColor(0xFF000000);
+        textView.setGravity(Gravity.CENTER);
+        row1.addView(textView);
+        mResultRows.add(row1);
+
+        row1 = new TableRow(mResultsTable.getContext());
+        textView = new TextView(row1.getContext());
+        textView.setText("Pairs Skating");
+        textView.setOnClickListener(mListener);
+        textView.setTag(R.id.html, "CAT003RS");
+        textView.setTag(R.id.isShort, "no");
+        textView.setTag(R.id.isTeam, "no");
+        textView.setGravity(Gravity.CENTER);
+        textView.setTextColor(0xFF000000);
+        row1.addView(textView);
+        mResultRows.add(row1);
+
+        row1 = new TableRow(mResultsTable.getContext());
+        textView = new TextView(row1.getContext());
+        textView.setText("Ice Dance");
+        textView.setTextColor(0xFF000000);
+        textView.setOnClickListener(mListener);
+        textView.setTag(R.id.html, "CAT004RS");
+        textView.setTag(R.id.isShort, "no");
+        textView.setTag(R.id.isTeam, "no");
+        textView.setGravity(Gravity.CENTER);
+        row1.addView(textView);
+        mResultRows.add(row1);
+
+        TableRow blank1 = new TableRow(mResultsTable.getContext());
+        TextView empty1 = new TextView(blank1.getContext());
+        blank1.addView(empty1);
+        mResultRows.add(blank1);
 
         // get the time setting (should be only 1 element)
         Elements caption = doc.getElementsByClass("caption5");
@@ -336,6 +421,40 @@ public class EventSummaryFragment extends Fragment {
         }
         textView.setText(segment.isEmpty() ? (dashes+dashes) : segment);
         textView.setTextAppearance(R.style.basicFont);
+        textView.setTag(R.id.isShort, "no");
+        textView.setTag(R.id.isTeam, "no");
+        if(segment.equals("Short Program") || segment.equals("Short Dance")) {
+            textView.setTag(R.id.isShort, "SP");
+        }
+        if (category.equals("Men Single Skating")) {
+            textView.setTag(R.id.html, segment.equals("Short Program") ? "001" : "002");
+        }
+        else if (category.equals("Ladies Single Skating")) {
+            textView.setTag(R.id.html, segment.equals("Short Program") ? "003" : "004");
+        }
+        else if (category.equals("Pair Skating")) {
+            textView.setTag(R.id.html, segment.equals("Short Program") ? "005" : "006");
+        }
+        else if (category.equals("Ice Dance")) {
+            textView.setTag(R.id.html, segment.equals("Short Dance") ? "007" : "008");
+        }
+        else if (category.equals("Team Men")) {
+            textView.setTag(R.id.html, segment.equals("Short Program") ? "009" : "010");
+            textView.setTag(R.id.isTeam, "Team");
+        }
+        else if (category.equals("Team Ladies")) {
+            textView.setTag(R.id.html, segment.equals("Short Program") ? "011" : "012");
+            textView.setTag(R.id.isTeam, "Team");
+        }
+        else if (category.equals("Team Pairs")) {
+            textView.setTag(R.id.html, segment.equals("Short Program") ? "013" : "014");
+            textView.setTag(R.id.isTeam, "Team");
+        }
+        else if (category.equals("Team Ice Dance")) {
+            textView.setTag(R.id.html, segment.equals("Short Dance") ? "015" : "016");
+            textView.setTag(R.id.isTeam, "Team");
+        }
+
         row.addView(textView);
 
         // add row to list of rows
@@ -367,6 +486,7 @@ public class EventSummaryFragment extends Fragment {
 
             // add all the rows to the table
             mRows.forEach(mTable::addView);
+            mResultRows.forEach(mResultsTable::addView);
         }
     }
 }

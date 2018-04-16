@@ -29,6 +29,9 @@ public class EventResultsFragment extends Fragment {
     private View mView; // View for the fragment
     private View.OnClickListener mListener; // listener to go to skater bio
     private static String mEvent; // title of the current event
+    private String mHTML;
+    private boolean isShort;
+    private boolean isTeam;
 
     private TextView mRank1;
     private TextView mName1;
@@ -64,6 +67,10 @@ public class EventResultsFragment extends Fragment {
             mEvent = getArguments().getString("event");
         }
 
+        mHTML = getArguments().getString("html");
+        isShort = getArguments().getBoolean("isShort");
+        isTeam = getArguments().getBoolean("isTeam");
+
         // set event title
         TextView title = (TextView) mView.findViewById(R.id.resultsTitle);
         title.setText(mEvent);
@@ -91,7 +98,8 @@ public class EventResultsFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        (new ParsePageAsyncTask()).execute(new String[]{"http://www.isuresults.com/results/season1718/owg2018/CAT001RS.HTM"});
+        String mURL = "http://www.isuresults.com/results/season1718/owg2018/SEG"+mHTML+".HTM";
+        (new ParsePageAsyncTask()).execute(new String[]{mURL});
     }
 
     private class ParsePageAsyncTask extends AsyncTask<String, Void, Elements> {
@@ -113,21 +121,32 @@ public class EventResultsFragment extends Fragment {
         @Override
         protected void onPostExecute(Elements s) {
             TableLayout table = mView.findViewById(R.id.resultsTable);
+            System.out.println(s);
             Elements cols;
-            for (int j = 1 ; j < s.size(); j+=2) {
+            for (int j = 1 ; j < s.size(); j++) {
                 TableRow rowToAdd = new TableRow(getActivity());
                 TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
                 rowToAdd.setLayoutParams(lp);
                 cols = s.get(j).select("td");
                 for (int i = 0; i <= 8; i++) {
-                    if (i == 0 || i == 1 || i == 2 || i == 6 || i == 7 || i == 8) {
-                        TextView rowThing = new TextView(getActivity());
-                        rowThing.setText(cols.get(i).text());
-                        rowThing.setTextColor(0xFF000000);
-                        rowToAdd.addView(rowThing);
+                    if(!isShort || isTeam) {
+                        if (i == 0 || i == 1 || i == 2 || i == 3 || i == 4 || i == 6) {
+                            TextView rowThing = new TextView(getActivity());
+                            rowThing.setText(cols.get(i).text());
+                            rowThing.setTextColor(0xFF000000);
+                            rowToAdd.addView(rowThing);
+                        }
+                    }
+                    else {
+                        if (i == 0 || i == 2 || i == 3 || i == 4 || i == 5 || i == 7) {
+                            TextView rowThing = new TextView(getActivity());
+                            rowThing.setText(cols.get(i).text());
+                            rowThing.setTextColor(0xFF000000);
+                            rowToAdd.addView(rowThing);
+                        }
                     }
                 }
-                table.addView(rowToAdd, j/2+1);
+                table.addView(rowToAdd, j);
             }
         }
 
