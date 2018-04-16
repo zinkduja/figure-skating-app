@@ -190,7 +190,7 @@ public class LandingFragment extends Fragment {
                         Date today = new Date();
 
                         // add to appropriate list
-                        if(end.before(today)) {
+                        if (end.before(today)) {
                             mRecentEvents.add(skatingEvent);
                         } else if (start.after(today)) {
                             mUpcomingEvents.add(skatingEvent);
@@ -221,24 +221,24 @@ public class LandingFragment extends Fragment {
                 sortEventsByDate(mUpcomingEvents);
                 sortEventsByDate(mRecentEvents);
 
-                // add events to page
-                mCurrentEvents.forEach(event -> {
-                    LinearLayout layout = mView.findViewById(R.id.currentEventsLayout);
-                    CardView cardView = createCardView(event, layout);
-                    layout.addView(cardView);
-                });
+                // add events to page, only doing 3 per category
+                LinearLayout layoutCurrent = mView.findViewById(R.id.currentEventsLayout);
+                LinearLayout layoutUpcoming = mView.findViewById(R.id.upcomingEventsLayout);
+                LinearLayout layoutRecent = mView.findViewById(R.id.recentEventsLayout);
 
-                mUpcomingEvents.forEach(event -> {
-                    LinearLayout layout = mView.findViewById(R.id.upcomingEventsLayout);
-                    CardView cardView = createCardView(event, layout);
-                    layout.addView(cardView);
-                });
+                for (int i=0; i < 3; i++) {
+                    if (mCurrentEvents.size() != 0) {
+                        CardView cardView1 = createCardView(mCurrentEvents.get(i), layoutCurrent);
+                        layoutCurrent.addView(cardView1);
+                    }
 
-                mRecentEvents.forEach(event -> {
-                    LinearLayout layout = mView.findViewById(R.id.recentEventsLayout);
-                    CardView cardView = createCardView(event, layout);
-                    layout.addView(cardView);
-                });
+                    CardView cardView2 = createCardView(mUpcomingEvents.get(i), layoutUpcoming);
+                    layoutUpcoming.addView(cardView2);
+
+                    CardView cardView3 = createCardView(mRecentEvents.get(mRecentEvents.size()-1-i), layoutRecent);
+                    layoutRecent.addView(cardView3);
+                }
+
             } catch (IllegalStateException e) {
                 Log.w(TAG, "User switched to another tab before LandingFragment loaded.");
             }
