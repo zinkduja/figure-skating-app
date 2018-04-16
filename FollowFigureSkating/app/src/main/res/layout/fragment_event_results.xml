@@ -11,6 +11,7 @@
         android:id="@+id/resultsLL"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="5dp"
         android:orientation="vertical">
 
         <TextView
@@ -95,422 +96,422 @@
                 </TableRow>
 
                 <!--<TableRow-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent">-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent">-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wRank1"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="1"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wRank1"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="1"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="@android:color/black" />-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wName1"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:clickable="true"-->
-                        <!--android:text="Evgenia MEDVEDEVA"-->
-                        <!--android:textAlignment="textStart"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wName1"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:clickable="true"-->
+                <!--android:text="Evgenia MEDVEDEVA"-->
+                <!--android:textAlignment="textStart"-->
+                <!--android:textColor="@android:color/black" />-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wNation1"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="RUS"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wNation1"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="RUS"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="@android:color/black" />-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wPoints1"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="223.86"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wPoints1"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="223.86"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="@android:color/black" />-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wSP1"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="3"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wSP1"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="3"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="@android:color/black" />-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wFS1"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="1"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wFS1"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="1"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="@android:color/black" />-->
                 <!--</TableRow>-->
 
                 <!--<TableRow-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent">-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent">-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell7"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="2"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell7"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="2"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="@android:color/black" />-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wName2"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="Ashley WAGNER"-->
-                        <!--android:textAlignment="textStart"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wName2"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Ashley WAGNER"-->
+                <!--android:textAlignment="textStart"-->
+                <!--android:textColor="@android:color/black" />-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell9"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="USA"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell9"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="USA"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="@android:color/black" />-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell10"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="215.39"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell10"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="215.39"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="@android:color/black" />-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell11"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="4"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell11"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="4"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="@android:color/black" />-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell12"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="2"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell12"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="2"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="@android:color/black" />-->
                 <!--</TableRow>-->
 
                 <!--<TableRow-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent">-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent">-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell13"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="3"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell13"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="3"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="@android:color/black" />-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell14"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="Anna POGORILAYA"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell14"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Anna POGORILAYA"-->
+                <!--android:textColor="@android:color/black" />-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell15"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="RUS"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell15"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="RUS"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="@android:color/black" />-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell16"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="213.69"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell16"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="213.69"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="@android:color/black" />-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell17"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="2"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell17"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="2"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="@android:color/black" />-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell18"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="4"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell18"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="4"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="@android:color/black" />-->
                 <!--</TableRow>-->
 
                 <!--<TableRow-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent">-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent">-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell19"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="4"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell19"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="4"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="@android:color/black" />-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell20"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="Gracie GOLD"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell20"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Gracie GOLD"-->
+                <!--android:textColor="@android:color/black" />-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell21"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="USA"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell21"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="USA"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="@android:color/black" />-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell22"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="211.29"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell22"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="211.29"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="@android:color/black" />-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell23"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="1"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell23"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="1"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="@android:color/black" />-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell24"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="6"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell24"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="6"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="@android:color/black" />-->
                 <!--</TableRow>-->
 
                 <!--<TableRow-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent">-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent">-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell25"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="5"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell25"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="5"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="@android:color/black" />-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell26"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="Satoko MIYAHARA"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell26"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Satoko MIYAHARA"-->
+                <!--android:textColor="@android:color/black" />-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell27"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="JPN"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell27"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="JPN"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="@android:color/black" />-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell28"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="210.61"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell28"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="210.61"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="@android:color/black" />-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell29"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="6"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell29"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="6"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="@android:color/black" />-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell30"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="3"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell30"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="3"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="@android:color/black" />-->
                 <!--</TableRow>-->
 
                 <!--<TableRow-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent">-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent">-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell31"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="6"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell31"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="6"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="@android:color/black" />-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell32"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="Elena RADIONOVA"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell32"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Elena RADIONOVA"-->
+                <!--android:textColor="@android:color/black" />-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell33"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="RUS"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell33"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="RUS"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="@android:color/black" />-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell34"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="209.81"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell34"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="209.81"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="@android:color/black" />-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell35"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="5"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell35"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="5"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="@android:color/black" />-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell36"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="5"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell36"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="5"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="@android:color/black" />-->
                 <!--</TableRow>-->
 
                 <!--<TableRow-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent">-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent">-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell37"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="7"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell37"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="7"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="@android:color/black" />-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell38"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="Mao ASADA"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell38"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Mao ASADA"-->
+                <!--android:textColor="@android:color/black" />-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell39"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="JPN"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell39"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="JPN"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="@android:color/black" />-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell40"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="200.30"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell40"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="200.30"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="@android:color/black" />-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell41"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="9"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell41"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="9"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="@android:color/black" />-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell42"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="7"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell42"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="7"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="@android:color/black" />-->
                 <!--</TableRow>-->
 
                 <!--<TableRow-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent">-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent">-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell43"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="8"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell43"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="8"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="@android:color/black" />-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell44"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="Rika HONGO"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell44"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Rika HONGO"-->
+                <!--android:textColor="@android:color/black" />-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell45"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="JPN"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell45"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="JPN"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="@android:color/black" />-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell46"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="199.15"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell46"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="199.15"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="@android:color/black" />-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell47"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="7"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell47"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="7"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="@android:color/black" />-->
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/wTableCell48"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:text="8"-->
-                        <!--android:textAlignment="center"-->
-                        <!--android:textColor="@android:color/black" />-->
+                <!--<TextView-->
+                <!--android:id="@+id/wTableCell48"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="8"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="@android:color/black" />-->
                 <!--</TableRow>-->
 
             </TableLayout>

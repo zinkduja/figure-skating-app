@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -139,12 +140,12 @@ public class EventResultsFragment extends Fragment {
                 if(isTeam) {
                     for (int j = 1; j < s.size(); j += 2) {
                         TableRow rowToAdd = new TableRow(getActivity());
-                        if (isPrevColored) { // color rows with new date
-                            isPrevColored = !isPrevColored;
-                        }
-
                         if (!isPrevColored) {
                             rowToAdd.setBackgroundColor(getResources().getColor(R.color.paleBlue));
+                            isPrevColored = true;
+                        }
+                        else {
+                            isPrevColored = !isPrevColored;
                         }
                         TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
                         rowToAdd.setLayoutParams(lp);
@@ -152,6 +153,9 @@ public class EventResultsFragment extends Fragment {
                         for (int i = 0; i <= 6; i++) {
                             if (i == 0 || i == 1 || i == 2 || i == 6) {
                                 TextView rowThing = new TextView(getActivity());
+                                if(i!=1){
+                                    rowThing.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                                }
                                 String x = cols.get(i).text();
                                 int y = x.indexOf('/');
                                 if (y != -1) {
@@ -168,12 +172,12 @@ public class EventResultsFragment extends Fragment {
                 else {
                     for (int j = 1; j < s.size(); j += 2) {
                         TableRow rowToAdd = new TableRow(getActivity());
-                        if (isPrevColored) { // color rows with new date
-                            isPrevColored = !isPrevColored;
-                        }
-
                         if (!isPrevColored) {
                             rowToAdd.setBackgroundColor(getResources().getColor(R.color.paleBlue));
+                            isPrevColored = true;
+                        }
+                        else {
+                            isPrevColored = !isPrevColored;
                         }
                         TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
                         rowToAdd.setLayoutParams(lp);
@@ -181,6 +185,9 @@ public class EventResultsFragment extends Fragment {
                         for (int i = 0; i <= 8; i++) {
                             if (i == 0 || i == 1 || i == 2 || i == 6 || i == 7 || i == 8) {
                                 TextView rowThing = new TextView(getActivity());
+                                if(i!=1){
+                                    rowThing.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                                }
                                 String x = cols.get(i).text();
                                 int y = x.indexOf('/');
                                 if (y != -1) {
@@ -214,6 +221,9 @@ public class EventResultsFragment extends Fragment {
                         if (!isShort || isTeam) {
                             if (i == 0 || i == 1 || i == 2 || i == 3 || i == 4 || i == 6) {
                                 TextView rowThing = new TextView(getActivity());
+                                if(i!=1){
+                                    rowThing.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                                }
                                 String x = cols.get(i).text();
                                 int y = x.indexOf('/');
                                 if(y!=-1) {
