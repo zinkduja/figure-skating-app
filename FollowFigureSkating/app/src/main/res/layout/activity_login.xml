@@ -11,7 +11,16 @@
     tools:context="vandy.cs4279.followfigureskating.LoginActivity">
 
     <!-- Login progress -->
-    
+
+
+    <TextView
+        android:id="@+id/forgotPasswordLink"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:text="Forgot Password?"
+        android:textAlignment="textEnd"
+        android:textColor="@color/link_blue" />
 
     <ScrollView
         android:id="@+id/login_form"

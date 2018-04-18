@@ -4,12 +4,20 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -29,10 +37,12 @@ public class UserSettingsFragment extends Fragment {
     private View.OnClickListener mStopSkaterListener; // listener to stop following all skaters
     private View.OnClickListener mStopEventListener; // listener to stop following all events
     private View.OnClickListener mAboutLister; // listener to pull up app info
+    private View.OnClickListener mChangePasswordListener; // listener to change user password
 
     private AlertDialog mFollowingSkatersAlertDialog; // AlertDialog for stop following all skaters
     private AlertDialog mFollowingEventsAlertDialog; // AlertDialog for stop following all skaters
     private AlertDialog mAboutAlertDialog; // AlertDialog for pulling up app info
+    private AlertDialog mChangePasswordDialog; // AlertDialog for changing a user's password
 
     private DatabaseReference mDatabase; // reference to Firebase database
     private FirebaseAuth mAuth; // Firebase authentication reference
@@ -69,6 +79,7 @@ public class UserSettingsFragment extends Fragment {
         createSkaterDialog();
         createEventDialog();
         createAboutDialog();
+        createChangePasswordDialog();
         createListeners();
 
         // set onClickListeners
@@ -76,6 +87,7 @@ public class UserSettingsFragment extends Fragment {
         view.findViewById(R.id.stopFollowingSkatersLink).setOnClickListener(mStopSkaterListener);
         view.findViewById(R.id.stopFollowingEventsLink).setOnClickListener(mStopEventListener);
         view.findViewById(R.id.aboutLink).setOnClickListener(mAboutLister);
+        view.findViewById(R.id.changePasswordLink).setOnClickListener(mChangePasswordListener);
 
         return view;
     }
@@ -90,6 +102,71 @@ public class UserSettingsFragment extends Fragment {
         Intent intent = new Intent(getActivity(), MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+    }
+
+    /**
+     * Creates an AlertDialog that allows the user to change
+     * their password.  The user must re-authenticate.
+     */
+    private void createChangePasswordDialog() {
+        // create layouts
+        LinearLayout linearLayout = new LinearLayout(getContext());
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+        TextInputLayout inLayout1 = new TextInputLayout(linearLayout.getContext());
+        TextInputLayout inLayout2 = new TextInputLayout(linearLayout.getContext());
+
+        // create TextInputEditTexts
+        TextInputEditText oldPassword = new TextInputEditText(inLayout1.getContext());
+        oldPassword.setHint("Old password");
+        oldPassword.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+        TextInputEditText newPassword = new TextInputEditText(inLayout2.getContext());
+        newPassword.setHint("New password");
+        newPassword.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+
+        // add to main linearLayout for Dialog
+        inLayout1.addView(oldPassword);
+        inLayout2.addView(newPassword);
+        linearLayout.addView(inLayout1);
+        linearLayout.addView(inLayout2);
+
+        // create the AlertDialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Change Your Password")
+                .setView(linearLayout)
+                .setPositiveButton("Update", (DialogInterface dialog, int id) -> {
+
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                    // make sure the user is logged in
+                    if (user != null) {
+                        // make sure old password is correct
+                        AuthCredential cred = EmailAuthProvider.getCredential(user.getEmail(),
+                                oldPassword.getText().toString());
+
+                        user.reauthenticate(cred)
+                                .addOnSuccessListener(aVoid -> {
+                                    // user re-authenticated, change password
+                                    user.updatePassword(newPassword.getText().toString());
+                                    Toast.makeText(this.getActivity(), "Password changed.",
+                                            Toast.LENGTH_SHORT).show();
+                                })
+                                .addOnFailureListener(aVoid -> {
+                                    // wrong password
+                                    Toast.makeText(this.getActivity(), "Incorrect password.",
+                                            Toast.LENGTH_LONG).show();
+                                });
+
+                        Log.d(TAG, user.getEmail() + " changed password.");
+                    } else {
+                        Log.e(TAG, "User somehow not logged in");
+                    }
+                })
+                .setNegativeButton("Cancel", (DialogInterface dialog, int id) -> {
+                    // user cancelled, do nothing
+                });
+
+        // Set the AlertDialog object to instance variable
+        mChangePasswordDialog = builder.create();
     }
 
     /**
@@ -123,7 +200,7 @@ public class UserSettingsFragment extends Fragment {
                     // User cancelled the dialog
                 });
 
-        // Create the AlertDialog object and return it
+        // Set the AlertDialog object to instance variable
         mFollowingSkatersAlertDialog = builder.create();
     }
 
@@ -158,7 +235,7 @@ public class UserSettingsFragment extends Fragment {
                     // User cancelled the dialog
                 });
 
-        // Create the AlertDialog object and return it
+        // Set the AlertDialog object to instance variable
         mFollowingEventsAlertDialog = builder.create();
     }
 
@@ -174,7 +251,7 @@ public class UserSettingsFragment extends Fragment {
                     //do nothing, just close Dialog
                 });
 
-        // Create the AlertDialog object and return it
+        // Set the AlertDialog object to instance variable
         mAboutAlertDialog = builder.create();
     }
 
@@ -183,6 +260,7 @@ public class UserSettingsFragment extends Fragment {
      * mLogoutListener will log the user out
      * mStopSkaterListener and mStopEventListener will show an AlertDialog so the user can confirm
      * mAboutListener will show info about this app
+     * mChangePasswordListener will allow the user to change their password
      */
     private void createListeners() {
         mLogoutListener = (View v) -> {
@@ -200,6 +278,10 @@ public class UserSettingsFragment extends Fragment {
 
         mAboutLister = (View v) -> {
             mAboutAlertDialog.show();
+        };
+
+        mChangePasswordListener = (View v) -> {
+            mChangePasswordDialog.show();
         };
     }
 }

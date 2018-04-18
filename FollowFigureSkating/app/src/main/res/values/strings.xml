@@ -112,4 +112,5 @@
 
     <string name="about_msg">Version: 1.0.0\n\nBuilt: 4/11/18\n\nCreated by: Josie Zink-Duda
         and Shreya Shanker\n\nLogo Credit: Lia Zink-Duda</string>
+    <string name="forgotPassword">Forgot password?</string>
 </resources>
