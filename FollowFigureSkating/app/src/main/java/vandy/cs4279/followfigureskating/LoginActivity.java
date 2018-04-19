@@ -20,7 +20,6 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 /**
  * This Activity allows the user to login to the app.  Only users who have registered
@@ -82,13 +81,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     FirebaseAuth.getInstance().sendPasswordResetEmail(email.getText().toString())
                             .addOnSuccessListener(aVoid -> {
                                 // email sent successfully
-                                Log.d(TAG, "Email sent to: " + email.getText().toString());
+                                //Log.d(TAG, "Email sent to: " + email.getText().toString());
                                 Toast.makeText(LoginActivity.this, "Email sent.",
                                         Toast.LENGTH_SHORT).show();
                             })
                             .addOnFailureListener(aVoid -> {
                                 // email could not be sent
-                                Log.d(TAG, "Email could not be sent to: " + email.getText().toString());
+                                //Log.d(TAG, "Email could not be sent to: " + email.getText().toString());
                                 Toast.makeText(LoginActivity.this, "No account with that email.",
                                         Toast.LENGTH_SHORT).show();
                             });
@@ -107,7 +106,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
      * @param password - the password the user registers with
      */
     private void createAccount(String email, String password) {
-        Log.d(TAG, "createAccount:" + email);
+        //Log.d(TAG, "createAccount:" + email);
         if (!validateForm() || !checkPassword()) {
             return;
         }
@@ -117,10 +116,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 .addOnCompleteListener(this, (@NonNull Task<AuthResult> task) -> {
 
                     if (task.isSuccessful()) {
-                        Log.d(TAG, "createUserWithEmail:success");
+                        //Log.d(TAG, "createUserWithEmail:success");
                         onSuccessfulLoginOrRegister();
                     } else {
-                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                        //Log.w(TAG, "createUserWithEmail:failure", task.getException());
                         Toast.makeText(LoginActivity.this, "Authentication failed.",
                                 Toast.LENGTH_SHORT).show();
                     }
@@ -147,7 +146,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
      * @param password - password the user has entered
      */
     private void signIn(String email, String password) {
-        Log.d(TAG, "signIn:" + email);
+        //Log.d(TAG, "signIn:" + email);
         if (!validateForm()) {
             return;
         }
@@ -157,10 +156,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 .addOnCompleteListener(this, (@NonNull Task<AuthResult> task) -> {
 
                     if (task.isSuccessful()) {
-                        Log.d(TAG, "signInWithEmail:success");
+                        //Log.d(TAG, "signInWithEmail:success");
                         onSuccessfulLoginOrRegister();
                     } else {
-                        Log.w(TAG, "signInWithEmail:failure", task.getException());
+                        //Log.w(TAG, "signInWithEmail:failure", task.getException());
                         Toast.makeText(LoginActivity.this, "Authentication failed.",
                                 Toast.LENGTH_SHORT).show();
                     }

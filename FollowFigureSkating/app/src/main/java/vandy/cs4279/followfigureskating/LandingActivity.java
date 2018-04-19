@@ -9,13 +9,9 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -117,7 +113,7 @@ public class LandingActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed () {
-        Log.d(TAG, "onBackPressed:" + getSupportFragmentManager().getFragments().toString());
+        //Log.d(TAG, "onBackPressed:" + getSupportFragmentManager().getFragments().toString());
         Fragment curFrag = getSupportFragmentManager().findFragmentById(R.id.frame_layout);
         if (curFrag instanceof LandingFragment || curFrag instanceof SkatersFragment
                 || curFrag instanceof FavoritesFragment || curFrag instanceof UserSettingsFragment) {
@@ -162,7 +158,7 @@ public class LandingActivity extends AppCompatActivity {
                     }
                 });
 
-                Log.i(TAG, "skater database successfully updated");
+                //Log.i(TAG, "skater database successfully updated");
 
                 // update the progress bar
                 mProgressStatus.incrementAndGet();
@@ -228,7 +224,7 @@ public class LandingActivity extends AppCompatActivity {
                     }
                 });
 
-                Log.i(TAG, "event database successfully updated");
+                //Log.i(TAG, "event database successfully updated");
 
                 // update the progress bar
                 mProgressStatus.incrementAndGet();
@@ -241,7 +237,8 @@ public class LandingActivity extends AppCompatActivity {
                 }
 
             } catch (Throwable t) {
-                Log.e(TAG, t.getMessage());
+                //Log.e(TAG, t.getMessage());
+                t.printStackTrace();
             }
 
             return null;

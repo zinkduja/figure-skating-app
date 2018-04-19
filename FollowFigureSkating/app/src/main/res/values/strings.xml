@@ -110,7 +110,7 @@
     <item type="id" name="isTeam"/>
     <item type="id" name="isOverall"/>
 
-    <string name="about_msg">Version: 1.0.0\n\nBuilt: 4/11/18\n\nCreated by: Josie Zink-Duda
+    <string name="about_msg">Version: 1.0.0\n\nBuilt: 4/23/18\n\nCreated by: Josie Zink-Duda
         and Shreya Shanker\n\nLogo Credit: Lia Zink-Duda</string>
     <string name="forgotPassword">Forgot password?</string>
 </resources>

@@ -147,7 +147,7 @@ public class LandingFragment extends Fragment {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.e(TAG, "Database error: " + databaseError.getMessage());
+               // Log.e(TAG, "Database error: " + databaseError.getMessage());
             }
         });
     }
@@ -198,14 +198,16 @@ public class LandingFragment extends Fragment {
                             mCurrentEvents.add(skatingEvent);
                         }
                     } catch (ParseException e) {
-                        Log.e(TAG, e.getMessage());
+                       // Log.e(TAG, e.getMessage());
+                        e.printStackTrace();
                     }
                 });
 
-                Log.i(TAG, "Successful fetch of events from database");
+                //Log.i(TAG, "Successful fetch of events from database");
 
             } catch (Throwable t) {
-                Log.e(TAG, t.getMessage());
+                //Log.e(TAG, t.getMessage());
+                t.printStackTrace();
             }
 
             return null;
@@ -240,7 +242,7 @@ public class LandingFragment extends Fragment {
                 }
 
             } catch (IllegalStateException e) {
-                Log.w(TAG, "User switched to another tab before LandingFragment loaded.");
+                //Log.w(TAG, "User switched to another tab before LandingFragment loaded.");
             }
         }
 
@@ -315,10 +317,11 @@ public class LandingFragment extends Fragment {
                     }
 
                 } catch (ParseException e) {
-                    Log.e(TAG, e.getMessage());
+                    //Log.e(TAG, e.getMessage());
+                    e.printStackTrace();
                 }
 
-                Log.e(TAG, "sortEventsByDate(): This code should not be reached.");
+                //Log.e(TAG, "sortEventsByDate(): This code should not be reached.");
                 return 0;
             });
         }

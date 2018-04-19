@@ -171,13 +171,13 @@ public class SkaterBioFragment extends Fragment {
 
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
-                            Log.e(TAG, "Database error: " + databaseError.getMessage());
+                            //Log.e(TAG, "Database error: " + databaseError.getMessage());
                         }
                     });
 
 
         } else {
-            Log.e(TAG, "User somehow not logged in");
+            //Log.e(TAG, "User somehow not logged in");
         }
     }
 
@@ -195,7 +195,7 @@ public class SkaterBioFragment extends Fragment {
             // add skater to favorites
             mDatabase.child("favorites").child("skaters").child(email[0]).child(mSkaterName).setValue(true);
         } else {
-            Log.e(TAG, "User somehow not logged in");
+            //Log.e(TAG, "User somehow not logged in");
         }
     }
 
@@ -217,7 +217,7 @@ public class SkaterBioFragment extends Fragment {
                     .child(mSkaterName)
                     .removeValue();
         } else {
-            Log.e(TAG, "User somehow not logged in");
+            //Log.e(TAG, "User somehow not logged in");
         }
     }
 
@@ -238,7 +238,7 @@ public class SkaterBioFragment extends Fragment {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.e(TAG, "Database error: " + databaseError.getMessage());
+                //Log.e(TAG, "Database error: " + databaseError.getMessage());
             }
         });
     }
@@ -264,10 +264,11 @@ public class SkaterBioFragment extends Fragment {
                     newSkater = createSingleSkater(doc);
                 }
 
-                Log.i(TAG, "Information successfully pulled from ISU website");
+               // Log.i(TAG, "Information successfully pulled from ISU website");
 
             } catch (Throwable t) {
-                Log.e(TAG, t.getMessage());
+                //Log.e(TAG, t.getMessage());
+                t.printStackTrace();
             }
 
             return newSkater;

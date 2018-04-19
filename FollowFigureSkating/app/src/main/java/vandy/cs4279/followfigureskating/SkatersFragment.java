@@ -146,7 +146,7 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.e(TAG, "Database error: " + databaseError.getMessage());
+                //Log.e(TAG, "Database error: " + databaseError.getMessage());
             }
         });
     }
@@ -208,10 +208,11 @@ public class SkatersFragment extends Fragment implements View.OnClickListener, S
                     mSkaterNameList.add(String.valueOf(dsp.getValue()));
                 });
 
-                Log.i(TAG, "Successful fetch of skaters from database");
+                //Log.i(TAG, "Successful fetch of skaters from database");
 
             } catch (Throwable t) {
-                Log.e(TAG, t.getMessage());
+                //Log.e(TAG, t.getMessage());
+                t.printStackTrace();
             }
 
             return null;
