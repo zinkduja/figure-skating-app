@@ -493,9 +493,10 @@ public class EventSummaryFragment extends Fragment {
             // set up the table
             try {
                 createTable();
-                Log.i(TAG, "Information successfully pulled from ISU website");
+                //Log.i(TAG, "Information successfully pulled from ISU website");
             } catch (IOException e) {
-                Log.e(TAG, e.getMessage());
+                e.printStackTrace();
+                //Log.e(TAG, e.getMessage());
             }
 
             return null;

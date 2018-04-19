@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.AuthCredential;
@@ -156,9 +155,9 @@ public class UserSettingsFragment extends Fragment {
                                             Toast.LENGTH_LONG).show();
                                 });
 
-                        Log.d(TAG, user.getEmail() + " changed password.");
+                        //Log.d(TAG, user.getEmail() + " changed password.");
                     } else {
-                        Log.e(TAG, "User somehow not logged in");
+                        //Log.e(TAG, "User somehow not logged in");
                     }
                 })
                 .setNegativeButton("Cancel", (DialogInterface dialog, int id) -> {
@@ -191,9 +190,9 @@ public class UserSettingsFragment extends Fragment {
                                 .child(email[0])
                                 .removeValue();
 
-                        Log.d(TAG, "Stopped following all skaters.");
+                        //Log.d(TAG, "Stopped following all skaters.");
                     } else {
-                        Log.e(TAG, "User somehow not logged in");
+                        //Log.e(TAG, "User somehow not logged in");
                     }
                 })
                 .setNegativeButton(R.string.no, (DialogInterface dialog, int id) -> {
@@ -226,9 +225,9 @@ public class UserSettingsFragment extends Fragment {
                                 .child(email[0])
                                 .removeValue();
 
-                        Log.d(TAG, "Stopped following all events.");
+                        //Log.d(TAG, "Stopped following all events.");
                     } else {
-                        Log.e(TAG, "User somehow not logged in");
+                        //Log.e(TAG, "User somehow not logged in");
                     }
                 })
                 .setNegativeButton(R.string.no, (DialogInterface dialog, int id) -> {
@@ -264,7 +263,7 @@ public class UserSettingsFragment extends Fragment {
      */
     private void createListeners() {
         mLogoutListener = (View v) -> {
-            Log.d(TAG, "User logged out.");
+            //Log.d(TAG, "User logged out.");
             signOut();
         };
 

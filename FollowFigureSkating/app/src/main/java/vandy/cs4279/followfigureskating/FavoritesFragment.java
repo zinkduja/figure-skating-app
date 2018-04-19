@@ -199,11 +199,11 @@ public class FavoritesFragment extends Fragment {
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
-                    Log.e(TAG, "Database error: " + databaseError.getMessage());
+                    //Log.e(TAG, "Database error: " + databaseError.getMessage());
                 }
             });
         } else {
-            Log.e(TAG, "User somehow not logged in");
+            //Log.e(TAG, "User somehow not logged in");
         }
     }
 
@@ -233,11 +233,11 @@ public class FavoritesFragment extends Fragment {
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
-                    Log.e(TAG, "Database error: " + databaseError.getMessage());
+                    //Log.e(TAG, "Database error: " + databaseError.getMessage());
                 }
             });
         } else {
-            Log.e(TAG, "User somehow not logged in");
+            //Log.e(TAG, "User somehow not logged in");
         }
     }
 
@@ -318,7 +318,7 @@ public class FavoritesFragment extends Fragment {
                     cardView.setOnClickListener(mSkaterListener);
                     mSkaterList.add(cardView);
                 });
-                Log.i(TAG, "Successful fetch of favorite skaters from database");
+                //Log.i(TAG, "Successful fetch of favorite skaters from database");
 
             } catch (Throwable t) {
                 t.printStackTrace();
@@ -364,7 +364,7 @@ public class FavoritesFragment extends Fragment {
                     mEventList.add(cardView);
                 });
 
-                Log.i(TAG, "Successful fetch of favorite events from database");
+                //Log.i(TAG, "Successful fetch of favorite events from database");
 
             } catch(Throwable t) {
                 t.printStackTrace();

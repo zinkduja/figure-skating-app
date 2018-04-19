@@ -4,7 +4,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,16 +24,18 @@ import org.jsoup.select.Elements;
  */
 public class EventResultsFragment extends Fragment {
 
-    private String TAG = "EventResultsFragment";
+    private String TAG = "EventResultsFragment"; // tag for the Logcat
 
     private View mView; // View for the fragment
     private View.OnClickListener mListener; // listener to go to skater bio
+
     private static String mEvent; // title of the current event
-    private String mHTML;
-    private boolean isShort;
+    private String mHTML; // all the html for the events page
+
+    private boolean isShort; // booleans for category
     private boolean isTeam;
     private boolean isOverall;
-    private boolean isPrevColored = false;
+    private boolean isPrevColored = false; // used to color every other row
 
     public EventResultsFragment() {
         // Required empty public constructor
@@ -117,11 +118,14 @@ public class EventResultsFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Elements s) {
+            // get all views
             TableLayout table = mView.findViewById(R.id.resultsTable);
 
             TextView score1 = mView.findViewById(R.id.wTableHeader4);
             TextView score2 = mView.findViewById(R.id.wTableHeader5);
             TextView score3 = mView.findViewById(R.id.wTableHeader6);
+
+            // set the scores
             if(isOverall) {
                 if(isTeam) {
                     score1.setText("Total Points");
@@ -134,12 +138,15 @@ public class EventResultsFragment extends Fragment {
                     score3.setText("FS");
                 }
             }
-            //System.out.println(s);
+
+            // create the table
             Elements cols;
             if(isOverall) {
                 if(isTeam) {
-                    for (int j = 1; j < s.size(); j += 2) {
+                    for (int j = 1; j < s.size(); j += 2) { // used for weird ISU html layout
                         TableRow rowToAdd = new TableRow(getActivity());
+
+                        // color and set up the row
                         if (!isPrevColored) {
                             rowToAdd.setBackgroundColor(getResources().getColor(R.color.paleBlue));
                             isPrevColored = true;
@@ -149,6 +156,8 @@ public class EventResultsFragment extends Fragment {
                         }
                         TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
                         rowToAdd.setLayoutParams(lp);
+
+                        // create TextViews for the row
                         cols = s.get(j).select("td");
                         for (int i = 0; i <= 6; i++) {
                             if (i == 0 || i == 1 || i == 2 || i == 6) {
@@ -172,6 +181,8 @@ public class EventResultsFragment extends Fragment {
                 else {
                     for (int j = 1; j < s.size(); j += 2) {
                         TableRow rowToAdd = new TableRow(getActivity());
+
+                        // color and set up the row
                         if (!isPrevColored) {
                             rowToAdd.setBackgroundColor(getResources().getColor(R.color.paleBlue));
                             isPrevColored = true;
@@ -181,6 +192,8 @@ public class EventResultsFragment extends Fragment {
                         }
                         TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
                         rowToAdd.setLayoutParams(lp);
+
+                        // create TextViews for the row
                         cols = s.get(j).select("td");
                         for (int i = 0; i <= 8; i++) {
                             if (i == 0 || i == 1 || i == 2 || i == 6 || i == 7 || i == 8) {
@@ -205,6 +218,8 @@ public class EventResultsFragment extends Fragment {
             else {
                 for (int j = 1; j < s.size(); j++) {
                     TableRow rowToAdd = new TableRow(getActivity());
+
+                    // color and set up the row
                     if (!isPrevColored) {
                         rowToAdd.setBackgroundColor(getResources().getColor(R.color.paleBlue));
                         isPrevColored = true;
@@ -212,11 +227,11 @@ public class EventResultsFragment extends Fragment {
                     else {
                         isPrevColored = !isPrevColored;
                     }
-
-
                     TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
                     rowToAdd.setLayoutParams(lp);
                     cols = s.get(j).select("td");
+
+                    // create TextViews for the row
                     for (int i = 0; i <= 8; i++) {
                         if (!isShort || isTeam) {
                             if (i == 0 || i == 1 || i == 2 || i == 3 || i == 4 || i == 6) {
@@ -250,6 +265,8 @@ public class EventResultsFragment extends Fragment {
                     table.addView(rowToAdd, j);
                 }
             }
+
+            // add blanks (because of the BottomNavigationView)
             for(int i=0; i < 3; i++) {
                 TableRow blank = new TableRow(table.getContext());
                 TextView empty = new TextView(blank.getContext());
