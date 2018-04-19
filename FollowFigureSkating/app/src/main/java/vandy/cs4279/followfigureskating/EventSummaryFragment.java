@@ -48,6 +48,7 @@ public class EventSummaryFragment extends Fragment {
     private String mEventStart; // start date of the current event
     private String mEventEnd; // end date of the current event
     private String mTime; // time setting for the current event
+    private String mURL; //url for the event
 
     private TableLayout mTable; // table to hold the data
     private TableLayout mResultsTable; //table to hold the major results table
@@ -90,21 +91,32 @@ public class EventSummaryFragment extends Fragment {
         mEvent = getArguments().getString("event");
         mEventStart = getArguments().getString("startDate");
         mEventEnd = getArguments().getString("endDate");
+        mURL = getArguments().getString("html");
 
-        // create the OnClickListener
-        createListener();
+        System.out.println(mURL);
+        if(mURL.equals("")) {
+            TextView pageText = mView.findViewById(R.id.eventTitle);
+            pageText.setText("Find more information online!");
+            mRows.clear();
+            mResultRows.clear();
+        }
+        else {
 
-        // set event title
-        TextView title = mView.findViewById(R.id.eventTitle);
-        title.setText(mEvent);
+            // create the OnClickListener
+            createListener();
 
-        // fill in the table
-        mRows.clear();
-        mResultRows.clear();
-        (new CreateTableAsyncTask()).execute();
+            // set event title
+            TextView title = mView.findViewById(R.id.eventTitle);
+            title.setText(mEvent);
 
-        // set up following icon
-        setUpFollowingIcon();
+            // fill in the table
+            mRows.clear();
+            mResultRows.clear();
+            (new CreateTableAsyncTask()).execute();
+
+            // set up following icon
+            setUpFollowingIcon();
+        }
 
         return mView;
     }

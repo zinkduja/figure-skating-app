@@ -11,6 +11,7 @@ public class SkatingEvent {
     private String mEndDate;
     private String mYear;
     private String mLocation;
+    private String mHTML;
 
     /**
      * Default constructor
@@ -20,12 +21,13 @@ public class SkatingEvent {
     /**
      * Alternate constructor
      */
-    public SkatingEvent(String title, String start, String end, String year, String location) {
+    public SkatingEvent(String title, String start, String end, String year, String location, String html) {
         mTitle = title;
         mStartDate = start;
         mEndDate = end;
         mYear = year;
         mLocation = location;
+        mHTML = html;
     }
 
     // Getter Methods
@@ -49,4 +51,6 @@ public class SkatingEvent {
     public String getLocation() {
         return mLocation;
     }
+
+    public String getHTML() { return mHTML; }
 }

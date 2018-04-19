@@ -110,6 +110,7 @@ public class LandingFragment extends Fragment {
             String dates = ((TextView)(layout.getChildAt(1))).getText().toString();
             data.putString("startDate", dates.split(" - ")[0]);
             data.putString("endDate", dates.split(" - ")[1]);
+            data.putString("html", (String) v.getTag(R.id.startHtml));
             esFrag.setArguments(data);
 
             // switch to the event summary page
@@ -162,7 +163,7 @@ public class LandingFragment extends Fragment {
                 // fetch all the events' basic data
                 dataSnapshots[0].getChildren().forEach(event -> {
                     String title = event.getKey().split("--")[0]; //remove startDate from title
-                    String startDate = "", endDate = "", year = "", location = "";
+                    String startDate = "", endDate = "", year = "", location = "", html="";
 
                     for(DataSnapshot child : event.getChildren()) {
                         String key = child.getKey();
@@ -175,11 +176,14 @@ public class LandingFragment extends Fragment {
                             year = child.getValue().toString();
                         } else if (key.equals("location")) {
                             location = child.getValue().toString();
+                        } else if(key.equals("html")) {
+                            html = child.getValue().toString();
                         }
+
                     }
 
                     // create SkatingEvent based on info from database
-                    SkatingEvent skatingEvent = new SkatingEvent(title, startDate, endDate, year, location);
+                    SkatingEvent skatingEvent = new SkatingEvent(title, startDate, endDate, year, location, html);
 
                     try{
                         // check the start and end dates
@@ -285,6 +289,7 @@ public class LandingFragment extends Fragment {
 
             // set listeners and add to main layout
             cardView.addView(layout);
+            cardView.setTag(R.id.startHtml, event.getHTML()); 
             cardView.setOnClickListener(mTextListener);
 
             return cardView;
