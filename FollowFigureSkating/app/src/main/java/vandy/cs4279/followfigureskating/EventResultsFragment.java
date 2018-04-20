@@ -84,14 +84,16 @@ public class EventResultsFragment extends Fragment {
             String name = ((TextView) v).getText().toString();
 
             // flip first and last names
-            if (name.contains("/")) { //two people
-                String pair[] = name.split("/");
-                String temp1[] = pair[0].split(" ");
-                String temp2[] = pair[1].split(" ");
-                name = temp1[1] + " " + temp1[0] + " " + " & " + temp2[1] + " " + temp2[0];
-            } else { //one person
-                String temp[] = name.split(" ");
-                name = temp[1] + " " + temp[0];
+            if(mEvent.contains("Olympics")) {
+                if (name.contains("/")) { //two people
+                    String pair[] = name.split("/");
+                    String temp1[] = pair[0].split(" ");
+                    String temp2[] = pair[1].split(" ");
+                    name = temp1[1] + " " + temp1[0] + " & " + temp2[2] + " " + temp2[1];
+                } else { //one person
+                    String temp[] = name.split(" ");
+                    name = temp[1] + " " + temp[0];
+                }
             }
 
             name = name.replace(System.getProperty("line.separator"), "");
@@ -304,6 +306,9 @@ public class EventResultsFragment extends Fragment {
                                     x = x.substring(0, y-1) + System.getProperty("line.separator") + x.substring(y-1, x.length());
                                 }
                                 rowThing.setText(x);
+                                if (i == 2) {
+                                    rowThing.setOnClickListener(mListener);
+                                }
                                 rowThing.setTextColor(0xFF000000);
                                 rowToAdd.addView(rowThing);
                             }

@@ -111,6 +111,10 @@ public class EventSummaryFragment extends Fragment {
             text.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             row.addView(text);
             mTable.addView(row);
+            TextView timeHolder = mView.findViewById(R.id.timeHolder);
+            timeHolder.setVisibility(View.GONE);
+            MaterialFavoriteButton button = mView.findViewById(R.id.followEventButton);
+            button.setVisibility(View.GONE);
         }
         else {
             // create the OnClickListener
@@ -262,18 +266,20 @@ public class EventSummaryFragment extends Fragment {
         row1.addView(textView);
         mResultRows.add(row1);
 
-        row1 = new TableRow(mResultsTable.getContext());
-        textView= new TextView(row1.getContext());
-        textView.setText(R.string.teamEvent);
-        textView.setGravity(Gravity.CENTER);
-        textView.setOnClickListener(mListener);
-        textView.setTag(R.id.html, "TEC001RS");
-        textView.setTag(R.id.isOverall, "Yes");
-        textView.setTag(R.id.isShort, "no");
-        textView.setTag(R.id.isTeam, "Team");
-        textView.setTextColor(0xFF000000);
-        row1.addView(textView);
-        mResultRows.add(row1);
+        if(mEvent.contains("Olympics")) {
+            row1 = new TableRow(mResultsTable.getContext());
+            textView = new TextView(row1.getContext());
+            textView.setText(R.string.teamEvent);
+            textView.setGravity(Gravity.CENTER);
+            textView.setOnClickListener(mListener);
+            textView.setTag(R.id.html, "TEC001RS");
+            textView.setTag(R.id.isOverall, "Yes");
+            textView.setTag(R.id.isShort, "no");
+            textView.setTag(R.id.isTeam, "Team");
+            textView.setTextColor(0xFF000000);
+            row1.addView(textView);
+            mResultRows.add(row1);
+        }
 
         row1 = new TableRow(mResultsTable.getContext());
         textView= new TextView(row1.getContext());
