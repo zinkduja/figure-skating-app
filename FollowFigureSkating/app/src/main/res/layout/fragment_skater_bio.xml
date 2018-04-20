@@ -400,7 +400,7 @@
                             android:textColor="@android:color/black" />
 
                         <TextView
-                            android:id="@+id/tableCell8"
+                            android:id="@+id/bestLong"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="-"
@@ -408,7 +408,7 @@
                             android:textColor="@android:color/black" />
 
                         <TextView
-                            android:id="@+id/tableCell9"
+                            android:id="@+id/bestLongComp"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="-"

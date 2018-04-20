@@ -22,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import vandy.cs4279.followfigureskating.dbClasses.Skater;
 
@@ -56,6 +57,8 @@ public class SkaterBioFragment extends Fragment {
     private TextView mBestShortCompView; // View for skater's best short comp
     private TextView mBestTopView; // View for skater's best top
     private TextView mBestTopCompView; // View for skater's best top comp
+    private TextView mBestLongView;
+    private TextView mBestLongCompView;
 
     public SkaterBioFragment() {
         // Required empty public constructor
@@ -104,6 +107,8 @@ public class SkaterBioFragment extends Fragment {
         mBestShortCompView = rootView.findViewById(R.id.bestShortComp);
         mBestTopView = rootView.findViewById(R.id.bestTop);
         mBestTopCompView = rootView.findViewById(R.id.bestTopComp);
+        mBestLongView = rootView.findViewById(R.id.bestLong);
+        mBestLongCompView = rootView.findViewById(R.id.bestLongComp);
 
         mSkaterImage = rootView.findViewById(R.id.skaterPhoto);
 
@@ -317,13 +322,17 @@ public class SkaterBioFragment extends Fragment {
             Element shortProgram = doc.getElementById("FormView2_Label3");
             Element freeProgram = doc.getElementById("FormView2_Label4");
 
+            Element scoreTable = doc.getElementById("FormView2_GridView3");
+            Elements scoreTableRows = scoreTable.select("tr");
+            Element bestTop = scoreTableRows.get(0).select("td").get(1);
+            Element bestShort = scoreTableRows.get(1).select("td").get(1);
+            Element bestLong = scoreTableRows.get(2).select("td").get(1);
+
             Element bestShortComp = doc.getElementById("FormView2_GridView3_ctl03_HyperLink3");
             // alternate html id for bestShortComp
             if (bestShortComp == null){
                 bestShortComp = doc.getElementById("FormView2_GridView3_ctl03_Label");
             }
-
-            Element bestShort = doc.getElementById("FormView2_GridView3");
 
             Element bestTopComp = doc.getElementById("FormView2_GridView3_ctl02_HyperLink3");
             // alternate html id for bestTopComp
@@ -331,12 +340,17 @@ public class SkaterBioFragment extends Fragment {
                 bestTopComp = doc.getElementById("FormView2_GridView3_ctl02_Label");
             }
 
-            Element bestTop = doc.getElementById("FormView2_GridView3");
+            Element bestLongComp = doc.getElementById("FormView2_GridView3_ctl04_HyperLink3");
+            // alternate html id for bestLongComp
+            if (bestLongComp == null) {
+                bestLongComp = doc.getElementById("FormView2_GridView3_ctl04_Label");
+            }
 
             // create Skater based on info
             return new Skater(mSkaterName, dobs, heights, hometowns, coach.text(), choreo.text(),
                     former.text(), nation.text(), shortProgram.text(), freeProgram.text(),
-                    bestTop.text(), bestTopComp.text(), bestShort.text(), bestShortComp.text());
+                    bestTop.text(), bestTopComp.text(), bestShort.text(), bestShortComp.text(), bestLong.text(),
+                    bestLongComp.text());
         }
 
         /**
@@ -365,13 +379,18 @@ public class SkaterBioFragment extends Fragment {
             Element shortProgram = doc.getElementById("FormView1_Label3");
             Element freeProgram = doc.getElementById("FormView1_Label4");
 
+            Element scoreTable = doc.getElementById("FormView1_GridView3");
+            Elements scoreTableRows = scoreTable.select("tr");
+            Element bestTop = scoreTableRows.get(0).select("td").get(1);
+            Element bestShort = scoreTableRows.get(1).select("td").get(1);
+            Element bestLong = scoreTableRows.get(2).select("td").get(1);
+
+
             Element bestShortComp = doc.getElementById("FormView1_GridView3_ctl03_HyperLink1");
             // alternate html id for bestShortComp
             if (bestShortComp == null){
                 bestShortComp = doc.getElementById("FormView1_GridView3_ctl03_Label");
             }
-
-            Element bestShort = doc.getElementById("FormView1_GridView3");
 
             Element bestTopComp = doc.getElementById("FormView1_GridView3_ctl02_HyperLink1");
             // alternate html id for bestTopComp
@@ -379,13 +398,17 @@ public class SkaterBioFragment extends Fragment {
                 bestTopComp = doc.getElementById("FormView1_GridView3_ctl02_Label");
             }
 
-            Element bestTop = doc.getElementById("FormView1_GridView3");
+            Element bestLongComp = doc.getElementById("FormView1_GridView3_ctl04_HyperLink1");
+            // alternate html id for bestLongComp
+            if (bestLongComp == null) {
+                bestLongComp = doc.getElementById("FormView1_GridView3_ctl04_Label");
+            }
 
             // create Skater based on info
             return new Skater(mSkaterName, dob.text(), height, hometown.text(),
                     coach.text(), choreo.text(), former.text(), nation.text(), shortProgram.text(),
                     freeProgram.text(), bestTop.text(), bestTopComp.text(), bestShort.text(),
-                    bestShortComp.text());
+                    bestShortComp.text(), bestLong.text(), bestLongComp.text());
         }
 
         @Override
@@ -401,10 +424,12 @@ public class SkaterBioFragment extends Fragment {
             mFormerCoachesView.setText(s.getmFormerCoaches());
             mShortProgramView.setText(s.getmShortProgram());
             mFreeProgramView.setText(s.getmFreeProgram());
-            //mBestTopView.setText(s.getmBestTop());
+            mBestTopView.setText(s.getmBestTop());
             mBestTopCompView.setText(s.getmBestTopComp());
-            //mBestShortView.setText(s.getmBestShort());
+            mBestShortView.setText(s.getmBestShort());
             mBestShortCompView.setText(s.getmBestShortComp());
+            mBestLongView.setText(s.getmBestLong());
+            mBestLongCompView.setText(s.getmBestLongComp());
         }
     }
 }

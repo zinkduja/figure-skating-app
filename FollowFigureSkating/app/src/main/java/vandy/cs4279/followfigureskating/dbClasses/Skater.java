@@ -20,6 +20,8 @@ public class Skater {
     private String mBestTopComp;
     private String mBestShort;
     private String mBestShortComp;
+    private String mBestLong;
+    private String mBestLongComp;
 
     /**
      * Default constructor
@@ -31,7 +33,8 @@ public class Skater {
      */
     public Skater(String name, String dob, String height, String hometown, String coach,
             String choreographer, String formerCoaches, String nation, String shortP, String freeP,
-                  String bestTop, String bestTopComp, String bestShort, String bestShortComp) {
+                  String bestTop, String bestTopComp, String bestShort, String bestShortComp, String bestLong,
+                  String bestLongComp) {
         mName = name;
         mDob = dob;
         mHeight = height;
@@ -46,6 +49,8 @@ public class Skater {
         mBestShortComp = bestShortComp;
         mBestTop = bestTop;
         mBestTopComp = bestTopComp;
+        mBestLong = bestLong;
+        mBestLongComp = bestLongComp;
 
     }
 
@@ -92,5 +97,9 @@ public class Skater {
     public String getmBestShort() { return mBestShort; }
 
     public String getmBestShortComp() { return mBestShortComp; }
+
+    public String getmBestLong() { return mBestLong; }
+
+    public String getmBestLongComp() { return mBestLongComp; }
 
 }
