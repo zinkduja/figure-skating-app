@@ -73,39 +73,36 @@ public class EventResultsFragment extends Fragment {
         isOverall = getArguments().getBoolean("isOverall");
 
         // set event title
-        TextView title = (TextView) mView.findViewById(R.id.resultsTitle);
+        TextView title = mView.findViewById(R.id.resultsTitle);
         title.setText(mEvent);
 
         // create the OnClickListener
-        mListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //pass the name of the skater to the fragment
-                SkaterBioFragment sbFrag = SkaterBioFragment.newInstance();
-                Bundle data = new Bundle();
-                String name = ((TextView) v).getText().toString();
+        mListener = (View v) -> {
+            //pass the name of the skater to the fragment
+            SkaterBioFragment sbFrag = SkaterBioFragment.newInstance();
+            Bundle data = new Bundle();
+            String name = ((TextView) v).getText().toString();
 
-                // flip first and last names
-                if (name.contains("/")) { //two people
-                    String pair[] = name.split("/");
-                    String temp1[] = pair[0].split(" ");
-                    String temp2[] = pair[1].split(" ");
-                    name = temp1[1] + " " + temp1[0] + " " + " & " + temp2[1] + " " + temp2[0];
-                } else { //one person
-                    String temp[] = name.split(" ");
-                    name = temp[1] + " " + temp[0];
-                }
-
-                name = name.replace(System.getProperty("line.separator"), "");
-                data.putString("name", name.replace("/", "&"));
-                sbFrag.setArguments(data);
-
-                getFragmentManager().beginTransaction()
-                        .addToBackStack("SKATER_BIO_FRAG")
-                        .replace(R.id.frame_layout, sbFrag)
-                        .commit();
+            // flip first and last names
+            if (name.contains("/")) { //two people
+                String pair[] = name.split("/");
+                String temp1[] = pair[0].split(" ");
+                String temp2[] = pair[1].split(" ");
+                name = temp1[1] + " " + temp1[0] + " " + " & " + temp2[1] + " " + temp2[0];
+            } else { //one person
+                String temp[] = name.split(" ");
+                name = temp[1] + " " + temp[0];
             }
-        };
+
+            name = name.replace(System.getProperty("line.separator"), "");
+            data.putString("name", name.replace("/", "&"));
+            sbFrag.setArguments(data);
+
+            getFragmentManager().beginTransaction()
+                    .addToBackStack("SKATER_BIO_FRAG")
+                    .replace(R.id.frame_layout, sbFrag)
+                    .commit();
+            };
 
         return mView;
     }
@@ -140,7 +137,7 @@ public class EventResultsFragment extends Fragment {
                 Element table = doc.select("table table table").get(0);
                 firstLine = table.select("tr");
             } catch (Throwable t) {
-                t.printStackTrace();
+                //t.printStackTrace();
                 goodURL = false;
             }
             return firstLine;
