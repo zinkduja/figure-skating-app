@@ -124,5 +124,6 @@
     <string name="timeText">Time</string>
     <string name="categoryText">Category</string>
     <string name="segmentText">Segment</string>
-    <string name="noScheduleText">No schedule available, please check event website.</string>
+    <string name="noScheduleText">No schedule available, \nplease check event website.</string>
+    <string name="noResultsText">No results available here, \nplease check event website.</string>
 </resources>

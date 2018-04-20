@@ -22,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -110,7 +111,7 @@ public class LandingFragment extends Fragment {
             String dates = ((TextView)(layout.getChildAt(1))).getText().toString();
             data.putString("startDate", dates.split(" - ")[0]);
             data.putString("endDate", dates.split(" - ")[1]);
-            data.putString("html", (String) v.getTag(R.id.startHtml));
+            data.putString("url", (String) v.getTag(R.id.startHtml));
             esFrag.setArguments(data);
 
             // switch to the event summary page
@@ -225,25 +226,46 @@ public class LandingFragment extends Fragment {
                 sortEventsByDate(mCurrentEvents);
                 sortEventsByDate(mUpcomingEvents);
                 sortEventsByDate(mRecentEvents);
+                Collections.reverse(mRecentEvents);
 
                 // add events to page, only doing 3 per category
                 LinearLayout layoutCurrent = mView.findViewById(R.id.currentEventsLayout);
                 LinearLayout layoutUpcoming = mView.findViewById(R.id.upcomingEventsLayout);
                 LinearLayout layoutRecent = mView.findViewById(R.id.recentEventsLayout);
 
-                for (int i=0; i < 3; i++) {
-                    if (mCurrentEvents.size() != 0) {
-                        CardView cardView1 = createCardView(mCurrentEvents.get(i), layoutCurrent);
+                int i = 0;
+
+                for (SkatingEvent event : mCurrentEvents) {
+                    if (i < 3) {
+                        CardView cardView1 = createCardView(event, layoutCurrent);
                         layoutCurrent.addView(cardView1);
+                        i++;
+                    } else {
+                        break;
                     }
-
-                    CardView cardView2 = createCardView(mUpcomingEvents.get(i), layoutUpcoming);
-                    layoutUpcoming.addView(cardView2);
-
-                    CardView cardView3 = createCardView(mRecentEvents.get(mRecentEvents.size()-1-i), layoutRecent);
-                    layoutRecent.addView(cardView3);
                 }
 
+                i = 0;
+                for (SkatingEvent event : mUpcomingEvents) {
+                    if (i < 3) {
+                        CardView cardView1 = createCardView(event, layoutUpcoming);
+                        layoutUpcoming.addView(cardView1);
+                        i++;
+                    } else {
+                        break;
+                    }
+                }
+
+                i = 0;
+                for (SkatingEvent event : mRecentEvents) {
+                    if (i < 3) {
+                        CardView cardView1 = createCardView(event, layoutRecent);
+                        layoutRecent.addView(cardView1);
+                        i++;
+                    } else {
+                        break;
+                    }
+                }
             } catch (IllegalStateException e) {
                 //Log.w(TAG, "User switched to another tab before LandingFragment loaded.");
             }

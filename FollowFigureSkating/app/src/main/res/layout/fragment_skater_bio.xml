@@ -282,7 +282,7 @@
                             android:id="@+id/shortprogram"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="Hip Hip Chin Chin performed by Club des Belugas"
+                            android:text="Unknown"
                             android:textColor="@android:color/black" />
 
                     </TableRow>
@@ -302,7 +302,7 @@
                             android:id="@+id/freeprogram"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="Diamonds (from 'Moulin Rouge' soundtrack), One Day I'll Fly Away (from 'Moulin Rouge' soundtrack), The Show Must Go On (from 'Moulin Rouge' soundtrack)"
+                            android:text="Unknown"
                             android:textColor="@android:color/black" />
 
                     </TableRow>
@@ -349,7 +349,7 @@
                             android:id="@+id/bestTop"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="215.39"
+                            android:text="-"
                             android:textAlignment="center"
                             android:textColor="@android:color/black" />
 
@@ -357,7 +357,7 @@
                             android:id="@+id/bestTopComp"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="ISU World Championships 2016"
+                            android:text="-"
                             android:textColor="@android:color/black" />
                     </TableRow>
 
@@ -376,7 +376,7 @@
                             android:id="@+id/bestShort"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="73.16"
+                            android:text="-"
                             android:textAlignment="center"
                             android:textColor="@android:color/black" />
 
@@ -384,7 +384,7 @@
                             android:id="@+id/bestShortComp"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="ISU World Championships 2016"
+                            android:text="-"
                             android:textColor="@android:color/black" />
                     </TableRow>
 
@@ -403,7 +403,7 @@
                             android:id="@+id/tableCell8"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="142.23"
+                            android:text="-"
                             android:textAlignment="center"
                             android:textColor="@android:color/black" />
 
@@ -411,7 +411,7 @@
                             android:id="@+id/tableCell9"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="ISU World Championships 2016"
+                            android:text="-"
                             android:textColor="@android:color/black" />
                     </TableRow>
 

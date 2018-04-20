@@ -149,7 +149,7 @@ public class FavoritesFragment extends Fragment {
                     .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            data.putString("html", dataSnapshot.getValue().toString());
+                            data.putString("url", dataSnapshot.getValue().toString());
                             esFrag.setArguments(data);
 
                             // switch to the event summary page

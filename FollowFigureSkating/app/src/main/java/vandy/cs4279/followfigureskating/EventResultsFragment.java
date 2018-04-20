@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -31,6 +32,7 @@ public class EventResultsFragment extends Fragment {
 
     private static String mEvent; // title of the current event
     private String mHTML; // all the html for the events page
+    private String mURL; // the main url for the event results
 
     private boolean isShort; // booleans for category
     private boolean isTeam;
@@ -64,6 +66,7 @@ public class EventResultsFragment extends Fragment {
             mEvent = getArguments().getString("event");
         }
 
+        mURL = getArguments().getString("url");
         mHTML = getArguments().getString("html");
         isShort = getArguments().getBoolean("isShort");
         isTeam = getArguments().getBoolean("isTeam");
@@ -80,7 +83,21 @@ public class EventResultsFragment extends Fragment {
                 //pass the name of the skater to the fragment
                 SkaterBioFragment sbFrag = SkaterBioFragment.newInstance();
                 Bundle data = new Bundle();
-                data.putString("name", ((TextView) v).getText().toString());
+                String name = ((TextView) v).getText().toString();
+
+                // flip first and last names
+                if (name.contains("/")) { //two people
+                    String pair[] = name.split("/");
+                    String temp1[] = pair[0].split(" ");
+                    String temp2[] = pair[1].split(" ");
+                    name = temp1[1] + " " + temp1[0] + " " + " & " + temp2[1] + " " + temp2[0];
+                } else { //one person
+                    String temp[] = name.split(" ");
+                    name = temp[1] + " " + temp[0];
+                }
+
+                name = name.replace(System.getProperty("line.separator"), "");
+                data.putString("name", name.replace("/", "&"));
                 sbFrag.setArguments(data);
 
                 getFragmentManager().beginTransaction()
@@ -96,14 +113,26 @@ public class EventResultsFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        String mURL = "http://www.isuresults.com/results/season1718/owg2018/"+mHTML+".HTM";
-        (new ParsePageAsyncTask()).execute(new String[]{mURL});
+        if (mHTML.equals("other")) {
+            LinearLayout layout = mView.findViewById(R.id.resultsScrollLayout);
+            TextView text = new TextView(layout.getContext());
+            text.setText(R.string.noResultsText);
+            text.setTextAppearance(R.style.mediumBaseFont);
+            text.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            layout.addView(text);
+        } else {
+            String url = mURL.replace(".htm", "/") + mHTML + ".HTM";
+            (new ParsePageAsyncTask()).execute(url);
+        }
     }
 
     private class ParsePageAsyncTask extends AsyncTask<String, Void, Elements> {
 
+        private boolean goodURL;
+
         @Override
         protected Elements doInBackground(String... strings) {
+            goodURL = true;
             Elements firstLine = new Elements();
             try {
                 Document doc = Jsoup.connect(strings[0]).get();
@@ -112,13 +141,25 @@ public class EventResultsFragment extends Fragment {
                 firstLine = table.select("tr");
             } catch (Throwable t) {
                 t.printStackTrace();
+                goodURL = false;
             }
             return firstLine;
         }
 
         @Override
         protected void onPostExecute(Elements s) {
-            // get all views
+            // if bad URL, then set up message for user
+            if (!goodURL) {
+                LinearLayout layout = mView.findViewById(R.id.resultsScrollLayout);
+                TextView text = new TextView(layout.getContext());
+                text.setText(R.string.noResultsText);
+                text.setTextAppearance(R.style.mediumBaseFont);
+                text.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                layout.addView(text);
+                return;
+            }
+
+            // otherwise, get all views
             TableLayout table = mView.findViewById(R.id.resultsTable);
 
             TextView score1 = mView.findViewById(R.id.wTableHeader4);
@@ -126,8 +167,8 @@ public class EventResultsFragment extends Fragment {
             TextView score3 = mView.findViewById(R.id.wTableHeader6);
 
             // set the scores
-            if(isOverall) {
-                if(isTeam) {
+            if (isOverall) {
+                if (isTeam) {
                     score1.setText("Total Points");
                     score2.setText("");
                     score3.setText("");
@@ -141,8 +182,8 @@ public class EventResultsFragment extends Fragment {
 
             // create the table
             Elements cols;
-            if(isOverall) {
-                if(isTeam) {
+            if (isOverall) {
+                if (isTeam) {
                     for (int j = 1; j < s.size(); j += 2) { // used for weird ISU html layout
                         TableRow rowToAdd = new TableRow(getActivity());
 
@@ -162,7 +203,7 @@ public class EventResultsFragment extends Fragment {
                         for (int i = 0; i <= 6; i++) {
                             if (i == 0 || i == 1 || i == 2 || i == 6) {
                                 TextView rowThing = new TextView(getActivity());
-                                if(i!=1){
+                                if (i != 1) {
                                     rowThing.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                                 }
                                 String x = cols.get(i).text();
@@ -171,6 +212,9 @@ public class EventResultsFragment extends Fragment {
                                     x = x.substring(0, y - 1) + System.getProperty("line.separator") + x.substring(y - 1, x.length());
                                 }
                                 rowThing.setText(x);
+                                if (i == 1) {
+                                    rowThing.setOnClickListener(mListener);
+                                }
                                 rowThing.setTextColor(0xFF000000);
                                 rowToAdd.addView(rowThing);
                             }
@@ -198,7 +242,7 @@ public class EventResultsFragment extends Fragment {
                         for (int i = 0; i <= 8; i++) {
                             if (i == 0 || i == 1 || i == 2 || i == 6 || i == 7 || i == 8) {
                                 TextView rowThing = new TextView(getActivity());
-                                if(i!=1){
+                                if (i != 1) {
                                     rowThing.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                                 }
                                 String x = cols.get(i).text();
@@ -207,6 +251,9 @@ public class EventResultsFragment extends Fragment {
                                     x = x.substring(0, y - 1) + System.getProperty("line.separator") + x.substring(y - 1, x.length());
                                 }
                                 rowThing.setText(x);
+                                if (i == 1) {
+                                    rowThing.setOnClickListener(mListener);
+                                }
                                 rowThing.setTextColor(0xFF000000);
                                 rowToAdd.addView(rowThing);
                             }
@@ -236,15 +283,18 @@ public class EventResultsFragment extends Fragment {
                         if (!isShort || isTeam) {
                             if (i == 0 || i == 1 || i == 2 || i == 3 || i == 4 || i == 6) {
                                 TextView rowThing = new TextView(getActivity());
-                                if(i!=1){
+                                if (i != 1){
                                     rowThing.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                                 }
                                 String x = cols.get(i).text();
                                 int y = x.indexOf('/');
-                                if(y!=-1) {
+                                if (y != -1) {
                                     x = x.substring(0, y-1) + System.getProperty("line.separator") + x.substring(y-1, x.length());
                                 }
                                 rowThing.setText(x);
+                                if (i == 1) {
+                                    rowThing.setOnClickListener(mListener);
+                                }
                                 rowThing.setTextColor(0xFF000000);
                                 rowToAdd.addView(rowThing);
                             }
@@ -253,7 +303,7 @@ public class EventResultsFragment extends Fragment {
                                 TextView rowThing = new TextView(getActivity());
                                 String x = cols.get(i).text();
                                 int y = x.indexOf('/');
-                                if(y!=-1) {
+                                if (y != -1) {
                                     x = x.substring(0, y-1) + System.getProperty("line.separator") + x.substring(y-1, x.length());
                                 }
                                 rowThing.setText(x);

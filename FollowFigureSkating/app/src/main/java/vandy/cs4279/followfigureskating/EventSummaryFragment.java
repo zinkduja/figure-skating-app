@@ -93,7 +93,7 @@ public class EventSummaryFragment extends Fragment {
         mEvent = getArguments().getString("event");
         mEventStart = getArguments().getString("startDate");
         mEventEnd = getArguments().getString("endDate");
-        mURL = getArguments().getString("html");
+        mURL = getArguments().getString("url");
 
         // get table views
         mTable = mView.findViewById(R.id.eventTable);
@@ -136,6 +136,7 @@ public class EventSummaryFragment extends Fragment {
             EventResultsFragment erFrag = EventResultsFragment.newInstance();
             Bundle data = new Bundle();
             data.putString("event", mEvent);
+            data.putString("url", mURL);
             data.putString("html", (String) v.getTag(R.id.html));
             if(v.getTag(R.id.isShort).equals("SP")) {
                 data.putBoolean("isShort", true);
@@ -471,13 +472,13 @@ public class EventSummaryFragment extends Fragment {
             textView.setTag(R.id.isShort, "SP");
         }
 
-        if (category.equals("Men Single Skating")) {
+        if (category.equals("Men Single Skating") || category.equals("Men")) {
             textView.setTag(R.id.html, segment.equals("Short Program") ? "SEG001" : "SEG002");
         }
-        else if (category.equals("Ladies Single Skating")) {
+        else if (category.equals("Ladies Single Skating") || category.equals("Ladies")) {
             textView.setTag(R.id.html, segment.equals("Short Program") ? "SEG003" : "SEG004");
         }
-        else if (category.equals("Pair Skating")) {
+        else if (category.equals("Pair Skating") || category.equals("Pairs")) {
             textView.setTag(R.id.html, segment.equals("Short Program") ? "SEG005" : "SEG006");
         }
         else if (category.equals("Ice Dance")) {
@@ -498,6 +499,8 @@ public class EventSummaryFragment extends Fragment {
         else if (category.equals("Team Ice Dance")) {
             textView.setTag(R.id.html, segment.equals("Short Dance") ? "SEG015" : "SEG016");
             textView.setTag(R.id.isTeam, "Team");
+        } else {
+            textView.setTag(R.id.html, "other");
         }
 
         row.addView(textView);
