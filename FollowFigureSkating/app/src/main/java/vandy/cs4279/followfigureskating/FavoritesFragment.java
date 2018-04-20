@@ -135,17 +135,35 @@ public class FavoritesFragment extends Fragment {
             EventSummaryFragment esFrag = EventSummaryFragment.newInstance();
             Bundle data = new Bundle();
             LinearLayout layout = (LinearLayout)(((CardView) v).getChildAt(0));
-            data.putString("event", ((TextView)(layout.getChildAt(0))).getText().toString());
-            String dates = ((TextView)(layout.getChildAt(1))).getText().toString();
-            data.putString("startDate", dates.split(" - ")[0]);
-            data.putString("endDate", dates.split(" - ")[1]);
-            esFrag.setArguments(data);
 
-            // switch to the event summary page
-            getFragmentManager().beginTransaction()
-                    .addToBackStack("EVENT_SUMMARY_FRAG")
-                    .replace(R.id.frame_layout, esFrag)
-                    .commit();
+            String title = ((TextView)(layout.getChildAt(0))).getText().toString();
+            data.putString("event", title);
+
+            String dates = ((TextView)(layout.getChildAt(1))).getText().toString();
+            String start = dates.split(" - ")[0];
+            data.putString("startDate", start);
+            data.putString("endDate", dates.split(" - ")[1]);
+
+            // get data from the database
+            mDatabase.child("competitions").child(title + "--" + start).child("html")
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            data.putString("html", dataSnapshot.getValue().toString());
+                            esFrag.setArguments(data);
+
+                            // switch to the event summary page
+                            getFragmentManager().beginTransaction()
+                                    .addToBackStack("EVENT_SUMMARY_FRAG")
+                                    .replace(R.id.frame_layout, esFrag)
+                                    .commit();
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            //Log.e(TAG, "Database error: " + databaseError.getMessage());
+                        }
+                    });
         };
     }
 

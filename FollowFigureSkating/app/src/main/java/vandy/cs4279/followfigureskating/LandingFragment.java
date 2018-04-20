@@ -179,7 +179,6 @@ public class LandingFragment extends Fragment {
                         } else if(key.equals("html")) {
                             html = child.getValue().toString();
                         }
-
                     }
 
                     // create SkatingEvent based on info from database
@@ -291,7 +290,7 @@ public class LandingFragment extends Fragment {
 
             // set listeners and add to main layout
             cardView.addView(layout);
-            cardView.setTag(R.id.startHtml, event.getHTML()); 
+            cardView.setTag(R.id.startHtml, event.getHTML());
             cardView.setOnClickListener(mTextListener);
 
             return cardView;

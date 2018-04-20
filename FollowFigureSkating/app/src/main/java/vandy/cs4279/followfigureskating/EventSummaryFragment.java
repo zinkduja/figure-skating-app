@@ -85,6 +85,8 @@ public class EventSummaryFragment extends Fragment {
         if (container != null) {
             container.removeAllViews();
         }
+        mRows.clear();
+        mResultRows.clear();
 
         // Inflate the layout for this fragment and get arguments
         mView = inflater.inflate(R.layout.fragment_event_summary, container, false);
@@ -93,25 +95,28 @@ public class EventSummaryFragment extends Fragment {
         mEventEnd = getArguments().getString("endDate");
         mURL = getArguments().getString("html");
 
-        System.out.println(mURL);
-        if(mURL.equals("")) {
-            TextView pageText = mView.findViewById(R.id.eventTitle);
-            pageText.setText("Find more information online!");
-            mRows.clear();
-            mResultRows.clear();
+        // get table views
+        mTable = mView.findViewById(R.id.eventTable);
+        mResultsTable = mView.findViewById(R.id.resultsTable);
+
+        // set event title
+        TextView title = mView.findViewById(R.id.eventTitle);
+        title.setText(mEvent);
+
+        if(mURL.equals("")) { // no url for the event
+            TableRow row = new TableRow(mTable.getContext());
+            TextView text = new TextView(row.getContext());
+            text.setText(R.string.noScheduleText);
+            text.setTextAppearance(R.style.mediumBaseFont);
+            text.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            row.addView(text);
+            mTable.addView(row);
         }
         else {
-
             // create the OnClickListener
             createListener();
 
-            // set event title
-            TextView title = mView.findViewById(R.id.eventTitle);
-            title.setText(mEvent);
-
             // fill in the table
-            mRows.clear();
-            mResultRows.clear();
             (new CreateTableAsyncTask()).execute();
 
             // set up following icon
@@ -121,7 +126,6 @@ public class EventSummaryFragment extends Fragment {
         return mView;
     }
 
-    //TODO - change how to determine results or cur skating
     /**
      * Creates an OnClickListener - goes to the results of a section of
      * the current competition.
@@ -194,11 +198,11 @@ public class EventSummaryFragment extends Fragment {
 
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
-                            Log.e(TAG, "Database error: " + databaseError.getMessage());
+                            //Log.e(TAG, "Database error: " + databaseError.getMessage());
                         }
                     });
         } else {
-            Log.e(TAG, "User somehow not logged in");
+            //Log.e(TAG, "User somehow not logged in");
         }
     }
 
@@ -218,12 +222,12 @@ public class EventSummaryFragment extends Fragment {
             mDatabase.child("favorites").child("events").child(email[0])
                     .child(key).setValue(true);
         } else {
-            Log.e(TAG, "User somehow not logged in");
+            //Log.e(TAG, "User somehow not logged in");
         }
     }
 
     /**
-     * Removes current skater from favorites for current user.
+     * Removes current event from favorites for current user.
      */
     private void removeFavorite() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -241,22 +245,17 @@ public class EventSummaryFragment extends Fragment {
                     .child(key)
                     .removeValue();
         } else {
-            Log.e(TAG, "User somehow not logged in");
+            //Log.e(TAG, "User somehow not logged in");
         }
     }
 
     /**
-     * Creates the time table for the event.
-     * @throws IOException
+     * Creates links to overall results.
      */
-    private void createTable() throws IOException {
-        //TODO - change url based on event
-        Document doc = Jsoup.connect("http://www.isuresults.com/results/season1718/owg2018/").get();
-        mTable = mView.findViewById(R.id.eventTable);
-        mResultsTable = mView.findViewById(R.id.resultsTable);
+    private void createOverallTable() {
         TableRow row1 = new TableRow(mResultsTable.getContext());
         TextView textView = new TextView(row1.getContext());
-        textView.setText("Overall Results");
+        textView.setText(R.string.overallResults);
         textView.setGravity(Gravity.CENTER);
         textView.setTextAppearance(R.style.smallBaseFont);
         row1.addView(textView);
@@ -264,7 +263,7 @@ public class EventSummaryFragment extends Fragment {
 
         row1 = new TableRow(mResultsTable.getContext());
         textView= new TextView(row1.getContext());
-        textView.setText("Team Event");
+        textView.setText(R.string.teamEvent);
         textView.setGravity(Gravity.CENTER);
         textView.setOnClickListener(mListener);
         textView.setTag(R.id.html, "TEC001RS");
@@ -277,7 +276,7 @@ public class EventSummaryFragment extends Fragment {
 
         row1 = new TableRow(mResultsTable.getContext());
         textView= new TextView(row1.getContext());
-        textView.setText("Men Single Skating");
+        textView.setText(R.string.menSingle);
         textView.setOnClickListener(mListener);
         textView.setTag(R.id.html, "CAT001RS");
         textView.setTag(R.id.isOverall, "Yes");
@@ -290,7 +289,7 @@ public class EventSummaryFragment extends Fragment {
 
         row1 = new TableRow(mResultsTable.getContext());
         textView = new TextView(row1.getContext());
-        textView.setText("Ladies Single Skating");
+        textView.setText(R.string.ladiesSingle);
         textView.setOnClickListener(mListener);
         textView.setTag(R.id.html, "CAT002RS");
         textView.setTag(R.id.isOverall, "Yes");
@@ -303,7 +302,7 @@ public class EventSummaryFragment extends Fragment {
 
         row1 = new TableRow(mResultsTable.getContext());
         textView = new TextView(row1.getContext());
-        textView.setText("Pairs Skating");
+        textView.setText(R.string.pairsSkating);
         textView.setOnClickListener(mListener);
         textView.setTag(R.id.html, "CAT003RS");
         textView.setTag(R.id.isOverall, "Yes");
@@ -316,7 +315,7 @@ public class EventSummaryFragment extends Fragment {
 
         row1 = new TableRow(mResultsTable.getContext());
         textView = new TextView(row1.getContext());
-        textView.setText("Ice Dance");
+        textView.setText(R.string.icedanceSkating);
         textView.setTextColor(0xFF000000);
         textView.setOnClickListener(mListener);
         textView.setTag(R.id.html, "CAT004RS");
@@ -331,24 +330,47 @@ public class EventSummaryFragment extends Fragment {
         TextView empty1 = new TextView(blank1.getContext());
         blank1.addView(empty1);
         mResultRows.add(blank1);
+    }
+
+    /**
+     * Creates the time table for the event.
+     * @throws IOException
+     */
+    private void createTable() throws IOException {
+        // connect to web with jsoup
+        Document doc = Jsoup.connect(mURL).get();
+        boolean isISUPage = mURL.contains("isuresults");
 
         // get the time setting (should be only 1 element)
         Elements caption = doc.getElementsByClass("caption5");
-        mTime = caption.get(0).text();
+        mTime =  caption.size() == 0 ? "(Local Time Zone)" : caption.get(0).text();
 
         // get the 'Time Schedule' table
         Elements webTables = doc.getElementsByTag("table");
-        Element table = webTables.get(5).child(0);
+        Element table = isISUPage ? webTables.get(5).child(0) : webTables.get(1).child(1);
         table.child(0).remove();
 
         // go through the table on the website and create table rows for the local table
         createTitleRow();
         table.children().forEach(row -> {
             // date, time, category, segment
+            String time = "", category = "", segment = "";
             String date = row.child(0).text();
-            String time = row.child(1).text();
-            String category = row.child(2).text();
-            String segment = row.child(3).text();
+            if (isISUPage) {
+                time = row.child(1).text();
+                category = row.child(2).text();
+                segment = row.child(3).text();
+            } else {
+                if (date.isEmpty()) {
+                    time = row.child(1).text();
+                    if (time.equals("to follow")) {
+                        time = "  -  ";
+                    }
+                    category = row.child(2).text().split(" - ")[0];
+                    segment = row.child(3).child(0).text();
+                }
+            }
+
             createTableRow(date, time, category, segment);
         });
 
@@ -369,25 +391,25 @@ public class EventSummaryFragment extends Fragment {
 
         // TextView for the date
         TextView textView = new TextView(row.getContext());
-        textView.setText("Date");
+        textView.setText(R.string.dateText);
         textView.setTextAppearance(R.style.smallBaseFont);
         row.addView(textView);
 
         // TextView for the time
         textView = new TextView(row.getContext());
-        textView.setText("Time");
+        textView.setText(R.string.timeText);
         textView.setTextAppearance(R.style.smallBaseFont);
         row.addView(textView);
 
         // TextView for the category
         textView = new TextView(row.getContext());
-        textView.setText("Category");
+        textView.setText(R.string.categoryText);
         textView.setTextAppearance(R.style.smallBaseFont);
         row.addView(textView);
 
         // TextView for the segment
         textView = new TextView(row.getContext());
-        textView.setText("Segment");
+        textView.setText(R.string.segmentText);
         textView.setTextAppearance(R.style.smallBaseFont);
         row.addView(textView);
 
@@ -441,12 +463,14 @@ public class EventSummaryFragment extends Fragment {
         }
         textView.setText(segment.isEmpty() ? (dashes+dashes) : segment);
         textView.setTextAppearance(R.style.basicFont);
+
         textView.setTag(R.id.isShort, "no");
         textView.setTag(R.id.isTeam, "no");
         textView.setTag(R.id.isOverall, "no");
         if(segment.equals("Short Program") || segment.equals("Short Dance")) {
             textView.setTag(R.id.isShort, "SP");
         }
+
         if (category.equals("Men Single Skating")) {
             textView.setTag(R.id.html, segment.equals("Short Program") ? "SEG001" : "SEG002");
         }
@@ -492,6 +516,7 @@ public class EventSummaryFragment extends Fragment {
         protected Void doInBackground(Void... params) {
             // set up the table
             try {
+                createOverallTable();
                 createTable();
                 //Log.i(TAG, "Information successfully pulled from ISU website");
             } catch (IOException e) {
@@ -507,8 +532,8 @@ public class EventSummaryFragment extends Fragment {
             ((TextView)(mView.findViewById(R.id.timeHolder))).setText(mTime);
 
             // add all the rows to the table
-            mRows.forEach(mTable::addView);
             mResultRows.forEach(mResultsTable::addView);
+            mRows.forEach(mTable::addView);
         }
     }
 }

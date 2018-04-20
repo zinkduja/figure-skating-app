@@ -114,4 +114,15 @@
     <string name="about_msg">Version: 1.0.0\n\nBuilt: 4/23/18\n\nCreated by: Josie Zink-Duda
         and Shreya Shanker\n\nLogo Credit: Lia Zink-Duda</string>
     <string name="forgotPassword">Forgot password?</string>
+    <string name="overallResults">Overall Results</string>
+    <string name="teamEvent">Team Event</string>
+    <string name="menSingle">Men Single Skating</string>
+    <string name="ladiesSingle">Ladies Single Skating</string>
+    <string name="pairsSkating">Pairs Skating</string>
+    <string name="icedanceSkating">Ice Dance</string>
+    <string name="dateText">Date</string>
+    <string name="timeText">Time</string>
+    <string name="categoryText">Category</string>
+    <string name="segmentText">Segment</string>
+    <string name="noScheduleText">No schedule available, please check event website.</string>
 </resources>

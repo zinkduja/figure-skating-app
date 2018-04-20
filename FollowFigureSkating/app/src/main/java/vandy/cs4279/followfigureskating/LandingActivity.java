@@ -61,7 +61,6 @@ public class LandingActivity extends AppCompatActivity {
         (new SkaterListAsyncTask()).execute("http://www.isuresults.com/ws/ws/wsmen.htm");
         (new SkaterListAsyncTask()).execute("http://www.isuresults.com/ws/ws/wspairs.htm");
         (new SkaterListAsyncTask()).execute("http://www.isuresults.com/ws/ws/wsdance.htm");
-        //TODO - add pairs and ice dance
 
         // update the events from the ISU website
         (new EventListAsyncTask())
