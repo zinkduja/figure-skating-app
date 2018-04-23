@@ -183,7 +183,7 @@ public class EventSummaryFragment extends Fragment {
                                 // check if event is a favorite and set the button
                                 boolean fav = false;
                                 for (DataSnapshot child : dataSnapshot.getChildren()) {
-                                    if (child.getKey().equals((mEvent + "--" + mEventStart))) {
+                                    if (child.getKey().equals((mEvent + "--" + mEventStart + "--" + mEventEnd))) {
                                         fav = true;
                                     }
                                 }
